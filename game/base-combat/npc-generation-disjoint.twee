@@ -1,0 +1,50 @@
+:: Widgets NPC Generation Disjoint [widget]
+<<widget "generateNPCDisjoin">><<nobr>>
+<!-- Copy example from the old code -->
+<!-- Args are NPC#(1-*), Age for all the npcs -->
+<!-- Example: <<generateNPCDisjoin 10 a>> would generate 10 NPCs as adult -->
+
+<!-- Check from the old code -->
+<!-- Checks if endevent was properly used after the last event -->
+<<if $enemyno gte 1>>
+    <<set $endeventerror to $lastgenerated>>
+<</if>>
+<<set $lastgenerated to $passage>>
+
+<!-- Dinamically creating a list to alocate all to npcs -->
+<<set $npcFightList = [$args[0]]>>
+
+<!-- Generating all the npc specify by the args[0] -->
+<<for _i to 0; _i lt $args[0]; _i++>>
+    <!-- Defining npc characteristics -->
+    <<set _age to "a">>
+    <<set _gender to "m">>
+    <<set _pronoun to "m">>
+
+    <!-- Defining npc age -->
+    <<if $args[1]>>
+        <<set _age to $args[1]>>
+    <</if>>
+
+    <!-- Defining npc gender -->
+    <<set $rng to random(1, 100)>>
+    <<if $malechance lt $rng>>
+        <<set _gender to "f">>
+        <<set _pronoun to "f">>
+    <</if>>
+
+    <!-- Defining npc health -->
+    <!-- ToDo: Define a roof value than create a function to change the damage according to difficult -->
+    <!-- Natural exponential function maybe... roof = 400? -->
+    <<set _maxHealth to 200>>
+
+    <!-- See this model in the folder model, file NPC-Human_Model -->
+    <<set $npcFightList[_i] to new NpcModel(
+        '_age',
+        '_gender',
+        '_pronoun',
+        '_maxHealth'
+    )>>
+<</for>>
+
+<</nobr>><</widget>>
