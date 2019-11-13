@@ -20,6 +20,7 @@
     <<set _age to "a">>
     <<set _gender to "m">>
     <<set _pronoun to "m">>
+    <<set _arousal to ($allure / 50)>>
 
     <!-- Defining npc age -->
     <<if $args[1]>>
@@ -45,6 +46,8 @@
         '_pronoun',
         '_maxHealth'
     )>>
+
+    <<set $npcFightList[_i].arousal to _arousal>>
 <</for>>
 
 <</nobr>><</widget>>

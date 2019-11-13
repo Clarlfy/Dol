@@ -1,0 +1,67 @@
+:: Widgets NPCs Init Fight [widget]
+<!-- This is the basic model for a human -->
+<!-- Usage: -->
+<!-- <<basicWoman>> will generate only 1 npc adult to fight against -->
+<!-- <<basicWoman 5>> will generate 5 npcs adults to fuck with hahahaha -->
+<!-- <<basicWoman 10 t>> will generate 10 npcs teenagers to fight against -->
+<<widget "basicWoman">><<nobr>> <!-- maninit IS MY @#@$! @liahhh -->
+
+<<if $args[0]>>
+    <<if $args[1]>>
+        <<generateNPCDisjoin $args[0] $args[1]>>
+    <<else>>
+        <<generateNPCDisjoin $args[0]>>
+    <</if>>
+<<else>>
+    <<generateNPCDisjoin 1>>
+<</if>>
+
+<<set $combat to 1>>
+
+<<combatinitRemodel>>
+
+<</nobr>><</widget>>
+
+<<widget "combatinitRemodel">><<nobr>>
+
+<<if $consensual is 1>>
+    <<set $controlstart to $control>>
+<</if>>
+
+<<if $genderknown.includes($npc)>>
+    <<set $crossdressing to 0>>
+<<else>>
+	<<if $player.gender isnot $player.appearance>>
+	    <<set $crossdressing to 1>>
+	<<else>>
+	    <<set $crossdressing to 0>>
+	<</if>>
+<</if>>
+
+<<if $npcFightList[0].type is "beast">>
+	<<if $npcFightList[0].penis is "none" and $penisexist is 1>>
+	    <<set $position to "missionary">>
+	<<else>>
+		<<if random(1, 100) gte 20>>
+		    <<set $position to "doggy">>
+		<<else>>
+		    <<set $position to "missionary">>
+		<</if>>
+	<</if>>
+<<else>>
+	<<if $npcFightList[0].penis is "none">>
+		<<if random(1, 100) gte 80>>
+		    <<set $position to "doggy">>
+		<<else>>
+		    <<set $position to "missionary">>
+		<</if>>
+	<<else>>
+		<<if random(1, 100) gte 50>>
+		    <<set $position to "doggy">>
+		<<else>>
+		    <<set $position to "missionary">>
+		<</if>>
+	<</if>>
+<</if>>
+
+<</nobr>><</widget>>

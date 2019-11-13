@@ -17,6 +17,10 @@ window.NpcModel = function(age, gender, pronoun, maxHealth,
     this.mouth = mouth || "none";
     this.chest = chest || "none";
     this.description = description || 0;
+    this.type = "man";
+    this.angermax = 200;
+    this.anger = 0;
+    this.trust = 0;
 };
 
 /* Don't bother with this, just return functions because no single engine is simple */

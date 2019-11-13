@@ -46,6 +46,23 @@ A radio is on:
 
 <span class="green">More debugging:</span>
 <br>
+<<man1init>>
+<<basicWoman 10 a>>
+gender1: $npcFightList[8].gender
+<br>
+<<set $npcFightList[8].gender to "anele">>
+<<set $npcFightList[8].notInTheJS to "not in the js">>
+gender2: $npcFightList[8].gender
+<br>
+type: $npcFightList[8].type
+<br>
+test: $npcFightList[8].notInTheJS
+<br>
+length: $npcFightList.length
+<br>
+arousal: $npcFightList[8].arousal
+<br>
+<br><br>
 <<link [[Add test news|Bedroom]]>><<radio_addnews "meteor_fall" "2">><</link>> radio_addnews "meteor_fall" "2"
 <br>
 <<link [[Add test news|Bedroom]]>><<radio_addnews "godzilla_awaken" "3">><</link>> radio_addnews "godzilla_awaken" "3"
