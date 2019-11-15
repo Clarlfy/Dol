@@ -1,0 +1,26 @@
+:: Widgets Text Disjoint [widget]
+
+<<widget "hisselectDisjoint">><<nobr>>
+<<set _n to $args[0]>>
+<<if $enemytype is "man" and $enemyno gte 2>>
+	<<personselectDisjoint _n>>
+	<<if $npc isnot 0>>
+	$npc's
+	<<elseif $npcFightList[_n].intro is 1>><<set $npcFightList[_n].intro to 0>>
+	the <<persons>>
+	<<else>>
+	<<his>>
+	<</if>>
+<<elseif $enemytype is "beast">>
+<<bhis>>
+<<else>>
+<<his>>
+<</if>>
+<</nobr>><</widget>>
+
+<<widget "personselectDisjoint">><<nobr>>
+<<set _n to $args[0]>>
+<<set $npcadult to $npcFightList[_n].adult>>
+<<set $pronoun to $npcFightList[_n].pronoun>>
+<<set $description to $npcFightList[_n].description>>
+<</nobr>><</widget>>

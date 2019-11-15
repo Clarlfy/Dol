@@ -1,0 +1,255 @@
+:: Widgets NPC Attributes Disjoint [widget]
+
+<!-- Generate attributes to npcs -->
+<<widget "npcattributeDisjoint">><<nobr>>
+<!-- V2.4 Widget set NPC attributes. $arg[0] calls NPC number to be generated. NG-->
+<!-- For transgender, $NPCList.pronoun sets appearance, including breasts. NPCList.gender sets genitals, including pp -->
+<!-- Future work this should call addns args to set pronoun, gender, and size of NPC(0-18) where larger number is more robust. This would eliminate much of the NPC calls from above and push to code. -->
+<!-- Added thug Vulgar/Bruitish as NPC19, can only be called with $arg[2] -->
+
+<<nounderwearcheck>>
+
+<!-- Existencial check -->
+<!-- Witch npc on the list will be generate -->
+<!-- ToDo: Change the default value -->
+<<if $args[0]>>
+    <<set _n to $args[0]>>
+<<else>>
+    <<set _n to 1>>
+<</if>>
+
+<!-- Gender of the npc -->
+<<if $args[1]>>
+    <<set _gen to $args[1]>>
+<<else>>
+    <<set _gen to "default value">>
+<</if>>
+
+<!-- Str of the npc -->
+<<if $args[2]>>
+    <<set _lvl to $args[2]>>
+<<else>>
+    <<set _lvl to "default value">>
+<</if>>
+
+<!-- Code related to transgender -->
+<!-- This sets transgender. This should be pushed up to npcgenerate later... -->
+<!-- Should be established for generation-->
+<<if _gen is "m" or _gen is "f">>
+	<<set $npcFightList[_n].gender to _gen>>
+	<<if _gen is "m">>
+		<<set $npcFightList[_n].penis to "clothed">>
+	<<elseif _gen is "f">>
+		<<set $npcFightList[_n].vagina to "clothed">>
+	<</if>>
+<<else>>
+	<<if $npcFightList[_n].pronoun is "m">>
+		<<if random(0, 99) gte $cbchance>>
+		    <<set $npcFightList[_n].penis to "clothed">>
+		    <<set $npcFightList[_n].gender to "m">>
+		<<else>>
+		    <<set $npcFightList[_n].vagina to "clothed">>
+		    <<set $npcFightList[_n].gender to "f">>
+		<</if>>
+	<<elseif $npcFightList[_n].pronoun is "f">>
+		<<if random(0, 99) gte $dgchance>>
+		    <<set $npcFightList[_n].vagina to "clothed">>
+		    <<set $npcFightList[_n].gender to "f">>
+		<<else>>
+		    <<set $npcFightList[_n].penis to "clothed">>
+		    <<set $npcFightList[_n].gender to "m">>
+		<</if>>
+	<</if>>
+<</if>>
+
+<<set $npcFightList[_n].chest to 0>>
+
+<!-- ToDo: This REALLY need to change somehow, less presset more pressedural -->
+<!-- Select color from npc -->
+<<set $npcskinselector to ($whitechance + $blackchance)>>
+<<if $npcskinselector is 0>>
+    <<set $npcskinselector to 1>>
+<</if>>
+    <<set $whitechanceselector to (($whitechance / $npcskinselector) * 100)>>
+    <<set $blackchanceselector to (($blackchance / $npcskinselector) * 100)>>
+<<if random(1, 100) lte $blackchanceselector>>
+    <<set $npcFightList[_n].skincolour to "black">>
+<<else>>
+    <<set $npcFightList[_n].skincolour to "white">>
+<</if>>
+
+<<set $rng to random(1, 100)>>
+<<if $rng gte 91>>
+	<<if $npcFightList[_n].penis isnot "none">>
+	<<set $npcFightList[_n].insecurity to "penis">>
+	<<else>>
+	<<set $npcFightList[_n].insecurity to "vagina">>
+	<</if>>
+<<elseif $rng gte 81>>
+	<<if $npcFightList[_n].vagina isnot "none">>
+	<<set $npcFightList[_n].insecurity to "vagina">>
+	<<else>>
+	<<set $npcFightList[_n].insecurity to "penis">>
+	<</if>>
+<<elseif $rng gte 61>>
+    <<set $npcFightList[_n].insecurity to "ethics">>
+<<elseif $rng gte 41>>
+    <<set $npcFightList[_n].insecurity to "weak">>
+<<elseif $rng gte 21>>
+    <<set $npcFightList[_n].insecurity to "skill">>
+<<else>>
+    <<set $npcFightList[_n].insecurity to "looks">>
+<</if>>
+
+<<if _lvl gte 0 and _lvl lte 19>>
+	<<set _i to _lvl>>
+<<else>>
+	<<set _i to random(0, 18)>>
+<</if>>
+/% DEBUG NPC: _i<br> %/
+<<if $npcFightList[_n].teen is 1>>
+	<<if $npcFightList[_n].pronoun is "f">> <!-- female appearing student -->
+		<<set _h to [125,175,150,150,150,175,150,200,200,200,125,200,250,125,250,200,250,250,200,300]>>
+		<<set _d to ["slight","lithe","lean","thin","slender","lissome","slim","taut","graceful","trim","mousy","cute","fit","petite","toned","shapely","robust","plump","wide-eyed","vulgar"]>>
+		<<set _blo to [0,0,0,0,0,0,0,0,0,0,0,3,3,3,3,5,5,8,3,10]>>
+		<<set _bhi to [4,4,4,4,4,4,7,7,7,7,8,8,8,8,8,11,11,12,10,12]>>
+	<<else>> <!-- male appearing student  -->
+		<<set _h to [125,175,150,150,150,175,150,200,200,200,125,200,250,125,250,200,250,250,200,300]>>
+		<<set _d to ["slight","lithe","lean","thin","slender","lissome","slim","taut","graceful","trim","mousy","cute","fit","petite","toned","shapely","robust","plump","wide-eyed","brutish"]>>
+	<</if>>
+<<else>>
+	<<if $npcFightList[_n].pronoun is "f">> <!-- female appearing adult -->
+		<<set _h to [125,175,150,150,150,175,150,200,125,200,275,200,250,250,200,200,250,200,200,350]>>
+		<<set _d to ["slight","lithe","lean","thin","slender","lissome","slim","taut","petite","trim","muscular","curvy","toned","plump","plush","shapely","robust","voluptuous","lush","vulgar"]>>
+		<<set _blo to [0,0,0,0,2,2,2,2,2,5,5,5,5,5,5,5,8,8,9,10]>>
+		<<set _bhi to [4,4,4,4,4,4,7,7,8,9,9,9,9,12,10,11,10,11,11,12]>>
+	<<else>> <!-- male appearing adult -->
+		<<set _h to [125,125,150,150,150,150,175,175,200,200,200,200,250,250,250,250,275,275,275,400]>>
+		<<set _d to ["petite","slight","slim","thin","slender","lanky","lissome","lithe","trim","lean","taut","plump","toned","bulky","broad","robust","rugged","muscular","burly","brutish"]>>
+	<</if>>
+<</if>>
+
+<!-- Set pp size seperately to allow for transgender NPCs. Changes should track with physical descriptions above, in order. -->
+<<if $npcFightList[_n].teen is 1>>
+	<<if $npcFightList[_n].gender is "m">> <!-- male genitals student, pronoun M or F -->
+		<<set _plo to [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8]>>
+		<<set _phi to [8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8]>>
+	<</if>>
+<<else>>
+	<<if $npcFightList[_n].gender is "m">> <!-- male genitals student, pronoun M or F -->
+		<<set _plo to [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8]>>
+		<<set _phi to [8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8]>>
+	<</if>>
+<</if>>
+
+<<set _brdes to ["nipple","budding","tiny","small","pert","modest","full","large","ample","massive","huge","gigantic","enormous"]>>
+
+
+<<set $npcFightList[_n].health to _h[_i]>>
+<<set $npcFightList[_n].description to _d[_i]>>
+
+/% DEBUG NPC _n : $npcFightList[_n].pronoun , $npcFightList[_n].gender $npcFightList[_n].description<br> %/
+
+<<if $npcFightList[_n].gender is "m">><!-- set pp on size based on MODs for male genitals -->
+	<<if $penis_mod gte _plo[_i]>><<set _plo[_i] to $penis_mod>><</if>>
+	<<if $penis_mod gte _phi[_i]>><<set _phi[_i] to $penis_mod>><</if>>
+	<<if $penis_mod lt 0>><<set _plo[_i] to Math.clamp(_plo[_i]+$penis_mod, 0, 8)>><<set _phi[_i] to Math.clamp(_phi[_i]+$penis_mod, 0, 8)>><</if>>
+<</if>>
+
+<<if $npcFightList[_n].pronoun is "f">><!-- set breast on size based on MODs for female appearance-->
+	<<if $breast_mod gte _blo[_i]>><<set _blo[_i] to $breast_mod>><</if>>
+	<<if $breast_mod gte _bhi[_i]>><<set _bhi[_i] to $breast_mod>><</if>>
+	<<if $breast_mod lt 0>><<set _blo[_i] to Math.clamp(_blo[_i]+$breast_mod, 0, 12)>><<set _bhi[_i] to Math.clamp(_bhi[_i]+$breast_mod, 0, 12)>><</if>>
+<</if>>
+
+<<if $npcFightList[_n].pronoun is "f">><<set _rng to random(_blo[_i], _bhi[_i])>><</if>>
+<<if $npcFightList[_n].gender is "m">><<set _rngpp to random(_plo[_i], _phi[_i])>><</if>>
+
+<<if $npcFightList[_n].adult is 1>> <!-- set adult breast size -->
+	<<if $npcFightList[_n].pronoun is "m">>
+		<<set $npcFightList[_n].breastsize to 0>>
+		<<set $npcFightList[_n].breastsdesc to "nipples">>
+		<<set $npcFightList[_n].breastdesc to "nipple">>
+	<<else>>
+		<<set $npcFightList[_n].breastsize to _rng>>
+		<<switch _rng>>
+		<<case 0>>
+			<<set $npcFightList[_n].breastsdesc to "nipples">>
+			<<set $npcFightList[_n].breastdesc to "nipple">>
+		<<default>>
+			<<set $npcFightList[_n].breastsdesc to _brdes[_rng]+" breasts">>
+			<<set $npcFightList[_n].breastdesc to _brdes[_rng]+" breast">>
+		<</switch>>
+	<</if>>
+<<else>> <!-- set student breast size -->
+	<<if $npcFightList[_n].pronoun is "m">>
+		<<set $npcFightList[_n].breastsize to 0>>
+		<<set $npcFightList[_n].breastsdesc to "nipples">>
+		<<set $npcFightList[_n].breastdesc to "nipple">>
+	<<else>>
+		<<set $npcFightList[_n].breastsize to _rng>>
+		<<switch _rng>>
+		<<case 0>>
+			<<set $npcFightList[_n].breastsdesc to "nipples">>
+			<<set $npcFightList[_n].breastdesc to "nipple">>
+		<<default>>
+			<<set $npcFightList[_n].breastsdesc to _brdes[_rng]+" breasts">>
+			<<set $npcFightList[_n].breastdesc to _brdes[_rng]+" breast">>
+		<</switch>>
+	<</if>>
+<</if>>
+
+<<if $npcFightList[_n].adult is 1>> <!-- set adult pp size -->
+	<<if $npcFightList[_n].gender is "m">>
+	<<switch _rngpp>>
+	<<case 0>>
+		<<set $npcFightList[_n].penisdesc to "tiny penis">>
+		<<set $npcFightList[_n].penissize to 1>>
+	<<case 5 6 7>>
+		<<set $npcFightList[_n].penisdesc to either("thick cock","hefty cock","big cock","large cock","veiny cock","meaty cock")>>
+		<<set $npcFightList[_n].penissize to 3>>
+	<<case 8>>
+		<<set $npcFightList[_n].penisdesc to either("massive cock","huge cock","humongous cock","immense cock","gigantic cock","enormous cock")>>
+		<<set $npcFightList[_n].penissize to 4>>
+	<<default>>
+		<<set $npcFightList[_n].penisdesc to "penis">>
+		<<set $npcFightList[_n].penissize to 2>>
+	<</switch>>
+	<</if>>
+<<else>> <!-- set student pp size -->
+	<<if $npcFightList[_n].gender is "m">>
+	<<switch _rngpp>>
+	<<case 0>>
+		<<set $npcFightList[_n].penisdesc to "tiny penis">>
+		<<set $npcFightList[_n].penissize to 1>>
+	<<case 7 8>>
+		<<set $npcFightList[_n].penisdesc to either("thick cock","hefty cock","big cock","large cock","veiny cock","meaty cock")>>
+		<<set $npcFightList[_n].penissize to 3>>
+	<<default>>
+		<<set $npcFightList[_n].penisdesc to "penis">>
+		<<set $npcFightList[_n].penissize to 2>>
+	<</switch>>
+	<</if>>
+<</if>>
+
+
+/% DEBUG NPC: _rng : $npcFightList[_n].breastsize : $npcFightList[_n].breastsdesc : $npcFightList[_n].breastdesc<br> %/
+
+<<set $rng to random(1, 100)>>
+<<if $npcFightList[_n].pronoun is "f">>
+	<<if $npcFightList[_n].adult is 1>>
+		<<if $rng gte 61>>
+		<<set $npcFightList[_n].lactation to 1>>
+		<<else>>
+		<<set $npcFightList[_n].lactation to 0>>
+		<</if>>
+	<<else>>
+		<<if $rng gte 81>>
+		<<set $npcFightList[_n].lactation to 1>>
+		<<else>>
+		<<set $npcFightList[_n].lactation to 0>>
+		<</if>>
+	<</if>>
+<</if>>
+
+<</nobr>><</widget>>

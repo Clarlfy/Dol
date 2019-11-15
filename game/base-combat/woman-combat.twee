@@ -1,4 +1,4 @@
-:: Widgets Combat Man-Combat Disjoint [widget]
+:: Widgets Combat Woman-Combat Disjoint [widget]
 <!-- Usage: -->
 <!-- <<woman-combat $npcFightList.length>> -->
 <<widget "woman-combat">><<nobr>>

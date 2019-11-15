@@ -46,9 +46,11 @@ A radio is on:
 
 <span class="green">More debugging:</span>
 <br>
-<<man1init>>
+<!-- Delete this after all the tests -->
 <<basicWoman 10 a>>
 gender1: $npcFightList[8].gender
+<br>
+pronoun: $npcFightList[8].pronoun
 <br>
 <<set $npcFightList[8].gender to "anele">>
 <<set $npcFightList[8].notInTheJS to "not in the js">>
@@ -62,7 +64,14 @@ length: $npcFightList.length
 <br>
 arousal: $npcFightList[8].arousal
 <br>
+<<basicWoman 7 a>>
+new length: $npcFightList.length
 <br><br>
+<!-- Delete till here -->
+<<link [[test new combat|Molestation2]]>>
+	<<set $molestationstart to 1>>
+<</link>>
+<br>
 <<link [[Add test news|Bedroom]]>><<radio_addnews "meteor_fall" "2">><</link>> radio_addnews "meteor_fall" "2"
 <br>
 <<link [[Add test news|Bedroom]]>><<radio_addnews "godzilla_awaken" "3">><</link>> radio_addnews "godzilla_awaken" "3"

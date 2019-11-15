@@ -1,0 +1,49 @@
+:: Molestation2 [nobr]
+<!-- Delete this file after all the tests -->
+
+<<if $molestationstart is 1>>
+<<set $molestationstart to 0>>
+<<controlloss>>
+<<violence 1>>
+<<neutral 1>>
+<<molested>>
+<<basicWoman>>
+<<set $mouthuse to "lefthand">>
+<<set $npcFightList[0].lefthand to "mouth">>
+You feel something probing your nethers. As you open your eyes a hand clasps down on your mouth, muffling your screams.
+<br>
+<<set $rescue to 1>>
+<<if $phase is 1>><<set $npcFightList[0].penis to "otheranusimminent">><<set $penisuse to "otheranus">><<set $penisstate to "otheranusimminent">><</if>>
+<</if>>
+
+
+<<effects>>
+<<effectsman>><<man>>
+
+<<stateman>>
+<br><br>
+<<actionsman>>
+
+	<<if $alarm is 1>>
+		<<if $rescue is 1>>
+		<span id="next"><<link [[Next->Molestation Alarm]]>><</link>></span><<nexttext>>
+		<<else>>
+		No one comes to your aid.
+		<<set $alarm to 0>>
+		<<if $drugged gte 1>>Intoxicated as you are, you couldn't cry very convincingly.<</if>>
+		<br><br>
+			<<if $enemyarousal gte $enemyarousalmax>>
+			<span id="next"><<link [[Next->Molestation Ejaculation]]>><</link>></span><<nexttext>>
+			<<elseif $enemyhealth lte 0>>
+			<span id="next"><<link [[Next->Molestation Escape]]>><</link>></span><<nexttext>>
+			<<else>>
+			<span id="next"><<link [[Next->Molestation]]>><</link>></span><<nexttext>>
+			<</if>>
+		<</if>>
+	<<elseif $enemyarousal gte $enemyarousalmax>>
+	<span id="next"><<link [[Next->Molestation Ejaculation]]>><</link>></span><<nexttext>>
+	<<elseif $enemyhealth lte 0>>
+	<span id="next"><<link [[Next->Molestation Escape]]>><</link>></span><<nexttext>>
+	<<else>>
+	<span id="next"><<link [[Next->Molestation]]>><</link>></span><<nexttext>>
+	<</if>>

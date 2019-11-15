@@ -1,0 +1,16 @@
+:: Widgets Player Combat Start [widget]
+<!-- Widgets to start the combat var for player -->
+<!-- For now it's only the target -->
+<!-- What is best, target for every limb or focus? -->
+<!-- In sex, best is every limb, in fight, best is focus -->
+
+<<widget "playerStart">><<nobr>>
+
+<!-- ToDo: Creat a object for the player instead of this format -->
+<!-- for the legibility of the code i'll create variables instead of vector -->
+<<set $rightHandTarget to 0>>
+<<set $rightLegTarget to 0>>
+<<set $leftHandTarget to 0>>
+<<set $leftLegTarget to 0>>
+
+<</nobr>><</widget>>
