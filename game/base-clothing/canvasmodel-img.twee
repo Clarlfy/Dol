@@ -5,6 +5,10 @@
 Render full player image.
 -->
 <<widget "canvasimg">>
+
+	<!-- 3DToDo: make 3d an option -->
+
+<!--
 	<<selectmodel "main" "sidebar">>
 	<<modelprepare-player-body>>
 	<<modelprepare-player-clothes>>
@@ -13,6 +17,7 @@ Render full player image.
 	<<else>>
 		<<rendermodel $args[0]>>
 	<</if>>
+	 -->
 <</widget>>
 
 <!--

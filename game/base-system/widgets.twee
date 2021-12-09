@@ -1775,12 +1775,19 @@
 <</widget>>
 
 <<widget "weatherdisplay">>
+
+
 <<if $season is "winter">>
 	<<set _weather_display to "winter">>
 <<else>>
 	<<set _weather_display to "normal">>
 <</if>>
+
 <<if $images is 1>>
+
+	<!-- 3DToDo: add 3d, also option -->
+
+<!--
 	<<if $daystate is "day">>
 		<<if $location is "tentworld">>
 		<img id="daystate" src="img/misc/tentskyday.png">
@@ -2330,7 +2337,7 @@
 	<</if>>
 
 <<else>>
-
+ -->
 <<if $daystate is "day">>
 	<<if $weather is "clear">>
 		It's a bright and sunny day.

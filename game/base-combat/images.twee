@@ -1,6 +1,16 @@
 :: Widgets Combat Img [widget]
 
 <<widget "combatimg">>
+	<<set $test to "not edited">>
+
+	<!-- 3DToDo: make 3d an option -->
+	<<script>>
+		
+		DOL3D.ShowCombat($(output));
+		
+	<</script>>
+
+<!-- 
 	<<if $enemyarousal gte ($enemyarousalmax / 5) * 4>>
 		<<set _animspeed to 'vfast'>>
 	<<elseif $enemyarousal gte ($enemyarousalmax / 5) * 3>>
@@ -38,6 +48,7 @@
 			<</if>>
 		</div>
 	<</if>>
+	-->
 <</widget>>
 
 <<widget "doggyimg">>
