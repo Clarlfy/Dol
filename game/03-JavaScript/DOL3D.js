@@ -41,7 +41,7 @@
 			}
 		};
 
-		// just for testing and learning how data in dol is stored in combat
+		
 		function* _ActiveNPCIterator() {
 			for(let i = 0; i < V.enemyno; i++) {
 				yield V.NPCList[i];
@@ -124,30 +124,28 @@
 			let mesh = await CreateChar();
 			scene.add( mesh );
 
-			let small = await CreateChar("Small");
-			small.position.set(-1, 0, 0);
-			scene.add(small);
-			let tiny  = await CreateChar("Tiny");
-			tiny.position.set(-2, 0, 0);
-			scene.add(tiny);
-			let large = await CreateChar("Large");
-			large.position.set(1, 0, 0);
-			scene.add(large);
 
 			let cube = CreateCube();
-			cube.position.set(2, 1.5, 0)
+			cube.position.set(-1, 1.5, 0)
 			scene.add(cube);
 			//console.log(mesh);
 
+			let npc;
+			let npcs = DOL3D.GetActiveNPCs();
+			console.log(V);
+			for(let i = 0; i < npcs.length; i++) {
+				npc = await CreateChar();
+				npc.position.x = 1 + i;
+				scene.add(npc);
+			}
+			
 			renderer.setAnimationLoop((time) => {
 				//TestAnimation(time, mesh);
 				renderer.render( scene, camera );
 			});
 			
 		};
-		DOL3D.ShowCombat = function (output) {
-			ShowCombat(output);
-		};
+		DOL3D.ShowCombat = ShowCombat;
 
 		async function ShowCanvas(output) {
 			let type = DOL3D.DisplayType.Canvas;
@@ -170,9 +168,7 @@
 				renderer.render( scene, camera );
 			});
 		};
-		DOL3D.ShowCanvas = function(output) {
-			ShowCanvas(output);
-		};
+		DOL3D.ShowCanvas =  ShowCanvas;
 
 
 		async function ShowCreate(output) {
