@@ -1785,9 +1785,8 @@
 
 <<if $images is 1>>
 
-	<!-- 3DToDo: add 3d, also option -->
-
-<!--
+	<!-- 3DToDo: make 3d an option -->
+	<!--
 	<<if $daystate is "day">>
 		<<if $location is "tentworld">>
 		<img id="daystate" src="img/misc/tentskyday.png">
@@ -2335,9 +2334,8 @@
 		<img id="location" @src="'img/misc/' + _weather_display + '/prison_dusk.gif'">
 		<</switch>>
 	<</if>>
-
+	-->
 <<else>>
- -->
 <<if $daystate is "day">>
 	<<if $weather is "clear">>
 		It's a bright and sunny day.

@@ -862,6 +862,16 @@ Your $worn.under_upper.name <<underupperhas>> been pulled to your $worn.under_up
 <</widget>>
 
 <<widget "startingPlayerImage">>
+<!-- 3DToDo: add option -->
+
+<<script>>
+
+	DOL3D.ShowCreate($(output));
+
+<</script>>
+
+
+<!--
 <<set $naturalhaircolour to $hairselect>>
 <<set _filters to {
 	"body": skinColor("t", $skinColor.range, setup.skinColor[$skinColor.natural]),
@@ -894,10 +904,10 @@ Your $worn.under_upper.name <<underupperhas>> been pulled to your $worn.under_up
 <<elseif $player.gender is "h">>
 	<<if $player.gender_body is "m" or ($player.gender_body is "a" and $breastsize lte 3)>>
 		<<set _clothesType to "male">>
-	<<else>> <!-- if $player.gender_body is "f" or ($player.gender_body is "a" and $breastsize gt 3)) --> 
+	<<else>> /* if $player.gender_body is "f" or ($player.gender_body is "a" and $breastsize gt 3)) */
 		<<set _clothesType to "female">>
 	<</if>>
-<<else>> <!-- if $player.gender is "f" -->
+<<else>> /* if $player.gender is "f" */
 	<<set _clothesType to "female">>
 <</if>>
 
@@ -932,7 +942,7 @@ Your $worn.under_upper.name <<underupperhas>> been pulled to your $worn.under_up
 		<<set $sidebarRenderer to 'canvas'>>
 	<</if>>
 	<<if $sidebarRenderer isnot 'img'>>
-		<<selectmodel "main" "sidebar">> <!-- reuse sidebar cache slot -->
+		<<selectmodel "main" "sidebar">> /* reuse sidebar cache slot */
 		<<twinescript>>
 			_modeloptions.breast_size = _breastSize;
 			_modeloptions.breasts = (!_showUnderwear && !_showClothes) ? "default" : "cleavage";
@@ -1033,7 +1043,7 @@ Your $worn.under_upper.name <<underupperhas>> been pulled to your $worn.under_up
 		<img class="layer-backhair colour-hair" src="img/hair/red/backhairfeetred.png">
 	<</if>>
 
-	<!-- P image insert here - This is not compatible with female pdmod, requires additional editing - add new layer in base.css-->
+	/* P image insert here - This is not compatible with female pdmod, requires additional editing - add new layer in base.css*/
 	<<if _penisSize isnot undefined and _showClothes is false and _showUnderwear is false>>
 		<<if $player.virginity.penile is true>>
 			<img class="layer-penis" @src="_img['penis_virgin' + ($player.ballsExist ? '':'noballs') + _penisSize]" @style="'filter: '+_filters.penis">
@@ -1106,8 +1116,10 @@ Your $worn.under_upper.name <<underupperhas>> been pulled to your $worn.under_up
 			</div>
 		<</if>>
 	<</if>>
-	<</if>> <!-- renderer switch -->
+	<</if>> /* renderer switch */
 </div>
+
+-->
 <</widget>>
 
 <<widget "startingPlayerImageUpdate">>

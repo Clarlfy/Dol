@@ -7,6 +7,12 @@ Render full player image.
 <<widget "canvasimg">>
 
 	<!-- 3DToDo: make 3d an option -->
+	<!-- 3DToDo: hide location display in 3d -->
+	<<script>>
+		
+		DOL3D.ShowCanvas($(output));
+		
+	<</script>>
 
 <!--
 	<<selectmodel "main" "sidebar">>

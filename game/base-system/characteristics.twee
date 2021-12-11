@@ -526,8 +526,20 @@ You have a <<skincolourtext>> <<if $breastsize gte 1>>You have <<breasts>>.<</if
 		<</if>>
 	<</silently>>
 	<<if $images is 1>>
+
+
 		<div id="player-body">
+			<!-- 3DToDo: add option -->
+
+			<<script>>
+
+				DOL3D.ShowChara($(output));
+
+			<</script>>
+			<!--
 			<<player-base-body>>
+ 			-->
+
 		</div>
 		<div id="sex-diagram">
 
@@ -594,6 +606,8 @@ You have a <<skincolourtext>> <<if $breastsize gte 1>>You have <<breasts>>.<</if
 				<</if>>
 			</div>
 		</div>
+
+
 	<<else>>
 		<div id="sex-skills" class="characteristic-box-list">
 			<<characteristic-box _seductionConfig>>
