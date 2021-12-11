@@ -101,7 +101,7 @@
 
 			let mesh = await GetMesh("char.glb");
 			mesh.scale.copy(new THREE.Vector3(size, size, size));
-			mesh.material = new THREE.MeshNormalMaterial();
+			mesh.children[1].material = new THREE.MeshNormalMaterial();
 			return mesh;
 		}
 
