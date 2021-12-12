@@ -13,6 +13,7 @@
 		}
 		
 
+
 		DOL3D.DataAddress = "http://37.59.47.180/data/"
 
 		DOL3D.CharSizes = {
@@ -41,6 +42,48 @@
 			}
 		};
 
+		class DOL3DChar {
+			constructor(eventuallyStuff) {
+
+			};
+
+			async GetScene(sizeName) {
+				if (this.scene == undefined)
+				{
+					if (sizeName == undefined)
+						sizeName = "Normal" 
+					let size = DOL3D.CharSizes[sizeName];
+
+					this.scene = await DownloadMesh("char.glb");
+					this.scene.scale.copy(new THREE.Vector3(size, size, size));
+					this.scene.children[1].material = new THREE.MeshNormalMaterial();
+				}
+				return this.scene;
+			};
+
+			async Generate() {
+				await this.GetScene();
+				this.mesh = this.scene.children[1];
+			};
+
+			GetMorphAmt(morph) {
+				if (morph == undefined || this.mesh.morphTargetInfluences.length < morph.index)
+					return;
+
+				
+				return this.mesh.morphTargetInfluences[this.mesh.morphTargetDictionary[morph]];
+			};
+
+			Morph(morph, amt, inc) {
+				if (morph == undefined || this.mesh.morphTargetInfluences.length < morph.index)
+					return;
+
+				if (inc)
+					this.mesh.morphTargetInfluences[this.mesh.morphTargetDictionary[morph]] += amt;
+				else
+					this.mesh.morphTargetInfluences[this.mesh.morphTargetDictionary[morph]] = amt;
+			};
+		};
 		
 		function* _ActiveNPCIterator() {
 			for(let i = 0; i < V.enemyno; i++) {
@@ -81,28 +124,24 @@
 		};
 
 
+
 		function CreateCube() {
 			let geometry = new THREE.BoxGeometry( 1, 1, 1 );
 			let material = new THREE.MeshNormalMaterial();
 			return new THREE.Mesh( geometry, material );
 		}
 
-		async function GetMesh(url) {
+		async function DownloadMesh(url) {
 			let loader = GetLoader();
 			let data = await loader.loadAsync(DOL3D.DataAddress + url);
 			return data.scene.children[0];
 		}
-
-		async function CreateChar(sizeName) {
-
-			if (sizeName == undefined)
-				sizeName = "Normal" 
-			let size = DOL3D.CharSizes[sizeName];
-
-			let mesh = await GetMesh("char.glb");
-			mesh.scale.copy(new THREE.Vector3(size, size, size));
-			mesh.children[1].material = new THREE.MeshNormalMaterial();
-			return mesh;
+		async function CreateChar(eventuallyStuff) {
+			let char = new DOL3DChar(eventuallyStuff);
+			await char.Generate();
+			char.Morph("mouth_closed", 1);
+			console.log(char);
+			return char;
 		}
 
 		function TestAnimation( time, mesh ) {
@@ -121,8 +160,8 @@
 
 			let scene = new THREE.Scene();
 	
-			let mesh = await CreateChar();
-			scene.add( mesh );
+			let char = await CreateChar();
+			scene.add(char.scene);
 
 
 			let cube = CreateCube();
@@ -135,8 +174,8 @@
 			console.log(V);
 			for(let i = 0; i < npcs.length; i++) {
 				npc = await CreateChar();
-				npc.position.x = 1 + i;
-				scene.add(npc);
+				npc.scene.position.x = 1 + i;
+				scene.add(npc.scene);
 			}
 			
 			renderer.setAnimationLoop((time) => {
@@ -158,13 +197,12 @@
 
 			let scene = new THREE.Scene();
 
-			let mesh = await CreateChar();
-			scene.add(mesh);
-			scene.add(CreateCube());
+			let char = await CreateChar();
+			scene.add(char.scene);
 			//console.log(mesh);
 			
 			renderer.setAnimationLoop((time) => {
-				TestAnimation(time, mesh);
+				TestAnimation(time, char.scene);
 				renderer.render( scene, camera );
 			});
 		};
@@ -181,8 +219,6 @@
 			let cam = CreateCamera(type);
 			cam.position.z = 2;
 			scene.add(cam);
-			scene.add(CreateCube());
-
 
 			render.setAnimationLoop((time) => {
 
