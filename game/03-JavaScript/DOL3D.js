@@ -10,26 +10,22 @@
 		};
 
 		async GetScene(sizeName) {
-			if (this.scene == undefined)
+			if (this.object == undefined)
 			{
-				if (sizeName == undefined)
-					sizeName = "Normal" 
-				let size = DOL3D.CharSizes[sizeName];
-
 				let gltf = await DownloadGLTF("char.glb");
 				
-				this.gltfScene = gltf.scene;
-				this.scene = gltf.scene.children[0];
+				this.gltf = gltf.scene;
+				this.object = gltf.scene.children[0];
 				this.animations = gltf.animations;
-				this.scene.scale.copy(new THREE.Vector3(size, size, size));
-				this.scene.children[1].material = new THREE.MeshNormalMaterial();
+				CharScale(this.object);
+				this.object.children[1].material = new THREE.MeshToonMaterial({color: 0xfcc197});
 			}
-			return this.scene;
+			return this.object;
 		};
 
 		async Generate() {
 			await this.GetScene();
-			this.mesh = this.scene.children[1];
+			this.mesh = this.object.children[1];
 		};
 
 		GetMorphAmt(morph) {
@@ -55,12 +51,21 @@
 				this.currentAnim.stop();
 
 			if (this.animMixer == undefined)
-				this.animMixer = new THREE.AnimationMixer(this.scene);
+				this.animMixer = new THREE.AnimationMixer(this.object);
 			else
 				this.animMixer.stopAllAction();
 
 			this.currentAnim = this.animMixer.clipAction(this.animations[clipNum]);
 			this.currentAnim.play();
+		};
+
+		async AddClothing(cloth, scene) {
+			let gltf = await DownloadGLTF(cloth + ".glb");
+			let clothingObject = gltf.scene.children[0];
+			let clothingMesh = clothingObject.children[1];
+			clothingMesh.material = new THREE.MeshToonMaterial({color: 0xf944fc});
+			clothingMesh.skeleton = this.mesh.skeleton;
+			this.object.add(clothingObject);
 		};
 	};
 
@@ -73,9 +78,11 @@
 	}
 	
 
-
+	// ToDo: host a server dedicated for this project or find a way to store assets locally 
+	//       without changing safety-related browser settings
 	DOL3D.DataAddress = "http://37.59.47.180/data/"
 
+	//scale factor for characters
 	DOL3D.CharSizes = {
 		"Tiny": 0.76,
 		"Small": 0.825,
@@ -83,28 +90,51 @@
 		"Large": 1.025
 	};
 
+	//render sizes for the different renderers
 	DOL3D.DisplayType = {
 		Combat: {
 			Width: 850,
-			Height: 400
+			Height: 400,
+			ClearColor: 0x111111,
 		},
 		Canvas:	{
 			Width: 280,
 			Height: 228,
+			ClearColor: 0x222222,
 		},
 		CreateChar: {
 			Width: 228,
-			Height: 200
+			Height: 200,
+			ClearColor: 0x222222,
 		},
 		Characteristics: {
 			Width: 200,
-			Height: 200
+			Height: 200,
+			ClearColor: 0x222222,
 		}
 	};
 
+	//indexes for the animations in the gltf, somwhow these don't seem to be able to be found by name
 	const CharClips = {
 		StandDefault: 0,
 		StandTPose: 1
+	};
+
+	//method for doing it anyway... will get slower the more animations are added
+	function GetAnim(char, name) {
+		for (let anim in char.animations) {
+			if (anim.name == name)
+				return anim;
+		};
+		console.error("Can't find animation with name '" + name + "'.");
+		return char.animations[1];
+	};
+
+	function CharScale(object, sizeName) {
+		if (sizeName == undefined)
+			sizeName = "Normal" 
+		let size = DOL3D.CharSizes[sizeName];
+		object.scale.copy(new THREE.Vector3(size, size, size));
 	};
 	
 	function* _ActiveNPCIterator() {
@@ -133,6 +163,7 @@
 		if (dispType != undefined) {
 			height = dispType.Height;
 			width = dispType.Width;
+			renderer.setClearColor(dispType.ClearColor, 1);
 		}
 
 		renderer.setSize( width, height );
@@ -146,6 +177,21 @@
 			return new THREE.PerspectiveCamera( 70, 1, 0.001, 2000 );
 
 		return new THREE.PerspectiveCamera( fov, dispType.Width / dispType.Height, 0.001, 2000 );
+	};
+	function CreateScene(dispType) {
+		let scene = new THREE.Scene();
+		let colorSky = 0xb1e1ff;
+		let colorGround = 0xf5f5f5;
+		let amInten = 0.4;
+		let amLight = new THREE.HemisphereLight(colorSky, colorGround, amInten);
+		scene.add(amLight);
+
+		let dirInten = 0.7;
+		let dirLight = new THREE.DirectionalLight(colorSky, dirInten);
+		dirLight.target.position.set(-4, -10, -10);
+		scene.add(dirLight);
+		scene.add(dirLight.target);
+		return scene;
 	};
 
 
@@ -165,7 +211,8 @@
 		let char = new DOL3DChar(eventuallyStuff);
 		await char.Generate();
 		//char.Morph("mouth_closed", 1);
-		console.log(char);
+		//console.log(char);
+		await char.AddClothing("shirt");
 		return char;
 	}
 
@@ -178,10 +225,10 @@
 		let camera = CreateCamera(type);			
 		camera.position.z = 2.5;
 
-		let scene = new THREE.Scene();
+		let scene = CreateScene(type);
 
 		let char = await CreateChar();
-		scene.add(char.scene);
+		scene.add(char.object);
 
 
 		let cube = CreateCube();
@@ -191,11 +238,10 @@
 
 		let npc;
 		let npcs = DOL3D.GetActiveNPCs();
-		console.log(V);
 		for(let i = 0; i < npcs.length; i++) {
 			npc = await CreateChar();
-			npc.scene.position.x = 1 + i;
-			scene.add(npc.scene);
+			npc.object.position.x = 1 + i;
+			scene.add(npc.object);
 		}
 		
 		renderer.setAnimationLoop((time) => {
@@ -216,13 +262,14 @@
 		camera.position.y = 0.8;
 		camera.position.x = 0.15;
 
-		let scene = new THREE.Scene();
+		let scene = CreateScene(type);
 
 		let char = await CreateChar();
-		char.scene.rotation.y = 0.5;
+		char.object.rotation.y = 0.5;
 		char.PlayAnim(CharClips.StandDefault);
 		char.Morph("mouth_closed", 1);
-		scene.add(char.scene);
+		scene.add(char.object);
+		
 
 		renderer.setAnimationLoop((time) => {
 			char.animMixer.update(time);
@@ -234,21 +281,28 @@
 
 	async function ShowCreate(output) {
 		let type = DOL3D.DisplayType.CreateChar;
-		let char;
-		let render = CreateRenderer(type);
-		output.append( render.domElement );
 
-		let scene = new THREE.Scene();
-		let cam = CreateCamera(type);
-		cam.position.z = 2;
-		scene.add(cam);
+		let renderer = CreateRenderer(type);
+		output.append( renderer.domElement );
 
-		render.setAnimationLoop((time) => {
+		let camera = CreateCamera(type, 40);
+		camera.position.z = 2.7;
+		camera.position.y = 0.8;
+		camera.position.x = 0.15;
 
+		let scene = CreateScene(type);
 
+		let char = await CreateChar();
+		char.object.rotation.y = 0.5;
+		char.PlayAnim(CharClips.StandDefault);
+		char.Morph("mouth_closed", 1);
+		scene.add(char.object);
+		
 
-			render.render(scene, cam);
-		})
+		renderer.setAnimationLoop((time) => {
+			char.animMixer.update(time);
+			renderer.render( scene, camera );
+		});
 	};
 	DOL3D.ShowCreate = ShowCreate;
 
@@ -258,7 +312,7 @@
 		let render = CreateRenderer(type);
 		output.append( render.domElement );
 
-		let scene = new THREE.Scene();
+		let scene = CreateScene(type);
 		let cam = CreateCamera(type);
 		cam.position.z = 2;
 		scene.add(cam);
