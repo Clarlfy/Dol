@@ -29,7 +29,7 @@
 		};
 
 		GetMorphAmt(morph) {
-			if (morph == undefined || this.mesh.morphTargetInfluences.length < morph.index)
+			if (morph == undefined)
 				return;
 
 			
@@ -37,13 +37,16 @@
 		};
 
 		Morph(morph, amt, inc) {
-			if (morph == undefined || this.mesh.morphTargetInfluences.length < morph.index)
-				return;
+			EditMorphTarget(this.mesh, morph, amt, inc);
 
-			if (inc)
-				this.mesh.morphTargetInfluences[this.mesh.morphTargetDictionary[morph]] += amt;
-			else
-				this.mesh.morphTargetInfluences[this.mesh.morphTargetDictionary[morph]] = amt;
+
+			//edit morphs for clothing ect.
+			let chObj, chMesh;
+			for (chObj in this.object.children) {
+				for (chMesh in chObj.children) {
+					EditMorphTarget(chMesh, morph, amt, inc);
+				};
+			};
 		};
 
 		PlayAnim(clipNum) {
@@ -69,6 +72,8 @@
 		};
 	};
 
+
+
 	var Loader = null;
 	function GetLoader() {
 		if (Loader == null){
@@ -89,6 +94,21 @@
 		"Normal": 0.925,
 		"Large": 1.025
 	};
+
+	function EditMorphTarget(object, morphName, amt, inc) {
+		if (morphName == undefined || !("morphTargetInfluences" in object))
+			return;
+
+		if (!(morphName in object.morphTargetDictionary))
+			return;
+
+		let index = object.morphTargetDictionary[morphName];
+		if (inc)
+			object.morphTargetInfluences[index] += amt;
+		else
+			object.morphTargetInfluences[index] = amt;
+	};
+
 
 	//render sizes for the different renderers
 	DOL3D.DisplayType = {
