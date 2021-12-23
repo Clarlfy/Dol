@@ -1783,10 +1783,8 @@
 	<<set _weather_display to "normal">>
 <</if>>
 
-<<if $images is 1>>
+<<if $images is 1 && !$enable3d>>
 
-	<!-- 3DToDo: make 3d an option -->
-	<!--
 	<<if $daystate is "day">>
 		<<if $location is "tentworld">>
 		<img id="daystate" src="img/misc/tentskyday.png">
@@ -2334,7 +2332,7 @@
 		<img id="location" @src="'img/misc/' + _weather_display + '/prison_dusk.gif'">
 		<</switch>>
 	<</if>>
-	-->
+	
 <<else>>
 <<if $daystate is "day">>
 	<<if $weather is "clear">>

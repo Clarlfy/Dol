@@ -1,54 +1,47 @@
 :: Widgets Combat Img [widget]
 
 <<widget "combatimg">>
-	<<set $test to "not edited">>
-
-	<!-- 3DToDo: make 3d an option -->
-	<<script>>
-		
-		DOL3D.ShowCombat($(output));
-		
-	<</script>>
-
-<!-- 
-	<<if $enemyarousal gte ($enemyarousalmax / 5) * 4>>
-		<<set _animspeed to 'vfast'>>
-	<<elseif $enemyarousal gte ($enemyarousalmax / 5) * 3>>
-		<<set _animspeed to 'fast'>>
-	<<elseif $enemyarousal gte ($enemyarousalmax / 5) * 1>>
-		<<set _animspeed to 'mid'>>
-	<<else>>
-		<<set _animspeed to 'slow'>>
-	<</if>>
-	<<if window.document.body.clientWidth lt 650>>
-		<div id="divandroidsex" @class="colourContainerClasses() + ($combatAnimations isnot false ? '':' noAnimations')">
-			<div id="divandroidLighten" @class="($imgLighten isnot ''? ' '+ $imgLighten:'')"></div>
-			<<if $position is "missionary">>
-				<<missionaryimg>>
-			<<else>>
-				<<doggyimg>>
-			<</if>>
-		</div>
-		<<if $ejaculating>>
-			<<ejacimg>>
+	<<if $enable3d>>
+		<<script>> DOL3D.ShowCombat($(output)); <</script>>
+	<<else>> 
+		<<if $enemyarousal gte ($enemyarousalmax / 5) * 4>>
+			<<set _animspeed to 'vfast'>>
+		<<elseif $enemyarousal gte ($enemyarousalmax / 5) * 3>>
+			<<set _animspeed to 'fast'>>
+		<<elseif $enemyarousal gte ($enemyarousalmax / 5) * 1>>
+			<<set _animspeed to 'mid'>>
 		<<else>>
-			<<xrayimg>>
+			<<set _animspeed to 'slow'>>
 		<</if>>
-	<<else>>
-		<div id="divsex" @class="colourContainerClasses() + ($combatAnimations isnot false ? '':' noAnimations') + ($imgLighten isnot ''? ' '+ $imgLighten:'')">
-			<<if $position is "missionary">>
-				<<missionaryimg>>
-			<<else>>
-				<<doggyimg>>
-			<</if>>
-			<<if $ejaculating is 1>>
+		<<if window.document.body.clientWidth lt 650>>
+			<div id="divandroidsex" @class="colourContainerClasses() + ($combatAnimations isnot false ? '':' noAnimations')">
+				<div id="divandroidLighten" @class="($imgLighten isnot ''? ' '+ $imgLighten:'')"></div>
+				<<if $position is "missionary">>
+					<<missionaryimg>>
+				<<else>>
+					<<doggyimg>>
+				<</if>>
+			</div>
+			<<if $ejaculating>>
 				<<ejacimg>>
 			<<else>>
 				<<xrayimg>>
 			<</if>>
-		</div>
+		<<else>>
+			<div id="divsex" @class="colourContainerClasses() + ($combatAnimations isnot false ? '':' noAnimations') + ($imgLighten isnot ''? ' '+ $imgLighten:'')">
+				<<if $position is "missionary">>
+					<<missionaryimg>>
+				<<else>>
+					<<doggyimg>>
+				<</if>>
+				<<if $ejaculating is 1>>
+					<<ejacimg>>
+				<<else>>
+					<<xrayimg>>
+				<</if>>
+			</div>
+		<</if>>
 	<</if>>
-	-->
 <</widget>>
 
 <<widget "doggyimg">>

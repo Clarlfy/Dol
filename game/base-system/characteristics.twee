@@ -529,17 +529,11 @@ You have a <<skincolourtext>> <<if $breastsize gte 1>>You have <<breasts>>.<</if
 
 
 		<div id="player-body">
-			<!-- 3DToDo: add option -->
-
-			<<script>>
-
-				DOL3D.ShowChara($(output));
-
-			<</script>>
-			<!--
-			<<player-base-body>>
- 			-->
-
+			<<if $enable3d>>
+				<<script>> DOL3D.ShowChara($(output)); <</script>>
+			<<else>>
+				<<player-base-body>>
+ 			<</if>>
 		</div>
 		<div id="sex-diagram">
 

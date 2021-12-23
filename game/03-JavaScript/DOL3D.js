@@ -4,6 +4,54 @@
 	(global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.DOL3D = {}));
 }(this, (function (exports) { 'use strict';
 
+	//from https://gist.github.com/cdata/f2d7a6ccdec071839bc1954c32595e87
+	const cloneGltf = (gltf) => {
+		const clone = {
+			animations: gltf.animations,
+			scene: gltf.scene.clone(true)
+		};
+	
+		const skinnedMeshes = {};
+	
+		gltf.scene.traverse(node => {
+			if (node.isSkinnedMesh) {
+				skinnedMeshes[node.name] = node;
+			}
+		});
+	
+		const cloneBones = {};
+		const cloneSkinnedMeshes = {};
+	
+		clone.scene.traverse(node => {
+			if (node.isBone) {
+				cloneBones[node.name] = node;
+			}
+		
+			if (node.isSkinnedMesh) {
+				cloneSkinnedMeshes[node.name] = node;
+			}
+		});
+	
+		for (let name in skinnedMeshes) {
+			const skinnedMesh = skinnedMeshes[name];
+			const skeleton = skinnedMesh.skeleton;
+			const cloneSkinnedMesh = cloneSkinnedMeshes[name];
+		
+			const orderedCloneBones = [];
+		
+			for (let i = 0; i < skeleton.bones.length; ++i) {
+				const cloneBone = cloneBones[skeleton.bones[i].name];
+				orderedCloneBones.push(cloneBone);
+			}
+		
+			cloneSkinnedMesh.bind(
+				new THREE.Skeleton(orderedCloneBones, skeleton.boneInverses),
+				cloneSkinnedMesh.matrixWorld);
+		}
+	
+		return clone;
+	}
+
 	class DOL3DChar {
 		constructor(eventuallyStuff) {
 
@@ -16,7 +64,11 @@
 				
 				this.gltf = gltf.scene;
 				this.object = gltf.scene.children[0];
-				this.animations = gltf.animations;
+
+				this.animations = [];
+				for (let i = 0; i < gltf.animations.length; i++) {
+					this.animations[gltf.animations[i].name] = gltf.animations[i];
+				}
 				CharScale(this.object);
 				this.object.children[1].material = new THREE.MeshToonMaterial({color: 0xfcc197});
 			}
@@ -26,6 +78,7 @@
 		async Generate() {
 			await this.GetScene();
 			this.mesh = this.object.children[1];
+			console.log(this);
 		};
 
 		GetMorphAmt(morph) {
@@ -49,7 +102,7 @@
 			};
 		};
 
-		PlayAnim(clipNum) {
+		PlayAnim(clipName) {
 			if (this.currentAnim != undefined)
 				this.currentAnim.stop();
 
@@ -58,7 +111,7 @@
 			else
 				this.animMixer.stopAllAction();
 
-			this.currentAnim = this.animMixer.clipAction(this.animations[clipNum]);
+			this.currentAnim = this.animMixer.clipAction(this.animations[clipName]);
 			this.currentAnim.play();
 		};
 
@@ -72,7 +125,7 @@
 		};
 	};
 
-
+	DOL3D.GltfCache = {};
 
 	var Loader = null;
 	function GetLoader() {
@@ -134,22 +187,6 @@
 		}
 	};
 
-	//indexes for the animations in the gltf, somwhow these don't seem to be able to be found by name
-	const CharClips = {
-		StandDefault: 0,
-		StandTPose: 1
-	};
-
-	//method for doing it anyway... will get slower the more animations are added
-	function GetAnim(char, name) {
-		for (let anim in char.animations) {
-			if (anim.name == name)
-				return anim;
-		};
-		console.error("Can't find animation with name '" + name + "'.");
-		return char.animations[1];
-	};
-
 	function CharScale(object, sizeName) {
 		if (sizeName == undefined)
 			sizeName = "Normal" 
@@ -165,16 +202,6 @@
 	DOL3D.GetActiveNPCs = function () {
 		return Array.from(_ActiveNPCIterator());
 	};
-	function DescribeNPCs() {
-		let npcs = DOL3D.GetActiveNPCs();
-		let output = "";
-		for (let i = 0; i < npcs.length; i++) {
-			let npc = npcs[i];
-			output += npc.fullDescription + (i != npcs.length - 1 ? "," : "") + " <br>";
-		}
-		return output;
-	}
-	DOL3D.DescribeNPCs = DescribeNPCs;
 
 	function CreateRenderer(dispType) {
 		let renderer = new THREE.WebGLRenderer( { antialias: true } );
@@ -223,15 +250,15 @@
 	}
 
 	async function DownloadGLTF(url) {
-		let loader = GetLoader();
-		let data = await loader.loadAsync(DOL3D.DataAddress + url);
-		return data;
+		if (!(url in DOL3D.GltfCache)) {
+			let loader = GetLoader();
+			DOL3D.GltfCache[url] = await loader.loadAsync(DOL3D.DataAddress + url);
+		}
+		return cloneGltf(DOL3D.GltfCache[url]);
 	}
 	async function CreateChar(eventuallyStuff) {
 		let char = new DOL3DChar(eventuallyStuff);
 		await char.Generate();
-		//char.Morph("mouth_closed", 1);
-		//console.log(char);
 		await char.AddClothing("shirt");
 		return char;
 	}
@@ -286,7 +313,7 @@
 
 		let char = await CreateChar();
 		char.object.rotation.y = 0.5;
-		char.PlayAnim(CharClips.StandDefault);
+		char.PlayAnim("stand_d");
 		char.Morph("mouth_closed", 1);
 		scene.add(char.object);
 		
@@ -314,7 +341,7 @@
 
 		let char = await CreateChar();
 		char.object.rotation.y = 0.5;
-		char.PlayAnim(CharClips.StandDefault);
+		char.PlayAnim("stand_d");
 		char.Morph("mouth_closed", 1);
 		scene.add(char.object);
 		

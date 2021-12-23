@@ -43,6 +43,8 @@
 <<set $sidebarRenderer to 'canvas'>>
 <<set $showDebugRenderer to !!StartConfig.debug>>
 <<set $lastWardrobeSlot to "head">>
+/*setting option to true for ease of testing*/
+<<set $enable3d to true>>
 
 <<set $gamemode to "normal">>
 

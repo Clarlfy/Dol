@@ -103,6 +103,7 @@ Closed sidebar time:
 </label>
 <br>*/
 <label><<checkbox "$showDebugRenderer" false true autocheck>> Enable renderer debugger</label>
+<label><<checkbox "$enable3d" false true autocheck>> Enable 3D</label>
 
 <br><br>
 <span class="gold">Combat Options</span>
