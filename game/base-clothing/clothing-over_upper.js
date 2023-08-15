@@ -43,7 +43,6 @@ function initOverUpper() {
 			accIcon: 0,
 			mainImage: 0,
 		},
-
 		{
 			index: 1,
 			name: "froggy coat",
@@ -88,7 +87,6 @@ function initOverUpper() {
 			accIcon: 0,
 			outfitPrimary: { over_lower: "froggy skirt", over_head: "froggy hood" },
 		},
-
 		{
 			index: 2,
 			name: "cream",

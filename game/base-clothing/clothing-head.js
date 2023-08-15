@@ -30,7 +30,6 @@ function initHead() {
 			accIcon: 0,
 			mainImage: 0,
 		},
-
 		{
 			index: 1,
 			name: "hairpin",
@@ -61,7 +60,6 @@ function initHead() {
 			iconFile: "hairpin.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 2,
 			name: "beanie",
@@ -93,7 +91,6 @@ function initHead() {
 			iconFile: "beanie.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 3,
 			name: "bunny ears",
@@ -123,7 +120,6 @@ function initHead() {
 			iconFile: "bunny_ears.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 4,
 			name: "nun's veil",
@@ -155,7 +151,6 @@ function initHead() {
 			iconFile: "nuns_veil.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 5,
 			name: "bow",
@@ -186,7 +181,6 @@ function initHead() {
 			iconFile: "bow.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 6,
 			name: "cap",
@@ -219,7 +213,6 @@ function initHead() {
 			iconFile: "cap.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 7,
 			name: "witch hat",
@@ -252,7 +245,6 @@ function initHead() {
 			iconFile: "witch_hat.png",
 			accIcon: "witch_hat_acc.png",
 		},
-
 		{
 			index: 8,
 			name: "christmas hat",
@@ -282,7 +274,6 @@ function initHead() {
 			location: 0,
 			iconFile: "christmas_hat.png",
 		},
-
 		{
 			index: 9,
 			name: "chef hat",
@@ -313,7 +304,6 @@ function initHead() {
 			location: 0,
 			iconFile: "chef_hat.png",
 		},
-
 		{
 			index: 10,
 			name: "cowboy hat",
@@ -345,7 +335,6 @@ function initHead() {
 			iconFile: "cowboy_hat.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 11,
 			name: "fedora",
@@ -377,7 +366,6 @@ function initHead() {
 			location: 0,
 			iconFile: "fedora.png",
 		},
-
 		{
 			index: 12,
 			name: "beatnik hat",
@@ -408,7 +396,6 @@ function initHead() {
 			location: 0,
 			iconFile: "beatnik_hat.png",
 		},
-
 		{
 			index: 13,
 			name: "sou'wester",
@@ -439,7 +426,6 @@ function initHead() {
 			location: 0,
 			iconFile: "souwester.png",
 		},
-
 		{
 			index: 14,
 			name: "flower crown",
@@ -468,7 +454,6 @@ function initHead() {
 			location: 0,
 			iconFile: "flower_crown.png",
 		},
-
 		{
 			index: 15,
 			name: "backwards cap",
@@ -499,7 +484,6 @@ function initHead() {
 			iconFile: "backwards_cap.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 16,
 			name: "alice band",
@@ -530,7 +514,6 @@ function initHead() {
 			iconFile: "alice_band.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 17,
 			name: "straw hat",
@@ -564,7 +547,6 @@ function initHead() {
 			iconFile: "straw_hat.png",
 			accIcon: "straw_hat_acc.png",
 		},
-
 		{
 			index: 18,
 			name: "straw flower hat",
@@ -598,7 +580,6 @@ function initHead() {
 			iconFile: 0,
 			accIcon: 0,
 		},
-
 		{
 			index: 19,
 			name: "maid band",
@@ -629,7 +610,6 @@ function initHead() {
 			iconFile: "maid_band.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 20,
 			name: "bun covers",
@@ -660,7 +640,6 @@ function initHead() {
 			iconFile: "bun_covers.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 21,
 			name: "headband",
@@ -691,7 +670,6 @@ function initHead() {
 			iconFile: "headband.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 22,
 			name: "feathered cap",
@@ -724,7 +702,6 @@ function initHead() {
 			iconFile: "feathered_cap.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 23,
 			name: "large sailor's hat",
@@ -757,7 +734,6 @@ function initHead() {
 			iconFile: "large_sailors_hat.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 24,
 			name: "small sailor's hat",
@@ -790,7 +766,6 @@ function initHead() {
 			iconFile: "small_sailors_hat.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 25,
 			name: "football helmet",
@@ -824,7 +799,6 @@ function initHead() {
 			iconFile: "football_helmet.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 26,
 			name: "big bow",
@@ -855,7 +829,6 @@ function initHead() {
 			iconFile: "big_bow.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 27,
 			name: "riding helmet",
@@ -889,7 +862,6 @@ function initHead() {
 			iconFile: "riding_helmet.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 28,
 			name: "top hat",
@@ -923,7 +895,6 @@ function initHead() {
 			iconFile: "top_hat.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 29,
 			name: "umbrella hat",
@@ -956,7 +927,6 @@ function initHead() {
 			iconFile: "umbrella_hat.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 30,
 			name: "racing helmet",
@@ -991,7 +961,6 @@ function initHead() {
 			iconFile: "racing_helmet.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 31,
 			name: "feathered hair clip",
@@ -1023,7 +992,6 @@ function initHead() {
 			iconFile: "feathered_hair_clip.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 32,
 			name: "hoodie hood",
@@ -1090,7 +1058,6 @@ function initHead() {
 			iconFile: 0,
 			accIcon: 0,
 		},
-
 		{
 			index: 33,
 			name: "tam o' shanter",
@@ -1124,7 +1091,6 @@ function initHead() {
 			iconFile: "tam_o_shanter.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 34,
 			name: "cat hat",
@@ -1158,7 +1124,6 @@ function initHead() {
 			iconFile: "cat_hat.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 35,
 			name: "monster hood",
@@ -1193,7 +1158,6 @@ function initHead() {
 			outfitSecondary: ["upper", "monster hoodie"],
 			accIcon: 0,
 		},
-
 		{
 			index: 36,
 			name: "kitty ears",
@@ -1225,7 +1189,6 @@ function initHead() {
 			iconFile: "kitty_ears.png",
 			accIcon: "kitty_ears_acc.png",
 		},
-
 		{
 			index: 37,
 			name: "mini snowman",
@@ -1257,7 +1220,6 @@ function initHead() {
 			iconFile: "mini_snowman.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 38,
 			name: "cow onesie hood",
@@ -1290,7 +1252,6 @@ function initHead() {
 			outfitSecondary: ["upper", "cow onesie"],
 			accIcon: 0,
 		},
-
 		{
 			index: 39,
 			name: "baseball cap",
@@ -1323,7 +1284,6 @@ function initHead() {
 			iconFile: "baseball_cap.png",
 			accIcon: "baseball_cap_acc.png",
 		},
-
 		{
 			index: 40,
 			name: "rose",
@@ -1355,7 +1315,6 @@ function initHead() {
 			iconFile: "rose.png",
 			accIcon: "rose_acc.png",
 		},
-
 		{
 			index: 41,
 			name: "scarecrow hat",
@@ -1385,7 +1344,6 @@ function initHead() {
 			location: 0,
 			iconFile: "scarecrow_hat.png",
 		},
-
 		{
 			index: 42,
 			name: "fish hairpin",
@@ -1416,7 +1374,6 @@ function initHead() {
 			iconFile: "fish_hairpin.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 43,
 			name: "pink nurse hat",
@@ -1447,7 +1404,6 @@ function initHead() {
 			iconFile: "pink_nurse.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 44,
 			name: "plastic nurse hat",
@@ -1478,7 +1434,6 @@ function initHead() {
 			iconFile: "plastic_nurse.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 45,
 			name: "transparent nurse hat",
@@ -1509,7 +1464,6 @@ function initHead() {
 			iconFile: "transparent_nurse.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 46,
 			name: "bunny headband",
@@ -1540,7 +1494,6 @@ function initHead() {
 			iconFile: "bunny_headband.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 47,
 			name: "daisy",
@@ -1569,7 +1522,6 @@ function initHead() {
 			location: 0,
 			iconFile: "daisy.png",
 		},
-
 		{
 			index: 48,
 			name: "spirit mask",
@@ -1602,7 +1554,6 @@ function initHead() {
 			accIcon: "spirit_mask_acc.png",
 		},
 	];
-
 	/*
 		Clothes that modders add go into this array, this should be empty in the base game at all times.
 		These items should have a `modder` variable with a the modders name in a short string

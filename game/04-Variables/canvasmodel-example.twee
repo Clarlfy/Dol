@@ -1,22 +1,92 @@
+:: Combat Demo
+
+<<if $sexstart is 1>>
+	<<set $sexstart to 0>>
+	<div class="combat-init">
+		<p>Init</p>
+		<<generate1>>
+		<<person1>>
+		<<consensual>>
+		<<maninit>>
+	</div>
+<</if>>
+
+<div class="combat-effects">
+	<p>Effects</p>
+	<<effects>>
+</div>
+<div class="combat-effectsman">
+	<p>Effects man</p>
+	<<effectsman>>
+</div>
+<div class="combat-state">
+	<p>State man</p>
+	<<stateman>>
+</div>
+<<combat-render>>
+<div class="combat-actions">
+	<p>Beast</p>
+	<<beast $enemyno>>
+</div>
+<div class="combat-actions">
+	<p>Actions man</p>
+	<<actionsman>>
+</div>
+<<link [[Next|passage()]]>><</link>><br>
+<<link [[Bedroom|Bedroom]]>><</link>><br>
+
+:: Combat Widgets [widget]
+
+<<widget "combat-render">>
+	<<modelselect "combat" "combat">>
+	<<modelprepare-player-body>>
+	<<modelprepare-player-clothes>>
+	<!-- Centres the inner grid -->
+	<div class="flex-row flex-centre">
+		<!-- Organises canvas windows into a grid -->
+		<div class="combat-grid">
+			<!-- Top row - Contains miniture viewports -->
+			<div class="combat-close">
+				<div class="combat-close-chest">
+					/* <<canvas-render>> */
+				</div>
+				<div class="combat-close-vagina">
+					/* <<canvas-render>> */
+				</div>
+				<div class="combat-close-penis">
+					/* <<canvas-render>> */
+				</div>
+				<div class="combat-close-arse">
+					/* <<canvas-render>> */
+				</div>
+			</div>
+			<!-- Main canvas container -->
+			<div class="combat-main">
+				<<canvas-render>>
+			</div>
+		</div>
+	</div>
+<</widget>>
+
 :: CanvasModel Example
 <<link [[Bedroom]]>><</link>>
 <hr>
 
 <!-- "divsex" is cache slot id to preserve layer caches between passages -->
 <<selectmodel "sexdemo" "divsex">>
-	<<set _modeloptions.animation_speed to "fast">>
-	<<set _modeloptions.position to "doggy">>
-	<<set _modeloptions.penis to "default">>
-	<<set _modeloptions.vagina to true>>
-	<<set _modeloptions.worn_under_lower to 1>>
-	<<set _modeloptions.worn_under_lower_state to "totheside">>
-	<<set _modeloptions.worn_under_lower_colour to "blue">>
-	<<set _modeloptions.xray_vaginal_show to true>>
-	<<set _modeloptions.close_vagina_show to true>>
-	<<set _modeloptions.vagina_state to "penetrated">>
-	<<set _modeloptions.vagina_penetrator to "tentacle">>
-	<<set _modeloptions.vagina_penetrator_size to 5>>
-	<<set _modeloptions.vagina_cumming to true>>
+<<set _modeloptions.animation_speed to "fast">>
+<<set _modeloptions.position to "doggy">>
+<<set _modeloptions.penis to "default">>
+<<set _modeloptions.vagina to true>>
+<<set _modeloptions.worn_under_lower to 1>>
+<<set _modeloptions.worn_under_lower_state to "totheside">>
+<<set _modeloptions.worn_under_lower_colour to "blue">>
+<<set _modeloptions.xray_vaginal_show to true>>
+<<set _modeloptions.close_vagina_show to true>>
+<<set _modeloptions.vagina_state to "penetrated">>
+<<set _modeloptions.vagina_penetrator to "tentacle">>
+<<set _modeloptions.vagina_penetrator_size to 5>>
+<<set _modeloptions.vagina_cumming to true>>
 <<animatemodel "">>
 
 <!-- Editor hooks to "last model" -->

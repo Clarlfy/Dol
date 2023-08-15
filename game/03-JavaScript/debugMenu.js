@@ -21,6 +21,10 @@ setup.debugMenu.eventList = {
 			widgets: [``],
 		},
 		{
+			link: ["New combat", "Combat Demo"],
+			widgets: ["<<set $sexstart to 1>>"],
+		},
+		{
 			link: [`Home`, `Bedroom`],
 			widgets: [`<<endcombat>>`],
 		},

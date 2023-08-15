@@ -99,5 +99,15 @@ const ZIndices = {
 	over_upper_arms_l: 170,
 	over_upper_arms_cover_r: 174,
 	over_upper_arms_cover_l: 174,
+
+	/* Combat */
+	backThigh: 12,
+	backLeg: 14,
+	backBreast: 16,
+	backArm: 18,
+	frontThigh: 22,
+	frontLeg: 24,
+	frontBreast: 26,
+	frontArm: 28,
 };
 window.ZIndices = ZIndices;

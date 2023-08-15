@@ -31,7 +31,6 @@ function initLegs() {
 			accIcon: 0,
 			mainImage: 0,
 		},
-
 		{
 			index: 1,
 			name: "tights",
@@ -63,7 +62,6 @@ function initLegs() {
 			iconFile: "tights.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 2,
 			name: "boy's gym socks",
@@ -95,7 +93,6 @@ function initLegs() {
 			iconFile: "boys_gym_socks.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 3,
 			name: "girl's gym socks",
@@ -127,7 +124,6 @@ function initLegs() {
 			iconFile: "girls_gym_socks.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 4,
 			name: "stockings",
@@ -159,7 +155,6 @@ function initLegs() {
 			iconFile: "stockings.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 5,
 			name: "fishnet stockings",
@@ -191,7 +186,6 @@ function initLegs() {
 			iconFile: "fishnet_stockings.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 6,
 			name: "fishnet tights",
@@ -223,7 +217,6 @@ function initLegs() {
 			iconFile: "fishnet_tights.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 7,
 			name: "garter stockings",
@@ -255,7 +248,6 @@ function initLegs() {
 			iconFile: "garter_stockings.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 8,
 			name: "legwarmers",
@@ -286,7 +278,6 @@ function initLegs() {
 			iconFile: "legwarmers.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 9,
 			name: "christmas leg warmers",
@@ -317,7 +308,6 @@ function initLegs() {
 			location: 0,
 			iconFile: "christmas_leg_warmers.png",
 		},
-
 		{
 			index: 10,
 			name: "gold anklets",
@@ -348,7 +338,6 @@ function initLegs() {
 			iconFile: "gold_anklets.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 11,
 			name: "naked",
@@ -378,7 +367,6 @@ function initLegs() {
 			iconFile: 0,
 			accIcon: 0,
 		},
-
 		{
 			index: 12,
 			name: "striped thighhighs",
@@ -411,7 +399,6 @@ function initLegs() {
 			iconFile: "striped_thighhighs.png",
 			accIcon: "striped_thighhighs_acc.png",
 		},
-
 		{
 			index: 13,
 			name: "ankle socks",
@@ -443,7 +430,6 @@ function initLegs() {
 			iconFile: "ankle_socks.png",
 			accIcon: "ankle_socks_acc.png",
 		},
-
 		{
 			index: 14,
 			name: "plain thighhighs",
@@ -475,7 +461,6 @@ function initLegs() {
 			iconFile: "striped_thighhighs.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 15,
 			name: "cow socks",
@@ -507,7 +492,6 @@ function initLegs() {
 			iconFile: "cow_socks.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 16,
 			name: "nurse socks",
@@ -539,7 +523,6 @@ function initLegs() {
 			iconFile: "nurse_socks.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 17,
 			name: "ribbon stockings",

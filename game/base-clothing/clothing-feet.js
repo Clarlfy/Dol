@@ -57,7 +57,6 @@ function initFeet() {
 			iconFile: "school_shoes.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 2,
 			name: "tuxedo shoes",
@@ -87,7 +86,6 @@ function initFeet() {
 			iconFile: "tuxedo_shoes.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 3,
 			name: "ankle cuffs",
@@ -116,7 +114,6 @@ function initFeet() {
 			iconFile: 0,
 			accIcon: 0,
 		},
-
 		{
 			index: 4,
 			name: "sandals",
@@ -146,7 +143,6 @@ function initFeet() {
 			iconFile: "sandals.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 5,
 			name: "dress sandals",
@@ -176,7 +172,6 @@ function initFeet() {
 			iconFile: "dress_sandals.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 6,
 			name: "trainers",
@@ -206,7 +201,6 @@ function initFeet() {
 			iconFile: "trainers.png",
 			accIcon: "trainers_acc.png",
 		},
-
 		{
 			index: 7,
 			name: "witch shoes",
@@ -237,7 +231,6 @@ function initFeet() {
 			iconFile: "witch_shoes.png",
 			accIcon: "witch_shoes_acc.png",
 		},
-
 		{
 			index: 8,
 			name: "wellies",
@@ -266,7 +259,6 @@ function initFeet() {
 			iconFile: "wellies.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 9,
 			name: "platform heels",
@@ -296,7 +288,6 @@ function initFeet() {
 			iconFile: "platform_heels.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 10,
 			name: "kitten heels",
@@ -326,7 +317,6 @@ function initFeet() {
 			iconFile: "kitten_heels.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 11,
 			name: "wedge sandals",
@@ -357,7 +347,6 @@ function initFeet() {
 			iconFile: "wedge_sandals.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 12,
 			name: "court heels",
@@ -387,7 +376,6 @@ function initFeet() {
 			iconFile: "court_heels.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 13,
 			name: "heeled boots",
@@ -417,7 +405,6 @@ function initFeet() {
 			iconFile: "heeled_boots.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 14,
 			name: "stripper heels",
@@ -448,7 +435,6 @@ function initFeet() {
 			iconFile: "stripper_heels.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 15,
 			name: "horsebit loafers",
@@ -478,7 +464,6 @@ function initFeet() {
 			iconFile: "horsebit_loafers.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 16,
 			name: "cordovan loafers",
@@ -508,7 +493,6 @@ function initFeet() {
 			iconFile: "cordovan_loafers.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 17,
 			name: "bunny slippers",
@@ -538,7 +522,6 @@ function initFeet() {
 			iconFile: "bunny_slippers.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 18,
 			name: "combat boots",
@@ -568,7 +551,6 @@ function initFeet() {
 			iconFile: "combat_boots.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 19,
 			name: "field boots",
@@ -598,7 +580,6 @@ function initFeet() {
 			iconFile: "field_boots.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 20,
 			name: "paddock boots",
@@ -628,7 +609,6 @@ function initFeet() {
 			iconFile: "paddock_boots.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 21,
 			name: "work boots",
@@ -658,7 +638,6 @@ function initFeet() {
 			iconFile: "work_boots.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 22,
 			name: "flippers",
@@ -688,7 +667,6 @@ function initFeet() {
 			iconFile: "flippers.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 23,
 			name: "ice skates",
@@ -718,7 +696,6 @@ function initFeet() {
 			iconFile: "ice_skates.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 24,
 			name: "long boots",
@@ -748,7 +725,6 @@ function initFeet() {
 			iconFile: "long_boots.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 25,
 			name: "light-up trainers",
@@ -777,7 +753,6 @@ function initFeet() {
 			iconFile: "light-up_trainers.png",
 			accIcon: "light-up_trainers_acc.png",
 		},
-
 		{
 			index: 26,
 			name: "ball and chain",
@@ -806,7 +781,6 @@ function initFeet() {
 			iconFile: 0,
 			accIcon: 0,
 		},
-
 		{
 			index: 27,
 			name: "cowboy boots",
@@ -836,7 +810,6 @@ function initFeet() {
 			iconFile: "cowboy_boots.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 28,
 			name: "high top trainers",
@@ -865,7 +838,6 @@ function initFeet() {
 			iconFile: "trainers.png",
 			accIcon: "trainers_acc.png",
 		},
-
 		{
 			index: 29,
 			name: "belly dancer's shoes",

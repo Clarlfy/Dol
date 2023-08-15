@@ -46,7 +46,6 @@ function initUpper() {
 			notuck: 1,
 			pregType: 0,
 		},
-
 		{
 			index: 1,
 			name: "sundress",
@@ -92,7 +91,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: 0,
 		},
-
 		{
 			index: 2,
 			name: "pyjama shirt",
@@ -136,7 +134,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: "split",
 		},
-
 		{
 			index: 3,
 			name: "towel top",
@@ -179,7 +176,6 @@ function initUpper() {
 			notuck: 1,
 			pregType: 0,
 		},
-
 		{
 			index: 4,
 			name: "t-shirt",
@@ -223,7 +219,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: 0,
 		},
-
 		{
 			index: 5,
 			name: "school shirt",
@@ -283,7 +278,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: "split",
 		},
-
 		{
 			index: 6,
 			name: "plant top",
@@ -327,7 +321,6 @@ function initUpper() {
 			notuck: 1,
 			pregType: 0,
 		},
-
 		{
 			index: 7,
 			name: "evening gown",
@@ -373,7 +366,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: 0,
 		},
-
 		{
 			index: 8,
 			name: "tank top",
@@ -417,7 +409,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: 0,
 		},
-
 		{
 			index: 9,
 			name: "ballgown",
@@ -463,7 +454,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: 0,
 		},
-
 		{
 			index: 10,
 			name: "kimono",
@@ -508,7 +498,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: 0,
 		},
-
 		{
 			index: 11,
 			name: "mini kimono",
@@ -553,7 +542,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: 0,
 		},
-
 		{
 			index: 12,
 			name: "maid dress",
@@ -599,7 +587,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: 0,
 		},
-
 		{
 			index: 13,
 			name: "nun's habit",
@@ -645,7 +632,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: 0,
 		},
-
 		{
 			index: 14,
 			name: "large towel",
@@ -690,7 +676,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: 0,
 		},
-
 		{
 			index: 15,
 			name: "tuxedo jacket",
@@ -735,7 +720,6 @@ function initUpper() {
 			notuck: 1,
 			pregType: "split",
 		},
-
 		{
 			index: 16,
 			name: "blouse",
@@ -780,7 +764,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: 0,
 		},
-
 		{
 			index: 17,
 			name: "babydoll",
@@ -825,7 +808,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: "min",
 		},
-
 		{
 			index: 18,
 			name: "babydoll lingerie",
@@ -870,7 +852,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: "min",
 		},
-
 		{
 			index: 19,
 			name: "crop top",
@@ -915,7 +896,6 @@ function initUpper() {
 			notuck: 1,
 			pregType: 0,
 		},
-
 		{
 			index: 20,
 			name: "serafuku",
@@ -961,7 +941,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: 0,
 		},
-
 		{
 			index: 21,
 			name: "tube top",
@@ -1006,7 +985,6 @@ function initUpper() {
 			notuck: 1,
 			pregType: 0,
 		},
-
 		{
 			index: 22,
 			name: "turtleneck",
@@ -1050,7 +1028,6 @@ function initUpper() {
 			notuck: 1,
 			pregType: 0,
 		},
-
 		{
 			index: 23,
 			name: "sweater",
@@ -1094,7 +1071,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: "min",
 		},
-
 		{
 			index: 24,
 			name: "oversized sweater",
@@ -1139,7 +1115,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: "min",
 		},
-
 		{
 			index: 25,
 			name: "witch dress",
@@ -1186,7 +1161,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: 0,
 		},
-
 		{
 			index: 26,
 			name: "vampire jacket",
@@ -1231,7 +1205,6 @@ function initUpper() {
 			notuck: 1,
 			pregType: "split",
 		},
-
 		{
 			index: 27,
 			name: "slut shirt",
@@ -1278,7 +1251,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: 0,
 		},
-
 		{
 			index: 28,
 			name: "girl's sweater",
@@ -1323,7 +1295,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: "min",
 		},
-
 		{
 			index: 29,
 			name: "girl's oversized sweater",
@@ -1369,7 +1340,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: "min",
 		},
-
 		{
 			index: 30,
 			name: "christmas shirt",
@@ -1412,7 +1382,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: 0,
 		},
-
 		{
 			index: 31,
 			name: "christmas dress",
@@ -1457,7 +1426,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: 0,
 		},
-
 		{
 			index: 32,
 			name: "monk's habit",
@@ -1503,7 +1471,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: 0,
 		},
-
 		{
 			index: 33,
 			name: "checkered shirt",
@@ -1547,7 +1514,6 @@ function initUpper() {
 			notuck: 1,
 			pregType: 0,
 		},
-
 		{
 			index: 34,
 			name: "belly dancer's top",
@@ -1593,7 +1559,6 @@ function initUpper() {
 			notuck: 1,
 			pregType: 0,
 		},
-
 		{
 			index: 35,
 			name: "straightjacket",
@@ -1638,7 +1603,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: "min",
 		},
-
 		{
 			index: 36,
 			name: "argyle sweater vest",
@@ -1682,7 +1646,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: 0,
 		},
-
 		{
 			index: 37,
 			name: "dress shirt",
@@ -1728,7 +1691,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: "split",
 		},
-
 		{
 			index: 38,
 			name: "gingham dress",
@@ -1776,7 +1738,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: "min",
 		},
-
 		{
 			index: 39,
 			name: "overalls",
@@ -1821,7 +1782,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: 0,
 		},
-
 		{
 			index: 40,
 			name: "black leather jacket",
@@ -1866,7 +1826,6 @@ function initUpper() {
 			notuck: 1,
 			pregType: "split",
 		},
-
 		{
 			index: 41,
 			name: "brown leather jacket",
@@ -1911,7 +1870,6 @@ function initUpper() {
 			notuck: 1,
 			pregType: "split",
 		},
-
 		{
 			index: 42,
 			name: "beatnik shirt",
@@ -1955,7 +1913,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: 0,
 		},
-
 		{
 			index: 43,
 			name: "cable knit turtleneck",
@@ -1999,7 +1956,6 @@ function initUpper() {
 			notuck: 1,
 			pregType: "min",
 		},
-
 		{
 			index: 44,
 			name: "v neck",
@@ -2043,7 +1999,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: 0,
 		},
-
 		{
 			index: 45,
 			name: "turtleneck jumper",
@@ -2087,7 +2042,6 @@ function initUpper() {
 			notuck: 1,
 			pregType: 0,
 		},
-
 		{
 			index: 46,
 			name: "cheongsam",
@@ -2134,7 +2088,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: 0,
 		},
-
 		{
 			index: 47,
 			name: "short cheongsam",
@@ -2181,7 +2134,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: "min",
 		},
-
 		{
 			index: 48,
 			name: "tie-front top",
@@ -2227,7 +2179,6 @@ function initUpper() {
 			notuck: 1,
 			pregType: 0,
 		},
-
 		{
 			index: 49,
 			name: "peacoat",
@@ -2271,7 +2222,6 @@ function initUpper() {
 			notuck: 1,
 			pregType: "min",
 		},
-
 		{
 			index: 50,
 			name: "gothic gown",
@@ -2320,7 +2270,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: 0,
 		},
-
 		{
 			index: 51,
 			name: "gothic jacket",
@@ -2365,7 +2314,6 @@ function initUpper() {
 			notuck: 1,
 			pregType: "split",
 		},
-
 		{
 			index: 52,
 			name: "swim shirt",
@@ -2411,7 +2359,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: 0,
 		},
-
 		{
 			index: 53,
 			name: "waiter's shirt",
@@ -2456,7 +2403,6 @@ function initUpper() {
 			notuck: 1,
 			pregType: "split",
 		},
-
 		{
 			index: 54,
 			name: "lederhosen",
@@ -2502,7 +2448,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: 0,
 		},
-
 		{
 			index: 55,
 			name: "karate jacket",
@@ -2547,7 +2492,6 @@ function initUpper() {
 			notuck: 1,
 			pregType: "min",
 		},
-
 		{
 			index: 56,
 			name: "sailor shirt",
@@ -2593,7 +2537,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: "min",
 		},
-
 		{
 			index: 57,
 			name: "short sailor shirt",
@@ -2639,7 +2582,6 @@ function initUpper() {
 			notuck: 1,
 			pregType: "min",
 		},
-
 		{
 			index: 58,
 			name: "padded football shirt",
@@ -2685,7 +2627,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: 0,
 		},
-
 		{
 			index: 59,
 			name: "gym shirt",
@@ -2731,7 +2672,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: 0,
 		},
-
 		{
 			index: 60,
 			name: "cheerleading top",
@@ -2777,7 +2717,6 @@ function initUpper() {
 			notuck: 1,
 			pregType: 0,
 		},
-
 		{
 			index: 61,
 			name: "hunting coat",
@@ -2823,7 +2762,6 @@ function initUpper() {
 			notuck: 1,
 			pregType: "split",
 		},
-
 		{
 			index: 62,
 			name: "letterman jacket",
@@ -2869,7 +2807,6 @@ function initUpper() {
 			notuck: 1,
 			pregType: "min",
 		},
-
 		{
 			index: 63,
 			name: "racing silks",
@@ -2915,7 +2852,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: "min",
 		},
-
 		{
 			index: 64,
 			name: "shadbelly coat",
@@ -2960,7 +2896,6 @@ function initUpper() {
 			notuck: 1,
 			pregType: "min",
 		},
-
 		{
 			index: 65,
 			name: "mummy top",
@@ -3005,7 +2940,6 @@ function initUpper() {
 			notuck: 1,
 			pregType: "min",
 		},
-
 		{
 			index: 66,
 			name: "diving suit",
@@ -3053,7 +2987,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: 0,
 		},
-
 		{
 			index: 67,
 			name: "classic sundress",
@@ -3099,7 +3032,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: 0,
 		},
-
 		{
 			index: 68,
 			name: "classic gothic gown",
@@ -3145,7 +3077,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: 0,
 		},
-
 		{
 			index: 69,
 			name: "scout shirt",
@@ -3191,7 +3122,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: "min",
 		},
-
 		{
 			index: 70,
 			name: "soccer shirt",
@@ -3237,7 +3167,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: 0,
 		},
-
 		{
 			index: 71,
 			name: "puffer jacket",
@@ -3282,7 +3211,6 @@ function initUpper() {
 			notuck: 1,
 			pregType: 0,
 		},
-
 		{
 			index: 72,
 			name: "camo shirt",
@@ -3327,7 +3255,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: 0,
 		},
-
 		{
 			index: 73,
 			name: "star pyjama shirt",
@@ -3372,7 +3299,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: "min",
 		},
-
 		{
 			index: 74,
 			name: "moon pyjama shirt",
@@ -3417,7 +3343,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: "min",
 		},
-
 		{
 			index: 75,
 			name: "catsuit",
@@ -3461,7 +3386,6 @@ function initUpper() {
 			outfitPrimary: { lower: "catsuit bottoms" },
 			pregType: 0,
 		},
-
 		{
 			index: 76,
 			name: "open shoulders crop top",
@@ -3506,7 +3430,6 @@ function initUpper() {
 			notuck: 1,
 			pregType: "min",
 		},
-
 		{
 			index: 77,
 			name: "hoodie",
@@ -3583,7 +3506,6 @@ function initUpper() {
 			hoodposition: "up",
 			pregType: 0,
 		},
-
 		{
 			index: 78,
 			name: "bathrobe",
@@ -3630,7 +3552,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: "min",
 		},
-
 		{
 			index: 79,
 			name: "rag top",
@@ -3674,7 +3595,6 @@ function initUpper() {
 			notuck: 1,
 			pregType: 0,
 		},
-
 		{
 			index: 80,
 			name: "retro top",
@@ -3732,7 +3652,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: 0,
 		},
-
 		{
 			index: 81,
 			name: "utility vest",
@@ -3776,7 +3695,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: "split",
 		},
-
 		{
 			index: 82,
 			name: "utility vest with shirt",
@@ -3821,7 +3739,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: 0,
 		},
-
 		{
 			index: 83,
 			name: "monster hoodie",
@@ -3868,7 +3785,6 @@ function initUpper() {
 			hoodposition: "up",
 			pregType: 0,
 		},
-
 		{
 			index: 84,
 			name: "keyhole dress",
@@ -3913,7 +3829,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: "min",
 		},
-
 		{
 			index: 85,
 			name: "prison shirt",
@@ -3956,7 +3871,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: "min",
 		},
-
 		{
 			index: 86,
 			name: "prison jumpsuit",
@@ -4001,7 +3915,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: "min",
 		},
-
 		{
 			index: 87,
 			name: "patient gown",
@@ -4047,7 +3960,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: "min",
 		},
-
 		{
 			index: 88,
 			name: "cropped hoodie",
@@ -4092,7 +4004,6 @@ function initUpper() {
 			notuck: 1,
 			pregType: 0,
 		},
-
 		{
 			index: 89,
 			name: "cow onesie",
@@ -4139,7 +4050,6 @@ function initUpper() {
 			hoodposition: "up",
 			pregType: 0,
 		},
-
 		{
 			index: 90,
 			name: "baseball shirt",
@@ -4183,7 +4093,6 @@ function initUpper() {
 			accIcon: "baseball_shirt_acc.png",
 			notuck: 0,
 		},
-
 		{
 			index: 91,
 			name: "scarecrow shirt",
@@ -4231,7 +4140,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: 0,
 		},
-
 		{
 			index: 92,
 			name: "waitress uniform",
@@ -4291,7 +4199,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: "min",
 		},
-
 		{
 			index: 93,
 			name: "split dress",
@@ -4351,7 +4258,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: 0,
 		},
-
 		{
 			index: 94,
 			name: "skimpy lolita dress",
@@ -4397,7 +4303,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: "min",
 		},
-
 		{
 			index: 95,
 			name: "short ballgown",
@@ -4442,7 +4347,6 @@ function initUpper() {
 			outfitPrimary: { lower: "short ballgown skirt" },
 			notuck: 0,
 		},
-
 		{
 			index: 96,
 			name: "single breasted jacket",
@@ -4501,7 +4405,6 @@ function initUpper() {
 			notuck: 1,
 			pregType: "split",
 		},
-
 		{
 			index: 97,
 			name: "double breasted jacket",
@@ -4560,7 +4463,6 @@ function initUpper() {
 			notuck: 1,
 			pregType: "min",
 		},
-
 		{
 			index: 98,
 			name: "pink nurse dress",
@@ -4607,7 +4509,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: 0,
 		},
-
 		{
 			index: 99,
 			name: "plastic nurse dress",
@@ -4654,7 +4555,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: 0,
 		},
-
 		{
 			index: 100,
 			name: "transparent nurse dress",
@@ -4701,7 +4601,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: 0,
 		},
-
 		{
 			index: 101,
 			name: "hanfu",
@@ -4761,7 +4660,6 @@ function initUpper() {
 			notuck: 1,
 			pregType: "min",
 		},
-
 		{
 			index: 102,
 			name: "open shoulder sweater",
@@ -4807,7 +4705,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: 0,
 		},
-
 		{
 			index: 103,
 			name: "winter jacket",
@@ -4853,7 +4750,6 @@ function initUpper() {
 			notuck: 1,
 			pregType: "split",
 		},
-
 		{
 			index: 104,
 			name: "cocoon",
@@ -4899,7 +4795,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: "min",
 		},
-
 		{
 			index: 105,
 			name: "skeleton outfit",
@@ -4945,7 +4840,6 @@ function initUpper() {
 			notuck: 0,
 			pregType: "min",
 		},
-
 		{
 			index: 106,
 			name: "classy vampire jacket",
@@ -4991,7 +4885,6 @@ function initUpper() {
 			notuck: 1,
 			pregType: "split",
 		},
-
 		{
 			index: 107,
 			name: "virgin killer",
@@ -5036,7 +4929,6 @@ function initUpper() {
 			notuck: 1,
 			pregType: 0,
 		},
-
 		{
 			index: 108,
 			name: "futuristic bodysuit",
@@ -5082,7 +4974,6 @@ function initUpper() {
 			notuck: 1,
 			pregType: "min",
 		},
-
 		{
 			index: 109,
 			name: "lace nightgown",
