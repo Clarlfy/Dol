@@ -5,6 +5,7 @@
 	<<set $combatDemoCombatconsensual to 1>>
 	<<set $combatDemoCombatText to 1>>
 	<<set $combatDemoDebugText to 1>>
+	<<set $combatDemoPosition to 0>>
 <</if>>
 
 <<if $sexstart is 1>>
@@ -125,6 +126,9 @@
 				<<set $enemytype to "tentacles">>
 				<<tentaclestart 8 15>>
 		<</switch>>
+		<<if $position isnot "wall" and $combatDemoPosition>>
+			<<set $position to $combatDemoPosition>>
+		<</if>>
 	</div>
 <</if>>
 
@@ -285,16 +289,33 @@ Swarm Combat:
 		<<set $combatDemoCombatconsensual to 0>>
 		<<endcombat>><<endevent>>
 		<<set $sexstart to 1>>
-	<</link>><br>
+	<</link>>
 <<else>>
 	<<link [[Set to Consensual|$passage]]>>
 		<<set $combatDemoCombatconsensual to 1>>
 		<<endcombat>><<endevent>>
 		<<set $sexstart to 1>>
-	<</link>><br>
+	<</link>>
 <</if>>
-<br>
-
+<br><br><br>
+<<if $position isnot "wall">>
+	<<link [[Set to missionary|$passage]]>>
+		<<set $combatDemoPosition to "missionary">>
+		<<endcombat>><<endevent>>
+		<<set $sexstart to 1>>
+	<</link>> |
+	<<link [[Set to doggy|$passage]]>>
+		<<set $combatDemoPosition to "doggy">>
+		<<endcombat>><<endevent>>
+		<<set $sexstart to 1>>
+	<</link>> |
+	<<link [[Dont set position|$passage]]>>
+		<<set $combatDemoPosition to 0>>
+		<<endcombat>><<endevent>>
+		<<set $sexstart to 1>>
+	<</link>> |
+	<br><br>
+<</if>>
 
 :: Combat Widgets [widget]
 
