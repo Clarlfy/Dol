@@ -1,13 +1,137 @@
 :: Combat Demo
 
+<<if !$combatDemoCombatType>>
+	<<set $combatDemoCombatType to "human">>
+	<<set $combatDemoCombatconsensual to 1>>
+	<<set $combatDemoCombatText to 1>>
+	<<set $combatDemoDebugText to 1>>
+<</if>>
+
 <<if $sexstart is 1>>
 	<<set $sexstart to 0>>
+	<<set $pain to 0>>
+	<<set $stress to 0>>
+	<<set $trauma to 0>>
+	<<set $arousal to 0>>
 	<div class="combat-init">
 		<p>Init</p>
-		<<generate1>>
-		<<person1>>
-		<<consensual>>
-		<<maninit>>
+		<<if $combatDemoCombatconsensual>>
+			<<consensual>>
+		<<else>>
+			<<molested>>
+		<</if>>
+		<<switch $combatDemoCombatType>>
+			<<case "human">>
+				<<generate1>>
+				<<person1>>
+				<<maninit>>
+			<<case "human wall">>
+				<<generate1>>
+				<<person1>>
+				<<maninit>>
+				<<set $position to "wall">>
+			<<case "human oral wall">>
+				<<generate1>>
+				<<person1>>
+				<<maninit>>
+				<<stuck_in_wall_oral>>
+			<<case "human gangbang">>
+				<<generate1>>
+				<<person1>>
+				<<generate2>>
+				<<generate3>>
+				<<generate4>>
+				<<generate5>>
+				<<generate6>>
+				<<maninit>>
+			<<case "wolf">>
+				<<beastNEWinit 1 wolf>>
+				<<beastCombatInit>>
+				<<beastTrainGenerate>>
+			<<case "dog">>
+				<<beastNEWinit 1 dog>>
+				<<beastCombatInit>>
+				<<beastTrainGenerate>>
+			<<case "dolphin">>
+				<<beastNEWinit 1 dolphin>>
+				<<beastCombatInit>>
+				<<beastTrainGenerate>>
+			<<case "cat">>
+				<<beastNEWinit 1 cat>>
+				<<beastCombatInit>>
+				<<beastTrainGenerate>>
+			<<case "cow">>
+				<<beastNEWinit 1 cow>>
+				<<beastCombatInit>>
+				<<beastTrainGenerate>>
+			<<case "bear">>
+				<<beastNEWinit 1 bear>>
+				<<beastCombatInit>>
+				<<beastTrainGenerate>>
+			<<case "fox">>
+				<<beastNEWinit 1 fox>>
+				<<beastCombatInit>>
+				<<beastTrainGenerate>>
+			<<case "horse">>
+				<<beastNEWinit 1 horse>>
+				<<beastCombatInit>>
+				<<beastTrainGenerate>>
+			<<case "lizard">>
+				<<beastNEWinit 1 lizard>>
+				<<beastCombatInit>>
+				<<beastTrainGenerate>>
+			<<case "boar">>
+				<<beastNEWinit 1 boar>>
+				<<beastCombatInit>>
+				<<beastTrainGenerate>>
+			<<case "pig">>
+				<<beastNEWinit 1 boar>>
+				<<beastCombatInit>>
+				<<beastTrainGenerate>>
+			<<case "creature">>
+				<<beastNEWinit 1 creature>>
+				<<beastCombatInit>>
+				<<beastTrainGenerate>>
+			<<case "hawk">>
+				<<beastNEWinit 1 hawk>>
+				<<beastCombatInit>>
+				<<beastTrainGenerate>>
+			<<case "fish">>
+				<<set $enemytype to "swarm">>
+				<<swarminit "fish" "container" "shaking" "shatter" "steady" 4 6>>
+			<<case "snakes">>
+				<<set $enemytype to "swarm">>
+				<<swarminit "snakes" "swarm" "slithering" "slither" "keep back" 10 0>>
+			<<case "spiders">>
+				<<set $enemytype to "swarm">>
+				<<swarminit "spiders" "sac" "slipping" "break" "steady" 1 9>>
+			<<case "slimes">>
+				<<set $enemytype to "swarm">>
+				<<swarminit "slimes" "slime mass" "moving towards you" "encircle you" "fend off" 8 0>>
+			<<case "pale slimes">>
+				<<set $enemytype to "swarm">>
+				<<swarminit "pale slimes" "slime mass" "moving towards you" "encircle you" "fend off" 8 0>>
+			<<case "maggots">>
+				<<set $enemytype to "swarm">>
+				<<swarminit "maggots" "swarm" "crawling" "crawl" "keep back" 2 8>>
+			<<case "worms">>
+				<<set $enemytype to "swarm">>
+				<<swarminit "worms" "jar" "held above the terrarium" "fall into the terrarium" "block" 0 10>>
+			<<case "eels">>
+				<<set $enemytype to "swarm">>
+				<<swarminit "eels" "swarm" "moving towards you" "encircle you" "fend off" 1 9>>
+			<<case "tentacles">>
+				<<set $combat to 1>>
+				<<set $enemytype to "tentacles">>
+				<<tentaclestart 8 15>>
+		<</switch>>
+	</div>
+<</if>>
+
+<<if $combatDemoCombatType is "tentacles">>
+	<div class="combat-state">
+		<p>State tentacles</p>
+		<<statetentacles>>
 	</div>
 <</if>>
 
@@ -16,24 +140,161 @@
 	<<effects>>
 </div>
 <div class="combat-effectsman">
-	<p>Effects man</p>
-	<<effectsman>>
+	<<if $combatDemoCombatType is "tentacles">>
+		<p>Effects Tentacles</p>
+		<<effectstentacles>>
+	<<elseif ["fish", "snakes", "spiders", "slimes", "pale slimes", "maggots", "worms", "eels"].includes($combatDemoCombatType)>>
+		<p>Swarm Effects</p>
+		<<swarmeffects>>
+	<<else>>
+		<p>Effects man</p>
+		<<effectsman>>
+	<</if>>
 </div>
-<div class="combat-state">
-	<p>State man</p>
-	<<stateman>>
+<div id="combat-man" @class="'combat-man' + ($combatDemoCombatText ? '' : ' hidden')">
+	<<switch $combatDemoCombatType>>
+		<<case "human" "human wall" "human oral wall" "human gangbang">>
+			<p>man</p>
+			<<man>>
+		<<case "wolf" "dog" "dolphin" "cat" "cow" "bear" "fox" "horse" "lizard" "boar" "pig" "creature" "hawk">>
+			<p>Beast</p>
+			<<beast $enemyno>>
+		<<case "fish" "snakes" "spiders" "slimes" "pale slimes" "maggots" "worms" "eels">>
+			<p>Swarm</p>
+			<<swarm>>
+		<<case "tentacles">>
+			<p>Tentacles</p>
+			<<tentacles>>
+	<</switch>>
 </div>
+
+<<if $combatDemoCombatType.includes("human")>>
+	<div class="combat-state">
+		<p>State man</p>
+		<<stateman>>
+	</div>
+<</if>>
 <<combat-render>>
 <div class="combat-actions">
-	<p>Beast</p>
-	<<beast $enemyno>>
+	<<if $combatDemoCombatType is "tentacles">>
+		<p>Actions Tentacles</p>
+		<<actionstentacles>>
+	<<elseif ["fish", "snakes", "spiders", "slimes", "pale slimes", "maggots", "worms", "eels"].includes($combatDemoCombatType)>>
+		<p>Swarm actions</p>
+		<<swarmactions>>
+	<<else>>
+		<p>Actions man</p>
+		<<actionsman>>
+	<</if>>
 </div>
-<div class="combat-actions">
-	<p>Actions man</p>
-	<<actionsman>>
-</div>
-<<link [[Next|passage()]]>><</link>><br>
-<<link [[Bedroom|Bedroom]]>><</link>><br>
+<<link [[Next|$passage]]>><</link>><br>
+<<link [[Bedroom|Bedroom]]>>
+	<<unset $combatDemoCombatType>>
+	<<unset $combatDemoCombatconsensual>>
+	<<unset $combatDemoCombatText>>
+	<<unset $combatDemoDebugText>>
+	<<unset $humanCombat>>
+	<<unset $beastCombat>>
+	<<unset $swarmCombat>>
+	<<endcombat>><<endevent>>
+<</link>><br>
+
+<br>
+<<link "Enable Combat Text">>
+	<<set $combatDemoCombatText to 1>>
+	<<removeclass "#combat-man" "hidden">>
+<</link>> |
+<<link "Disable Combat Text">>
+	<<set $combatDemoCombatText to 0>>
+	<<addclass "#combat-man" "hidden">>
+<</link>> |
+<br>
+<<link "Enable Debug Text">>
+	<<set $combatDemoDebugText to 1>>
+	<<removeclass "#combatDebug" "hidden">>
+<</link>> |
+<<link "Disable Debug Text">>
+	<<set $combatDemoDebugText to 0>>
+	<<addclass "#combatDebug" "hidden">>
+<</link>> |
+<br><br>
+
+These will restart combat:
+<br>
+Human Combat:
+<<listbox "$humanCombat" autoselect>>
+	<<option "human">>
+	<<option "human gangbang">>
+	<<option "human wall">>
+	<<option "human oral wall">>
+<</listbox>>
+<<link [[Set|$passage]]>>
+	<<set $combatDemoCombatType to $humanCombat>>
+	<<endcombat>><<endevent>>
+	<<set $sexstart to 1>>
+<</link>> |<br><br>
+
+Beast Combat:
+<<listbox "$beastCombat" autoselect>>
+	<<option "wolf">>
+	<<option "dog">>
+	<<option "dolphin">>
+	<<option "cat">>
+	<<option "cow">>
+	<<option "bear">>
+	<<option "fox">>
+	<<option "horse">>
+	<<option "lizard">>
+	<<option "boar">>
+	<<option "pig">>
+	<<option "creature">>
+	<<option "hawk">>
+<</listbox>>
+<<link [[Set|$passage]]>>
+	<<set $combatDemoCombatType to $beastCombat>>
+	<<endcombat>><<endevent>>
+	<<set $sexstart to 1>>
+<</link>> |<br><br>
+
+Swarm Combat:
+<<listbox "$swarmCombat" autoselect>>
+	<<option "fish">>
+	<<option "snakes">>
+	<<option "spiders">>
+	<<option "slimes">>
+	<<option "pale slimes">>
+	<<option "maggots">>
+	<<option "worms">>
+	<<option "eels">>
+<</listbox>>
+<<link [[Set|$passage]]>>
+	<<set $combatDemoCombatType to $swarmCombat>>
+	<<endcombat>><<endevent>>
+	<<set $sexstart to 1>>
+<</link>> |<br><br>
+
+<<link [[Tentacles Combat|$passage]]>>
+	<<set $combatDemoCombatType to "tentacles">>
+	<<endcombat>><<endevent>>
+	<<set $sexstart to 1>>
+<</link>> |
+
+<br><br>
+<<if $combatDemoCombatconsensual>>
+	<<link [[Set to Rape|$passage]]>>
+		<<set $combatDemoCombatconsensual to 0>>
+		<<endcombat>><<endevent>>
+		<<set $sexstart to 1>>
+	<</link>><br>
+<<else>>
+	<<link [[Set to Consensual|$passage]]>>
+		<<set $combatDemoCombatconsensual to 1>>
+		<<endcombat>><<endevent>>
+		<<set $sexstart to 1>>
+	<</link>><br>
+<</if>>
+<br>
+
 
 :: Combat Widgets [widget]
 
