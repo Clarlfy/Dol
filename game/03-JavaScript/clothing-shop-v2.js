@@ -454,7 +454,7 @@ function allClothesSetup() {
 window.allClothesSetup = allClothesSetup;
 
 function shopSearchReplacer(name) {
-	return name.replace(/[^a-zA-Z0-9' -]+/g, "");
+	return name.replace(/[^a-zA-Z0-9\u4e00-\u9fa5' -]+/g, "");
 }
 window.shopSearchReplacer = shopSearchReplacer;
 
@@ -605,3 +605,18 @@ Macro.add("shopclothingcustomcolourwheel", {
 });
 
 window.colourPickerShopCustom = colourPickerShopCustom;
+
+function filterShopGroup(clothingItems) {
+	if (!Array.isArray(clothingItems)) return [];
+	T.itemGroups = {};
+	return clothingItems.filter(item => {
+		if (!item.shopGroup) return true;
+		if (!T.itemGroups[item.shopGroup]) {
+			T.itemGroups[item.shopGroup] = [item.index];
+			return true;
+		} else {
+			T.itemGroups[item.shopGroup].push(item.index);
+		};
+	});
+}
+window.filterShopGroup = filterShopGroup;

@@ -92,6 +92,8 @@
 			<br>
 		<</if>>
 	<</if>>
+	<<unset $whitneypantiesmaths>>
+	<<unset $whitneyskirtmaths>>
 <<elseif $stress gte $stressmax>>
 	<<link [[Everything fades to black...|School Passout]]>><</link>>
 
@@ -105,59 +107,61 @@
 	<<schoolperiod>>
 
 	<<if !["early", "late", "earlynoschool", "latenoschool", "daynoschool"].includes($schoolstate) and $exposed gte 1>>
-		<<schoolcourtyardicon>><<link [[Sneak to rear courtyard (0:05)|School Rear Courtyard]]>><<pass 5>><</link>>
+		<<schoolicon "courtyard">><<link [[Sneak to rear courtyard (0:05)|School Rear Courtyard]]>><<pass 5>><</link>>
 		<br>
 		<<swimmingicon>><<link [[Sneak to pool (0:03)|School Pool Entrance]]>><<pass 3>><</link>>
 		<br>
-		<<libraryicon>><<link [[Sneak to library (0:05)|School Library]]>><<pass 5>><</link>>
+		<<schoolicon "library">><<link [[Sneak to library (0:05)|School Library]]>><<pass 5>><</link>>
 		<br>
-		<<toileticon>><<link [[Sneak to toilets (0:05)|School Toilets]]>><<pass 5>><</link>>
+		<<bathroomicon "toilet">><<link [[Sneak to toilets (0:05)|School Toilets]]>><<pass 5>><</link>>
 		<br>
 	<<else>>
 		<<if $schoolstate is "afternoon" and $detention gte 1 and $daily.school.detentionAttended isnot 1 and $pillory_tenant.special.name isnot "Leighton">>
-		<<headdeskicon>><<link [[Go to detention|School Detention]]>><</link>>
+		<<schoolicon "headdesk">><<link [[Go to detention|School Detention]]>><</link>>
 		<br>
 			<<if $headdrive gte 1 and $headnodetention isnot 1 and $headmoney isnot 1 and $headphotoshoot isnot 1>>
-			<<link [[Blackmail Leighton|Head's Office Blackmail]]>><<npc Leighton>><<person1>><<set $phase to 1>><</link>><<crime>>
+			<<schoolicon "headdesk">><<link [[Blackmail Leighton|Head's Office Blackmail]]>><<npc Leighton>><<person1>><<set $phase to 1>><</link>><<crime "coercion">>
 			<br>
 			<</if>>
 		<br>
 		<</if>>
 
+		Hallway
+		<br>
 		<<lockericon>><<link [[Lockers|School Lockers]]>><</link>>
 		<br><br>
 		Outside
 		<br>
 		<<exiticon>><<link [[Front courtyard (0:02)|School Front Courtyard]]>><<pass 2>><</link>>
 		<br>
-		<<schoolcourtyardicon>><<link [[Rear courtyard (0:02)|School Rear Courtyard]]>><<pass 2>><</link>>
+		<<schoolicon "courtyard">><<link [[Rear courtyard (0:02)|School Rear Courtyard]]>><<pass 2>><</link>>
 		<br><br>
 		Facilities
 		<br>
-		<<eaticon>><<link [[Canteen (0:01)|Canteen]]>><<pass 1>><</link>>
+		<<foodicon "eat">><<link [[Canteen (0:01)|Canteen]]>><<pass 1>><</link>>
 		<br>
 		<<swimmingicon>><<link [[Pool (0:01)|School Pool Entrance]]>><<pass 1>><</link>>
 		<br>
-		<<libraryicon>><<link [[Library (0:02)|School Library]]>><<pass 2>><</link>>
+		<<schoolicon "library">><<link [[Library (0:02)|School Library]]>><<pass 2>><</link>>
 		<br>
 		<<if $schoolstate is "afternoon" and $detention gte 1 and $daily.school.detentionAttended isnot 1>>
 		<<else>>
-			<<headdeskicon>><<link [[Head's office (0:02)|Head's Office]]>><<pass 2>><</link>>
+			<<schoolicon "headdesk">><<link [[Head's office (0:02)|Head's Office]]>><<pass 2>><</link>>
 			<br>
 		<</if>>
-		<<infirmaryicon>><<link [[Infirmary (0:02)|School Infirmary]]>><<pass 2>><<set $phase to 0>><</link>>
+		<<schoolicon "infirmary">><<link [[Infirmary (0:02)|School Infirmary]]>><<pass 2>><<set $phase to 0>><</link>>
 		<br>
-		<<toileticon>><<link [[Toilets (0:02)|School Toilets]]>><<pass 2>><</link>>
+		<<bathroomicon "toilet">><<link [[Toilets (0:02)|School Toilets]]>><<pass 2>><</link>>
 		<br><br>
 		Classrooms
 		<br>
-		<<scienceicon>><<link [[Science classroom (0:01)|Science Classroom]]>><<pass 1>><</link>>
+		<<scienceicon>><<link [[Science classroom (0:01)|Science Classroom]]>><<set $justEntered to true>><<pass 1>><</link>>
 		<br>
-		<<mathicon>><<link [[Maths classroom (0:01)|Maths Classroom]]>><<pass 1>><</link>>
+		<<mathicon>><<link [[Maths classroom (0:01)|Maths Classroom]]>><<set $justEntered to true>><<pass 1>><</link>>
 		<br>
-		<<englishicon>><<link [[English classroom (0:01)|English Classroom]]>><<pass 1>><</link>>
+		<<englishicon>><<link [[English classroom (0:01)|English Classroom]]>><<set $justEntered to true>><<pass 1>><</link>>
 		<br>
-		<<historyicon>><<link [[History classroom (0:01)|History Classroom]]>><<pass 1>><</link>>
+		<<historyicon>><<link [[History classroom (0:01)|History Classroom]]>><<set $justEntered to true>><<pass 1>><</link>>
 		<br>
 	<</if>>
 <</if>>
@@ -722,11 +726,47 @@ The <<person>> gawks, as if not believing <<his>> eyes. <<He>> glances around, t
 :: Hallways Slime Breasts Defy
 <<effects>>
 
-The slime tries to assert control, but you fight it, and manage to wrench yourself away from the <<person>>.
-<br><br>
-<<endevent>>
-<<link [[Next|Hallways]]>><<set $eventskip to 1>><</link>>
-<br>
+<<if $earSlime.defyCooldown>>
+	<<if $earSlime.growth gte 100>>
+		<<set $earSlime.defyCooldown += 2>>
+		You turn away from the <<person>>, and feel a jolt of pain as the slime punishes you for defiance. However, <span class="red">it doesn't stop you, knowing that it can punish you in other ways.</span>
+	<<else>>
+		You turn away from the <<person>>, and feel a jolt of pain as the slime punishes you for defiance, however, <span class="teal">it's still worn out from overpowering you earlier.</span> You feel it try, <span class="green">but fail,</span> to force you to turn to the <<person>>.
+	<</if>>
+	<br><br>
+	<<endevent>>
+	<<link [[Next|Hallways]]>><<set $eventskip to 1>><</link>>
+	<br>
+<<elseif $earSlime.corruption gte (currentSkillValue('willpower') / 10)>>
+	<<if $exhibitionism gte 55 and $earSlime.growth lt 100>>
+		<<set $earSlime.defyCooldown += 4>>
+	<<else>>
+		<<set $earSlime.defyCooldown += 8>>
+	<</if>>
+	You turn away from the <<person>>, and feel a jolt of pain as the slime punishes you for defiance. It tries to force you to turn to the <<person>>, <span class="red">and you fail</span> to resist its influence.
+	<<ggwillpower>><<willpower 3>>
+	<<if !$worn.upper.type.includes("naked")>>
+		In one motion, <<pullup>> your $worn.upper.name. <<He>> gapes at you. "T-touch," you say. "Touch me."
+	<<else>>
+		You thrust out your chest. "T-touch," you say. "Touch me."
+	<</if>>
+	<br><br>
+
+	The <<person>> gawks, as if not believing <<his>> eyes. <<He>> glances around, then reaches out and cups your <<breasts>> in both hands. <<if !$worn.under_upper.type.includes("naked")>><<He>> feels you up through the fabric of your $worn.under_upper.name.<<else>><<He>> feels up your bare flesh.<</if>>
+	<br><br>
+
+	<<He>> becomes more forceful.
+	<br><br>
+
+	<<link [[Next|Hallways Slime Rape]]>><<set $molestationstart to 1>><</link>>
+	<br>
+<<else>>
+	The slime tries to assert control, but you fight it, and manage to wrench yourself away from the <<person>>.
+	<br><br>
+	<<endevent>>
+	<<link [[Next|Hallways]]>><<set $eventskip to 1>><</link>>
+	<br>
+<</if>>
 
 :: Hallways Slime Strip Submit willingly
 <<effects>>
@@ -759,17 +799,22 @@ The <<person>> becomes more forceful.
 :: Hallways Slime Strip Defy
 <<effects>>
 
-<<if $slimeDefyCooldown>>
-	The slime tries to assert control, however, <span class="teal">it's still worn out from overpowering you earlier.</span> You feel it try, <span class="green">but fail,</span> to force you to strip.
+<<if $earSlime.defyCooldown>>
+	<<if $earSlime.growth gte 100>>
+		<<set $earSlime.defyCooldown += 2>>
+		You move away from the <<person>>, and feel a jolt of pain as the slime punishes you for defiance. However, <span class="red">it doesn't stop you, knowing that it can punish you in other ways.</span>
+	<<else>>
+		You move away from the <<person>>, however, <span class="teal">it's still worn out from overpowering you earlier.</span> You feel it try, <span class="green">but fail,</span> to force you to strip.
+	<</if>>
 	<br><br>
 	<<endevent>>
 	<<link [[Next|Hallways]]>><<set $eventskip to 1>><</link>>
 	<br>
-<<elseif $corruption_slime gte (currentSkillValue('willpower') / 10)>>
-	<<if $exhibitionism gte 55>>
-		<<set $slimeDefyCooldown to 4>>
+<<elseif $earSlime.corruption gte (currentSkillValue('willpower') / 10)>>
+	<<if $exhibitionism gte 55 and $earSlime.growth lt 100>>
+		<<set $earSlime.defyCooldown += 4>>
 	<<else>>
-		<<set $slimeDefyCooldown to 8>>
+		<<set $earSlime.defyCooldown += 8>>
 	<</if>>
 	The slime tries to assert control. <span class="red">It overpowers your will,</span> forcing you to turn toward the <<person>> and strip.
 	<<ggwillpower>><<willpower 3>>
@@ -2129,9 +2174,9 @@ The <<person>> grasps your collar tightly. "My parents took me to see a doc beca
 <<if $speech_attitude is "meek">>
 	"B-But... It's your baby!" you argue. "You should take care of it!"
 <<elseif $speech_attitude is "bratty">>
-	"Look, I'm very sorry for you," you explain. "It was my mistake, but I can't help you right now."
-<<else>>
 	"Tough shit," you tell <<him>>. "Guess it's time for you to learn to be a mommy, good luck."
+<<else>>
+	"Look, I'm very sorry for you," you explain. "It was my mistake, but I can't help you right now."
 <</if>>
 <br><br>
 
@@ -2504,7 +2549,7 @@ The group of students fight to pull down your <<if setup.clothes.lower[clothesIn
 		One of the students pulls hard, ripping your $pantsed.lower <<if $pantsed.underlower isnot "naked">> and your $pantsed.underlower <</if>> entirely off your body, but your <<print $worn.genitals.name>> stays in place.
 		<br><br>
 
-		"Look, every..." your tormenter cuts off, your torn $pantsed.lower in his hand, when <<he>> sees your <<print $worn.genitals.name>>. All the other students look curiously at it, a few laugh nervously.
+		"Look, every..." your tormenter cuts off, your torn $pantsed.lower in <<his>> hand, when <<he>> sees your <<print $worn.genitals.name>>. All the other students look curiously at it, a few laugh nervously.
 		<br><br>
 
 		Red-faced, you run off down the hallway while the other students look on in confusion.

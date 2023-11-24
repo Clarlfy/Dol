@@ -77,8 +77,8 @@
 	<<famesocial 1>>
 	<<towelup>>
 	<<endevent>>
-	<<effects>>
-	<<if $openinghours is 1>>
+	/*<<effects>>*/
+	<<if between(Time.hour, 8, 20)>>
 		<<link [[Next customer (0:50)|Spa Work]]>><</link>>
 		<br>
 		<<link [[Leave|Danube Street]]>><<set $eventskip to 1>><</link>>
@@ -323,7 +323,7 @@
 	<br>
 	<<if currentSkillValue('skulduggery') gte 100>>
 		<<set $skulduggerydifficulty to 500>>
-		<<link [[Rob|Spa Tired Steal]]>><</link>><<skulduggerydifficulty>><<crime>>
+		<<link [[Rob|Spa Tired Steal]]>><</link>><<skulduggerydifficulty>><<crime "thievery">>
 	<</if>>
 	<br>
 <</widget>>

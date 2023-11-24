@@ -232,9 +232,9 @@ You remain still. The <<beasttype>> watches you a moment longer, then beats <<bh
 	<<npc "Great Hawk">>
 	You awaken in a stone room, a sheet of feathers covering you. It's a wing.
 	<<if $monster is 1>>
-		The <<beasttype>> chirps beside you.
-	<<else>>
 		"I'm glad you're well," the <<beasttype>> says. "Spotted you asleep. Very dangerous. You should be careful. Come to nest when tired."
+	<<else>>
+		The <<beasttype>> chirps beside you.
 	<</if>>
 	<br><br>
 
@@ -250,7 +250,7 @@ You remain still. The <<beasttype>> watches you a moment longer, then beats <<bh
 	<<set $bird.timer to 60>>
 	<<set $bird.state to "home">>
 
-	<<link [[Bird Tower]]>><<endevent>><</link>>
+	<<link [[Next|Bird Tower]]>><<endevent>><</link>>
 	<br>
 <<else>>
 	<<npc "Great Hawk">>
@@ -268,7 +268,7 @@ You remain still. The <<beasttype>> watches you a moment longer, then beats <<bh
 <</if>>
 <<bird_schedule>>
 
-You are inside a ruined tower, deep in the moor.
+You are inside <<if $syndromebird is 1>>your tower<<else>>a ruined tower<</if>>, deep in the moor.
 <<if $syndromebird isnot 1>><<hunger_description>><</if>>
 <br><br>
 
@@ -420,38 +420,37 @@ You are inside a ruined tower, deep in the moor.
 			<br><br>
 			<<unbind>>
 		<<else>>
-			<<link [[Undo your bindings (0:10)|Bird Tower Unbind]]>><<bird_pass 10>><<unbind>><</link>>
+			<<undobindingsicon>><<link [[Undo your bindings (0:10)|Bird Tower Unbind]]>><<bird_pass 10>><<unbind>><</link>>
 			<br><br>
 		<</if>>
 	<</if>>
-	<<link [[Approach the perch|Bird Tower Perch]]>><</link>>
+	<<mooricon "perch">><<link [[Approach the perch|Bird Tower Perch]]>><</link>>
 	<br>
-	<<link [[Sit by the rainwater pool|Bird Tower Rainwater Pool]]>><</link>>
+	<<mooricon "rainwater">><<link [[Sit by the rainwater pool|Bird Tower Rainwater Pool]]>><</link>>
 	<br>
 	<<if $syndromebird isnot 1>>
-		<<link [[Look out the tower (0:05)|Bird Tower Look]]>><<bird_pass 5>><</link>>
+		<<crimeicon "mark">><<link [[Look out the tower (0:05)|Bird Tower Look]]>><<bird_pass 5>><</link>>
 		<br>
 	<</if>>
 	<<if $bird.lock is 1>>
-		<<link [[Examine the trap door (0:05)|Bird Tower Door]]>><<bird_pass 5>><</link>>
+		<<investigateicon>><<link [[Examine the trap door (0:05)|Bird Tower Door]]>><<bird_pass 5>><</link>>
 		<br>
 	<<else>>
-		<<link [[Enter the trap door (0:05)|Bird Tower Base Descend]]>><<bird_pass 5>><</link>>
+		<<getouticon "hole">><<link [[Enter the trap door (0:05)|Bird Tower Base Descend]]>><<bird_pass 5>><</link>>
 		<br>
 	<</if>>
 	<br>
 	<<if $syndromebird isnot 1>>
-		<<link [[Search for materials (1:00)|Bird Tower Search]]>><<bird_pass 60>><</link>>
+		<<investigateicon>><<link [[Search for materials (1:00)|Bird Tower Search]]>><<bird_pass 60>><</link>>
 		<br>
 	<</if>>
 	<<if $estate_fence is "quest" and $syndromebird is 1 and $bird.state is "home" and $bird.activity isnot "sleep">>
-		<<link [[Ask for help breaking into the Remy Estate|Bird Tower Estate]]>><</link>>
+		<<askicon>><<link [[Ask for help breaking into the Remy Estate|Bird Tower Estate]]>><</link>>
 		<br>
 	<</if>>
+	<<mooricon "nest">><<link [[Sleep in the nest|Bird Tower Bed]]>><</link>>
 	<br>
-	<<link [[Sleep in the nest|Bird Tower Bed]]>><</link>>
-	<br>
-	<<link [[Sleep elsewhere|Bird Tower Bed Alone]]>><<bird_stockholm -2>><</link>><<if $syndromebird isnot 1>><<lstockholm>><</if>>
+	<<bedicon "zzz">><<link [[Sleep elsewhere|Bird Tower Bed Alone]]>><<bird_stockholm -2>><</link>><<if $syndromebird isnot 1>><<lstockholm>><</if>>
 	<<if $bird.mirror is 1>>
 		<br>
 		<<if $nextPassageCheck is "Bird Tower Mirror">>
@@ -462,6 +461,7 @@ You are inside a ruined tower, deep in the moor.
 	<</if>>
 		<br>
 	<<if $syndromebird is 1>>
+		<br>
 		<<link [[Settings]]>><<set $settingsExitPassage to "Bird Tower">><</link>>
 		<br>
 		<<attitudesControlCheck>>
@@ -557,9 +557,9 @@ You are in the base of the ruined tower, deep in the moor. There's a slit in the
 	<</if>>
 <</if>>
 
-<<link [[Climb the stairs (0:05)|Bird Tower Base Climb]]>><<bird_pass 5>><</link>>
+<<stairsicon "up">><<link [[Climb the stairs (0:05)|Bird Tower Base Climb]]>><<bird_pass 5>><</link>>
 <br>
-<<link [[Leave the tower|Bird Tower Base Leave]]>><</link>>
+<<getouticon>><<link [[Leave the tower|Bird Tower Base Leave]]>><</link>>
 <br>
 
 
@@ -1414,31 +1414,7 @@ You don't move.
 
 <<nightmareCheck "Bird Tower Sleep">>
 
-<<if $sleeptrouble is 1 and $controlled is 0>>
-	<<link [[Sleep for 10 hours|Bird Tower Sleep]]>><<set $sleephour to 10>><<incrementautosave>><</link>> (<<timeAfterXHours 10>>)<<ltiredness>>
-	<br>
-	<<link [[Sleep for 9 hours|Bird Tower Sleep]]>><<set $sleephour to 9>><<incrementautosave>><</link>> (<<timeAfterXHours 9>>)<<ltiredness>>
-	<br>
-<</if>>
-
-<<link [[Sleep for 8 hours|Bird Tower Sleep]]>><<set $sleephour to 8>><<incrementautosave>><</link>> (<<timeAfterXHours 8>>)<<ltiredness>>
-<br>
-<<link [[Sleep for 7 hours|Bird Tower Sleep]]>><<set $sleephour to 7>><<incrementautosave>><</link>> (<<timeAfterXHours 7>>)<<ltiredness>>
-<br>
-<<link [[Sleep for 6 hours|Bird Tower Sleep]]>><<set $sleephour to 6>><<incrementautosave>><</link>> (<<timeAfterXHours 6>>)<<ltiredness>>
-<br>
-<<link [[Sleep for 5 hours|Bird Tower Sleep]]>><<set $sleephour to 5>><<incrementautosave>><</link>> (<<timeAfterXHours 5>>)<<ltiredness>>
-<br>
-<<link [[Sleep for 4 hours|Bird Tower Sleep]]>><<set $sleephour to 4>><<incrementautosave>><</link>> (<<timeAfterXHours 4>>)<<ltiredness>>
-<br>
-<<link [[Sleep for 3 hours|Bird Tower Sleep]]>><<set $sleephour to 3>><<incrementautosave>><</link>> (<<timeAfterXHours 3>>)<<ltiredness>>
-<br>
-<<link [[Sleep for 2 hours|Bird Tower Sleep]]>><<set $sleephour to 2>><<incrementautosave>><</link>> (<<timeAfterXHours 2>>)<<ltiredness>>
-<br>
-<<link [[Sleep for 1 hour|Bird Tower Sleep]]>><<set $sleephour to 1>><<incrementautosave>><</link>> &#8194;(<<timeAfterXHours 1>>)<<ltiredness>>
-<br>
-<<link [[Just sleep|Bird Tower Sleep]]>><<set $sleephour to -1>><<incrementautosave>><</link>> (??:??)<<ltiredness>>
-<br><br>
+<<generateSleepLinks "Bird Tower Sleep">>
 <<link [[Climb out of bed|Bird Tower]]>><<loadTempHairStyle>><<unset $bedGuest>><</link>>
 <br><br>
 
@@ -1450,31 +1426,7 @@ You lie in a covered corner of the tower. It's hard to get comfortable.
 
 <<nightmareCheck "Bird Tower Sleep">>
 
-<<if $sleeptrouble is 1 and $controlled is 0>>
-	<<link [[Sleep for 10 hours|Bird Tower Sleep Alone]]>><<set $sleephour to 10>><<incrementautosave>><</link>> (<<timeAfterXHours 10>>)<<ltiredness>>
-	<br>
-	<<link [[Sleep for 9 hours|Bird Tower Sleep Alone]]>><<set $sleephour to 9>><<incrementautosave>><</link>> (<<timeAfterXHours 9>>)<<ltiredness>>
-	<br>
-<</if>>
-
-<<link [[Sleep for 8 hours|Bird Tower Sleep Alone]]>><<set $sleephour to 8>><<incrementautosave>><</link>> (<<timeAfterXHours 8>>)<<ltiredness>>
-<br>
-<<link [[Sleep for 7 hours|Bird Tower Sleep Alone]]>><<set $sleephour to 7>><<incrementautosave>><</link>> (<<timeAfterXHours 7>>)<<ltiredness>>
-<br>
-<<link [[Sleep for 6 hours|Bird Tower Sleep Alone]]>><<set $sleephour to 6>><<incrementautosave>><</link>> (<<timeAfterXHours 6>>)<<ltiredness>>
-<br>
-<<link [[Sleep for 5 hours|Bird Tower Sleep Alone]]>><<set $sleephour to 5>><<incrementautosave>><</link>> (<<timeAfterXHours 5>>)<<ltiredness>>
-<br>
-<<link [[Sleep for 4 hours|Bird Tower Sleep Alone]]>><<set $sleephour to 4>><<incrementautosave>><</link>> (<<timeAfterXHours 4>>)<<ltiredness>>
-<br>
-<<link [[Sleep for 3 hours|Bird Tower Sleep Alone]]>><<set $sleephour to 3>><<incrementautosave>><</link>> (<<timeAfterXHours 3>>)<<ltiredness>>
-<br>
-<<link [[Sleep for 2 hours|Bird Tower Sleep Alone]]>><<set $sleephour to 2>><<incrementautosave>><</link>> (<<timeAfterXHours 2>>)<<ltiredness>>
-<br>
-<<link [[Sleep for 1 hour|Bird Tower Sleep Alone]]>><<set $sleephour to 1>><<incrementautosave>><</link>> &#8194;(<<timeAfterXHours 1>>)<<ltiredness>>
-<br>
-<<link [[Just sleep|Bird Tower Sleep Alone]]>><<set $sleephour to -1>><<incrementautosave>><</link>> (??:??)<<ltiredness>>
-<br><br>
+<<generateSleepLinks "Bird Tower Sleep Alone">>
 <<link [[Climb out of bed|Bird Tower]]>><<loadTempHairStyle>><</link>>
 <br><br>
 
@@ -1528,7 +1480,8 @@ You sit by the rainwater pool.
 
 :: Bird Tower Sleep
 <<set _autosavehere to true>>
-<<sleep>><<effects>>
+<<sleep>>
+<<effects>>
 
 <<if $wraith.nightmare is 2 and isBloodmoon()>>
 	<<sleepeffects>>
@@ -1630,7 +1583,8 @@ You sit by the rainwater pool.
 
 :: Bird Tower Sleep Alone
 <<set _autosavehere to true>>
-<<sleep>><<effects>>
+<<sleep>>
+<<effects>>
 
 <<if $wraith.nightmare is 2 and isBloodmoon()>>
 	<<sleepeffects>>
@@ -1872,7 +1826,8 @@ You're soon squeaky clean.
 <</if>>
 <<strip>>
 <<wash>>
-You remove your clothing. The <<beasttype>> swims to the other side of the pool, making room for you. You slip into the water. It's cold, but you soon get used to it.
+<<noClothingCheck>>
+<<if _nude is false>>You remove your clothing.<</if>> The <<beasttype>> swims to the other side of the pool, making room for you. You slip into the water. It's cold, but you soon get used to it.
 <br><br>
 
 <<if $daily.birdWash is undefined>>

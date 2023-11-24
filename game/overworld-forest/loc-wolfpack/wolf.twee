@@ -185,7 +185,7 @@ When you return to the cave, the pack is delighted to see you both come back.
 
 <<if $forestCliffKnown isnot 1>>
 
-    You pet the Black Wolf on <<bhis>> head and thank <<bhe>> for bringing you to such a wonderful place, but you suggest going back before the pack gets worried over your sudden absence. The <<beasttype>> licks your hand<<if $monster is 1>>, grumbles something<</if>> and stands up.
+    You pet the Black Wolf on <<bhis>> head and thank <<bhim>> for bringing you to such a wonderful place, but you suggest going back before the pack gets worried over your sudden absence. The <<beasttype>> licks your hand<<if $monster is 1>>, grumbles something<</if>> and stands up.
     <br><br>
 
     When you return to the cave, the pack is delighted to see you both come back.
@@ -193,7 +193,7 @@ When you return to the cave, the pack is delighted to see you both come back.
 
 <<else>>
 
-    You pat the Black Wolf on the head, thanking <<it>> for bringing you to this wonderful place again, but then suggest that you should go back before the pack gets worried about your sudden absence.The <<beasttype>> licks your hand<<if $monster is 1>>, grumbles something<</if>> and stands up.
+    You pat the Black Wolf on the head, thanking <<bhim>> for bringing you to this wonderful place again, but then suggest that you should go back before the pack gets worried about your sudden absence.The <<beasttype>> licks your hand<<if $monster is 1>>, grumbles something<</if>> and stands up.
     <br><br>
 
     When you return to the cave, the pack is delighted to see you both come back.
@@ -385,7 +385,7 @@ When you return to the cave, the pack is delighted to see you both come back.
 				<<else>>
 					<<bHe>> growls, but stops <<bhimself>> from snapping at you.
 				<</if>>
-			<<elseif $bird gte 4 and $transformationParts.bird.plumage isnot "hidden">>
+			<<elseif $harpy gte 4 and $transformationParts.bird.plumage isnot "hidden">>
 				<<bHe>> stares at your plumage in fascination.
 				<<if $monster is 1>>
 					<<bHe>> draws closer and runs a hand along your wings. "Never seen anything similar," <<bhe>> says. "Not in this forest."
@@ -886,6 +886,7 @@ Satisfied nothing will attack you in your sleep, you turn to make your way back.
 				<<bHe>> stands first, pushing <<bhis>> head under your arm. <<bHe>> wants you to lean on <<bhim>>. Stroking <<bhis>> fur, you accept the help as you make your way home to the cave.
 			<</if>>
 			<<stress -12>><<trauma -6>><<llstress>><<ltrauma>>
+			<br><br>
 			<<endcombat>>
 		<<else>>
 			The Black Wolf steps away and glances at you, and you get up. The two of you march back to the cave.

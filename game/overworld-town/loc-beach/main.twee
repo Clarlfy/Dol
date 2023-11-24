@@ -138,7 +138,7 @@ You could go for a swim, but make sure to dress appropriately.
 			<<link [[Next|Beach]]>><<set $eventskip to 1>><<endevent>><</link>>
 			<br>
 		<</if>>
-	<<elseif $NPCName[$NPCNameList.indexOf("Robin")].init is 0 and _robin_location is "beach" and $exposed lte 0>>
+	<<elseif $NPCName[$NPCNameList.indexOf("Robin")].init is 0 and Time.season isnot "winter" and Time.isWeekEnd() and between(Time.hour, 9, 16) and $exposed lte 0>>
 		<<set $robindebt to 0>><<set $robindebtlimit to 5>>
 		<<npc Robin>><<person1>>You see someone familiar working at a stand on the beach. <<He>> notices you at the same time. "Hey!" It's Robin. <<Hes>> another resident at the orphanage. <<Hes>> always looked up to you, despite being about the same age. <<He>> motions you over while cleaning a glass pitcher. <<He>> puts it down and hugs you when you approach.
 		<br><br>
@@ -169,7 +169,7 @@ You could go for a swim, but make sure to dress appropriately.
 				<br>
 			<</if>>
 			<<if $milkshake gte 1 and $exposed lte 0>>
-				<<ind>><<link [[Drink your milkshake (0:10)|Beach Milkshake]]>><<pass 10>><<set $milkshake -= 1>><<stress -5>><</link>><<lstress>>
+				<<foodicon "milkshake">><<link [[Drink your milkshake (0:10)|Beach Milkshake]]>><<pass 10>><<set $milkshake -= 1>><<stress -5>><</link>><<lstress>>
 				<br>
 			<</if>>
 		<</if>>
@@ -177,7 +177,7 @@ You could go for a swim, but make sure to dress appropriately.
 		<br>
 		<<if $exposed lte 0>>
 			<<if _robin_location is "beach">>
-				<<lemonadestandicon>><<link [[Robin's lemonade stand|Robin's Lemonade]]>><</link>>
+				<<robinicon "lemonade">><<link [[Robin's lemonade stand|Robin's Lemonade]]>><</link>>
 				<br>
 			<</if>>
 			<<if $leftleg is "bound" or $rightleg is "bound">>
@@ -191,20 +191,23 @@ You could go for a swim, but make sure to dress appropriately.
 			<br>
 		<</if>>
 		<<if $weather is "clear" and Time.dayState is "night" and $exposed lte 0>>
-			<<partyicon>><<link [[Party|Beach Party]]>><</link>>
+			<<socialiseicon "party">><<link [[Party|Beach Party]]>><</link>>
 			<br>
 		<</if>>
 		<<if $weather is "clear" and Time.dayState isnot "night" and $exposed lte 0>>
-			<<volleyballicon>><<link [[Volleyball|Beach Volleyball]]>><</link>>
+			<<socialiseicon "volleyball">><<link [[Volleyball|Beach Volleyball]]>><</link>>
 			<br>
 			<<if $exhibitionism gte 75 and $daily.beachStrip isnot 1>>
 				<<stripicon>><<link [[Strip (0:20)|Beach Strip]]>><<pass 20>><</link>><<exhibitionist5>>
 				<br>
 			<</if>>
 		<</if>>
-		<<if $exposed gte 1 and Time.dayState isnot "night">>
+		<<if $earSlime.forcedCommando isnot undefined and $worn.under_lower.name isnot "naked">>
+			<br>
+			<span class="red">The slimes in your ear refuses to allow you to leave with swimwear on.</span>
+		<<elseif $exposed gte 1 and Time.dayState isnot "night">>
 		<<else>>
-			<<add_link "<br>Travel<br>">><<hideDisplay>>
+			<<add_link "Travel<br>">><<hideDisplay>>
 			<<cliff>>
 			<br>
 			<<starfish>>
@@ -831,7 +834,7 @@ A whistle pierces the air. You turn and see a lifeguard running towards you.
 
 <<link [[Comply|Beach Strip Comply]]>><</link>>
 <br>
-<<link [[Refuse (1:00)|Beach Strip Refuse]]>><<stress -12>><<trauma -6>><<crimeup 50>><<pass 1 hour>><</link>><<crime>><<ltrauma>><<lstress>>
+<<link [[Refuse (1:00)|Beach Strip Refuse]]>><<stress -12>><<trauma -6>><<crimeUp 50 "exposure">><<pass 1 hour>><</link>><<crime "exposure">><<ltrauma>><<lstress>>
 <br>
 <<if $promiscuity gte 15>>
 <<link [[Seduce|Beach Strip Seduce]]>><</link>><<promiscuous2>>
@@ -909,7 +912,7 @@ You walk closer to the <<person>>. "I could get dressed," you say, leaning again
 
 <<link [[Comply|Beach Strip Comply]]>><</link>>
 <br>
-<<link [[Refuse (1:00)|Beach Strip Refuse]]>><<stress -12>><<trauma -6>><<crimeup 50>><<pass 1 hour>><</link>><<crime>><<ltrauma>><<lstress>>
+<<link [[Refuse (1:00)|Beach Strip Refuse]]>><<stress -12>><<trauma -6>><<crimeUp 50 "exposure">><<pass 1 hour>><</link>><<crime "exposure">><<ltrauma>><<lstress>>
 <br>
 
 <</if>>

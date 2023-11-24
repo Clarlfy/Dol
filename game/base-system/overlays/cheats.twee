@@ -27,7 +27,7 @@
 			<<if $player.virginity[_type] is true>>
 				<<set $player.virginity[_type] to (_virginity[_type] is true ? false : _virginity[_type])>><<set $player.virginity.temple to false>>
 			<<else>>
-				<<set $player.virginity[_type] to true>>
+				<<set $player.virginity[_type] to true>><<set $player.virginity.temple to true>>
 			<</if>>
 			<<run $(`#${_id}link .link-internal`).html($player.virginity[_type] is true ? "Take" : "Restore")>>
 			<<run $(`#${_id}`).html($player.virginity[_type] is true ? "Present" : "Taken by " + ($player.virginity[_type] is false ? "unknown" : $player.virginity[_type]))>>
@@ -125,14 +125,18 @@
 
 	<span class="gold">Player Body</span>
 	<br>
-	<<if ["Wardrobe","Changing Room","Eden Wardrobe","Asylum Wardrobe","Strip Club Dressing Room","Brothel Dressing Room","School Boy Wardrobe","School Girl Wardrobe"].includes($passage)>>
+	<<if _inWardrobe>>
 		/*passage change is intentional to allow the players to quickly see the visual differences*/
 		Current Gender: <<gender>>
+		<mouse class="tooltip linkBlue">(?)<span>This has other effects such as washing the player to prevent issues from occuring.</span></mouse>
 		<br>
-		<<if $sexStats.vagina.menstruation.currentState is "normal">>
+		<<if $earSlime.growth gt 50>>
+			Ear Slime current growth currently preventing gender changing. Remove the ear slime to enable these cheats again.
+		<<elseif $sexStats.vagina.menstruation.currentState is "normal">>
 			Change to:
 			<<if $player.gender isnot "m">>
 				<<link [[Become boy|$passage]]>>
+					<<wash>>
 					<<set $vaginause to "none">>
 					<<set $vaginastate to "none">>
 					<<set $penisuse to 0>>
@@ -147,6 +151,7 @@
 			<</if>>
 			<<if $player.gender isnot "f">>
 				<<link [[Become girl|$passage]]>>
+					<<wash>>
 					<<set $vaginause to 0>>
 					<<set $vaginastate to 0>>
 					<<set $penisuse to "none">>
@@ -161,6 +166,7 @@
 			<</if>>
 			<<if $player.gender isnot "h">>
 				<<link [[Become hermaphrodite|$passage]]>>
+					<<wash>>
 					<<set $vaginause to 0>>
 					<<set $vaginastate to 0>>
 					<<set $penisuse to 0>>
@@ -439,15 +445,15 @@
 	| <<link ">>>">><<set $deviancy += 100>><<clamp>><<replace "#statsdeviancy">><<print Math.trunc($deviancy)>><</replace>> <<updatesidebarimg>><</link>>
 	<br>
 
-	<<if $parasite.left_ear.name is "slime" or $parasite.right_ear.name is "slime">>
+	<<if numberOfEarSlime()>>
 
-	<<link "<<<">><<set $corruption_slime -= 100>><<clamp>><<replace "#statscorruption_slime">><<print Math.trunc($corruption_slime)>><</replace>> <<updatesidebarimg>><</link>> |
-	<<link "<<">><<set $corruption_slime -= 10>><<clamp>><<replace "#statscorruption_slime">><<print Math.trunc($corruption_slime)>><</replace>> <<updatesidebarimg>><</link>> |
-	<<link "<">><<set $corruption_slime -= 1>><<clamp>><<replace "#statscorruption_slime">><<print Math.trunc($corruption_slime)>><</replace>> <<updatesidebarimg>><</link>> |
-	Corruption: <span id="statscorruption_slime"><<print Math.trunc($corruption_slime)>></span>
-	| <<link ">">><<set $corruption_slime += 1>><<clamp>><<replace "#statscorruption_slime">><<print Math.trunc($corruption_slime)>><</replace>> <<updatesidebarimg>><</link>>
-	| <<link ">>">><<set $corruption_slime += 10>><<clamp>><<replace "#statscorruption_slime">><<print Math.trunc($corruption_slime)>><</replace>> <<updatesidebarimg>><</link>>
-	| <<link ">>>">><<set $corruption_slime += 100>><<clamp>><<replace "#statscorruption_slime">><<print Math.trunc($corruption_slime)>><</replace>> <<updatesidebarimg>><</link>>
+	<<link "<<<">><<set $earSlime.corruption -= 100>><<clamp>><<replace "#statscorruption_slime">><<print Math.trunc($earSlime.corruption)>><</replace>> <<updatesidebarimg>><</link>> |
+	<<link "<<">><<set $earSlime.corruption -= 10>><<clamp>><<replace "#statscorruption_slime">><<print Math.trunc($earSlime.corruption)>><</replace>> <<updatesidebarimg>><</link>> |
+	<<link "<">><<set $earSlime.corruption -= 1>><<clamp>><<replace "#statscorruption_slime">><<print Math.trunc($earSlime.corruption)>><</replace>> <<updatesidebarimg>><</link>> |
+	Corruption: <span id="statscorruption_slime"><<print Math.trunc($earSlime.corruption)>></span>
+	| <<link ">">><<set $earSlime.corruption += 1>><<clamp>><<replace "#statscorruption_slime">><<print Math.trunc($earSlime.corruption)>><</replace>> <<updatesidebarimg>><</link>>
+	| <<link ">>">><<set $earSlime.corruption += 10>><<clamp>><<replace "#statscorruption_slime">><<print Math.trunc($earSlime.corruption)>><</replace>> <<updatesidebarimg>><</link>>
+	| <<link ">>>">><<set $earSlime.corruption += 100>><<clamp>><<replace "#statscorruption_slime">><<print Math.trunc($earSlime.corruption)>><</replace>> <<updatesidebarimg>><</link>>
 	<br>
 
 	<</if>>
@@ -597,13 +603,13 @@
 	<</if>>
 
 	<<if $worn.under_lower.integrity gte 1>>
-		<<link "<<<">><<set $underlowerwet -= 100>><<clamp>><<replace "#statsunderwet">><<print Math.trunc($underlowerwet)>><</replace>> <<updatesidebarimg>><</link>> |
-		<<link "<<">><<set $underlowerwet -= 10>><<clamp>><<replace "#statsunderwet">><<print Math.trunc($underlowerwet)>><</replace>> <<updatesidebarimg>><</link>> |
-		<<link "<">><<set $underlowerwet -= 1>><<clamp>><<replace "#statsunderwet">><<print Math.trunc($underlowerwet)>><</replace>> <<updatesidebarimg>><</link>> |
-		Under bottom wetness: <span id="statsunderwet"><<print Math.trunc($underlowerwet)>></span>
-		| <<link ">">><<set $underlowerwet += 1>><<clamp>><<replace "#statsunderwet">><<print Math.trunc($underlowerwet)>><</replace>> <<updatesidebarimg>><</link>>
-		| <<link ">>">><<set $underlowerwet += 10>><<clamp>><<replace "#statsunderwet">><<print Math.trunc($underlowerwet)>><</replace>> <<updatesidebarimg>><</link>>
-		| <<link ">>>">><<set $underlowerwet += 100>><<clamp>><<replace "#statsunderwet">><<print Math.trunc($underlowerwet)>><</replace>> <<updatesidebarimg>><</link>>
+		<<link "<<<">><<set $underlowerwet -= 100>><<clamp>><<replace "#statsunderlowerwet">><<print Math.trunc($underlowerwet)>><</replace>> <<updatesidebarimg>><</link>> |
+		<<link "<<">><<set $underlowerwet -= 10>><<clamp>><<replace "#statsunderlowerwet">><<print Math.trunc($underlowerwet)>><</replace>> <<updatesidebarimg>><</link>> |
+		<<link "<">><<set $underlowerwet -= 1>><<clamp>><<replace "#statsunderlowerwet">><<print Math.trunc($underlowerwet)>><</replace>> <<updatesidebarimg>><</link>> |
+		Under bottom wetness: <span id="statsunderlowerwet"><<print Math.trunc($underlowerwet)>></span>
+		| <<link ">">><<set $underlowerwet += 1>><<clamp>><<replace "#statsunderlowerwet">><<print Math.trunc($underlowerwet)>><</replace>> <<updatesidebarimg>><</link>>
+		| <<link ">>">><<set $underlowerwet += 10>><<clamp>><<replace "#statsunderlowerwet">><<print Math.trunc($underlowerwet)>><</replace>> <<updatesidebarimg>><</link>>
+		| <<link ">>>">><<set $underlowerwet += 100>><<clamp>><<replace "#statsunderlowerwet">><<print Math.trunc($underlowerwet)>><</replace>> <<updatesidebarimg>><</link>>
 		<br>
 
 		<<link "<<<">><<set $worn.under_lower.integrity -= 100>><<clamp>><<replace "#statsunderlowerintegrity">><<print Math.trunc($worn.under_lower.integrity)>><</replace>> <<updatesidebarimg>><</link>> |
@@ -620,13 +626,13 @@
 	<</if>>
 
 	<<if $worn.under_upper.integrity gte 1>>
-		<<link "<<<">><<set $underupperwet -= 100>><<clamp>><<replace "#statsundertopwet">><<print Math.trunc($underupperwet)>><</replace>> <<updatesidebarimg>><</link>> |
-		<<link "<<">><<set $underupperwet -= 10>><<clamp>><<replace "#statsundertopwet">><<print Math.trunc($underupperwet)>><</replace>> <<updatesidebarimg>><</link>> |
-		<<link "<">><<set $underupperwet -= 1>><<clamp>><<replace "#statsundertopwet">><<print Math.trunc($underupperwet)>><</replace>> <<updatesidebarimg>><</link>> |
-		Under top wetness: <span id="statsundertopwet"><<print Math.trunc($underupperwet)>></span>
-		| <<link ">">><<set $underupperwet += 1>><<clamp>><<replace "#statsundertopwet">><<print Math.trunc($underupperwet)>><</replace>> <<updatesidebarimg>><</link>>
-		| <<link ">>">><<set $underupperwet += 10>><<clamp>><<replace "#statsundertopwet">><<print Math.trunc($underupperwet)>><</replace>> <<updatesidebarimg>><</link>>
-		| <<link ">>>">><<set $underupperwet += 100>><<clamp>><<replace "#statsundertopwet">><<print Math.trunc($underupperwet)>><</replace>> <<updatesidebarimg>><</link>>
+		<<link "<<<">><<set $underupperwet -= 100>><<clamp>><<replace "#statsunderupperwet">><<print Math.trunc($underupperwet)>><</replace>> <<updatesidebarimg>><</link>> |
+		<<link "<<">><<set $underupperwet -= 10>><<clamp>><<replace "#statsunderupperwet">><<print Math.trunc($underupperwet)>><</replace>> <<updatesidebarimg>><</link>> |
+		<<link "<">><<set $underupperwet -= 1>><<clamp>><<replace "#statsunderupperwet">><<print Math.trunc($underupperwet)>><</replace>> <<updatesidebarimg>><</link>> |
+		Under top wetness: <span id="statsunderupperwet"><<print Math.trunc($underupperwet)>></span>
+		| <<link ">">><<set $underupperwet += 1>><<clamp>><<replace "#statsunderupperwet">><<print Math.trunc($underupperwet)>><</replace>> <<updatesidebarimg>><</link>>
+		| <<link ">>">><<set $underupperwet += 10>><<clamp>><<replace "#statsunderupperwet">><<print Math.trunc($underupperwet)>><</replace>> <<updatesidebarimg>><</link>>
+		| <<link ">>>">><<set $underupperwet += 100>><<clamp>><<replace "#statsunderupperwet">><<print Math.trunc($underupperwet)>><</replace>> <<updatesidebarimg>><</link>>
 		<br>
 
 		<<link "<<<">><<set $worn.under_upper.integrity -= 100>><<clamp>><<replace "#statsunderupperintegrity">><<print Math.trunc($worn.under_upper.integrity)>><</replace>> <<updatesidebarimg>><</link>> |
@@ -669,7 +675,63 @@
 		<i>You are not wearing a mask or gag.</i>
 		<br>
 	<</if>>
-	<br>
+
+	<<set _cl_slots to ["upper", "lower", "under_upper", "under_lower", "over_upper", "over_lower", "genitals"]>>
+	<<if $worn.face.type.includesAny("covered", "gag", "mask")>>
+		<<run _cl_slots.push("face")>>
+	<</if>>
+	<<link "Fix all">>
+		<<for _cl range _cl_slots>>
+			<<if $worn[_cl].name isnot 'naked'>>
+				<<set _cl_max to clothingData(_cl, $worn[_cl], 'integrity_max')>>
+				<<set $worn[_cl].integrity to _cl_max>>
+				<<unset _cl_max>>
+				<<replace `'#stats' + _cl.replace('_','') + 'integrity'`>><<print Math.trunc($worn[_cl].integrity)>><</replace>>
+			<</if>>
+		<</for>>
+		<<unset _cl>>
+		<<updatesidebarimg>>
+	<</link>> |
+	<<link "Destroy all">>
+		/* not using ruined widgets to avoid side effects until confirmation */
+		<<for _cl range _cl_slots>>
+			<<if $worn[_cl].name isnot 'naked'>>
+				<<set _cl_min to 0>>
+				<<set $worn[_cl].integrity to _cl_min>>
+				<<unset _cl_min>>
+				<<replace `'#stats' + _cl.replace('_','') + 'integrity'`>><<print Math.trunc($worn[_cl].integrity)>><</replace>>
+			<</if>>
+		<</for>>
+		<<unset _cl>>
+		<<updatesidebarimg>>
+	<</link>> |
+	<<link "Dry all">>
+		<<dry_full>>
+		<<for _cl range _cl_slots.slice(0, 4)>>
+			<<if $worn[_cl].name isnot 'naked'>>
+				<<set _cl_wet to _cl.replace('_','') + "wet">>
+				<<replace `'#stats' + _cl_wet`>><<print Math.trunc(V[_cl_wet])>><</replace>>
+				<<unset _cl_wet>>
+			<</if>>
+		<</for>>
+		<<unset _cl>>
+		<<updatesidebarimg>>
+	<</link>> |
+	<<link "Drench all">>
+		<<for _cl range _cl_slots.slice(0, 4)>>
+			<<if $worn[_cl].name isnot 'naked'>>
+				<<set _cl_wet to _cl.replace('_','') + "wet">>
+				<<set V[_cl_wet] to 200>>
+				<<replace `'#stats' + _cl_wet`>><<print Math.trunc(V[_cl_wet])>><</replace>>
+				<<unset _cl_wet>>
+			<</if>>
+		<</for>>
+		<<unset _cl>>
+		<<clamp>>
+		<<updatesidebarimg>>
+	<</link>>
+	<br><br>
+
 
 	<span class="gold">Skills</span>
 	<br>
@@ -1682,6 +1744,24 @@
 	| <<link ">">><<npcincr Charlie love 1>><<clamp>><<replace "#statscharlielove">><<print Math.trunc($NPCName[$NPCNameList.indexOf("Charlie")].love)>><</replace>><</link>>
 	| <<link ">>">><<npcincr Charlie love 10>><<clamp>><<replace "#statscharlielove">><<print Math.trunc($NPCName[$NPCNameList.indexOf("Charlie")].love)>><</replace>><</link>>
 	| <<link ">>>">><<npcincr Charlie love 100>><<clamp>><<replace "#statscharlielove">><<print Math.trunc($NPCName[$NPCNameList.indexOf("Charlie")].love)>><</replace>><</link>> (50 = full)
+	<br><br>
+
+	<<link "<<<">><<npcincr "Zephyr" love -100>><<clamp>><<replace "#statszephyrlove">><<print Math.trunc($NPCName[$NPCNameList.indexOf("Zephyr")].love)>><</replace>><</link>> |
+	<<link "<<">><<npcincr "Zephyr" love -10>><<clamp>><<replace "#statszephyrlove">><<print Math.trunc($NPCName[$NPCNameList.indexOf("Zephyr")].love)>><</replace>><</link>> |
+	<<link "<">><<npcincr "Zephyr" love -1>><<clamp>><<replace "#statszephyrlove">><<print Math.trunc($NPCName[$NPCNameList.indexOf("Zephyr")].love)>><</replace>><</link>> |
+	Zephyr love: <span id="statszephyrlove"><<print Math.trunc($NPCName[$NPCNameList.indexOf("Zephyr")].love)>></span>
+	| <<link ">">><<npcincr "Zephyr" love 1>><<clamp>><<replace "#statszephyrlove">><<print Math.trunc($NPCName[$NPCNameList.indexOf("Zephyr")].love)>><</replace>><</link>>
+	| <<link ">>">><<npcincr "Zephyr" love 10>><<clamp>><<replace "#statszephyrlove">><<print Math.trunc($NPCName[$NPCNameList.indexOf("Zephyr")].love)>><</replace>><</link>>
+	| <<link ">>>">><<npcincr "Zephyr" love 100>><<clamp>><<replace "#statszephyrlove">><<print Math.trunc($NPCName[$NPCNameList.indexOf("Zephyr")].love)>><</replace>><</link>> (100 = full)
+	<br>
+
+	<<link "<<<">><<npcincr "Zephyr" dom -100>><<clamp>><<replace "#statszephyrdom">><<print Math.trunc($NPCName[$NPCNameList.indexOf("Zephyr")].dom)>><</replace>><</link>> |
+	<<link "<<">><<npcincr "Zephyr" dom -10>><<clamp>><<replace "#statszephyrdom">><<print Math.trunc($NPCName[$NPCNameList.indexOf("Zephyr")].dom)>><</replace>><</link>> |
+	<<link "<">><<npcincr "Zephyr" dom -1>><<clamp>><<replace "#statszephyrdom">><<print Math.trunc($NPCName[$NPCNameList.indexOf("Zephyr")].dom)>><</replace>><</link>> |
+	Zephyr dominance: <span id="statszephyrdom"><<print Math.trunc($NPCName[$NPCNameList.indexOf("Zephyr")].dom)>></span>
+	| <<link ">">><<npcincr "Zephyr" dom 1>><<clamp>><<replace "#statszephyrdom">><<print Math.trunc($NPCName[$NPCNameList.indexOf("Zephyr")].dom)>><</replace>><</link>>
+	| <<link ">>">><<npcincr "Zephyr" dom 10>><<clamp>><<replace "#statszephyrdom">><<print Math.trunc($NPCName[$NPCNameList.indexOf("Zephyr")].dom)>><</replace>><</link>>
+	| <<link ">>>">><<npcincr "Zephyr" dom 100>><<clamp>><<replace "#statszephyrdom">><<print Math.trunc($NPCName[$NPCNameList.indexOf("Zephyr")].dom)>><</replace>><</link>> (50 = full)
 	<br>
 
 	<br>
@@ -1703,8 +1783,6 @@
 	| <<link ">>">><<npcincr "Great Hawk" dom 10>><<clamp>><<replace "#statsgreathawkdom">><<print Math.trunc($NPCName[$NPCNameList.indexOf("Great Hawk")].dom)>><</replace>><</link>>
 	| <<link ">>>">><<npcincr "Great Hawk" dom 100>><<clamp>><<replace "#statsgreathawkdom">><<print Math.trunc($NPCName[$NPCNameList.indexOf("Great Hawk")].dom)>><</replace>><</link>> (100 = full)
 	<br><br>
-
-	<br>
 
 	<<link "<<<">><<set $wolfpacktrust -= 10>><<set $wolfpacktrust = Math.clamp($wolfpacktrust, 0, 30)>><<replace "#statstrust">><<print Math.trunc($wolfpacktrust)>><</replace>><</link>> |
 	<<link "<<">><<set $wolfpacktrust -= 5>><<set $wolfpacktrust = Math.clamp($wolfpacktrust, 0, 30)>><<replace "#statstrust">><<print Math.trunc($wolfpacktrust)>><</replace>><</link>> |
@@ -1762,7 +1840,7 @@
 	| <<link ">>">><<set $delinquency += 100>><<clamp>><<replace "#statsdelinquency">><<print Math.trunc($delinquency)>><</replace>><</link>>
 	| <<link ">>>">><<set $delinquency += 1000>><<clamp>><<replace "#statsdelinquency">><<print Math.trunc($delinquency)>><</replace>><</link>>
 	<br>
-	<<if $player.gender is "h">>
+	<<if $player.penisExist and $player.vaginaExist>>
 		<<link "<">><<set $schoolrep.herm -= 1>><<set $schoolrep.herm = Math.clamp($schoolrep.herm, 0, 5)>><<replace "#statsschoolrepherm">><<print Math.trunc($schoolrep.herm)>><</replace>><</link>> |
 		School hermaphrodite reputation: <span id="statsschoolrepherm"><<print Math.trunc($schoolrep.herm)>></span>
 		| <<link ">">><<set $schoolrep.herm += 1>><<set $schoolrep.herm = Math.clamp($schoolrep.herm, 0, 5)>><<replace "#statsschoolrepherm">><<print Math.trunc($schoolrep.herm)>><</replace>><</link>>
@@ -1771,14 +1849,6 @@
 		School crossdresser reputation: <span id="statsschoolrepcrossdress"><<print Math.trunc($schoolrep.crossdress)>></span>
 		| <<link ">">><<set $schoolrep.crossdress += 1>><<set $schoolrep.crossdress = Math.clamp($schoolrep.crossdress, 0, 5)>><<replace "#statsschoolrepcrossdress">><<print Math.trunc($schoolrep.crossdress)>><</replace>><</link>>
 	<</if>>
-	<br><br>
-	<<link "<<<">><<set $crime -= 1000>><<set $crime = Math.clamp($crime, C.crime.min, C.crime.max)>><<replace "#statscrime">><<print Math.trunc($crime)>><</replace>><</link>> |
-	<<link "<<">><<set $crime -= 100>><<set $crime = Math.clamp($crime, C.crime.min, C.crime.max)>><<replace "#statscrime">><<print Math.trunc($crime)>><</replace>><</link>> |
-	<<link "<">><<set $crime -= 10>><<set $crime = Math.clamp($crime, C.crime.min, C.crime.max)>><<replace "#statscrime">><<print Math.trunc($crime)>><</replace>><</link>> |
-	Crime: <span id="statscrime"><<print Math.trunc($crime)>></span>
-	| <<link ">">><<set $crime += 10>><<set $crime = Math.clamp($crime, C.crime.min, C.crime.max)>><<replace "#statscrime">><<print Math.trunc($crime)>><</replace>><</link>>
-	| <<link ">>">><<set $crime += 100>><<set $crime = Math.clamp($crime, C.crime.min, C.crime.max)>><<replace "#statscrime">><<print Math.trunc($crime)>><</replace>><</link>>
-	| <<link ">>>">><<set $crime += 1000>><<set $crime = Math.clamp($crime, C.crime.min, C.crime.max)>><<replace "#statscrime">><<print Math.trunc($crime)>><</replace>><</link>>
 	<br><br>
 
 	<<if $location is "asylum">>
@@ -1881,6 +1951,28 @@
 		| <<link ">>>">><<set $pound.status += 100>><<set $pound.status = Math.clamp($pound.status, 0, 100)>><<replace "#statpoundstatus">><<print Math.trunc($pound.status)>><</replace>><</link>>
 		<br><br>
 	<</if>>
+
+	<span class="gold">Crime</span>
+	<br>
+	<<for _cr range Object.keys(setup.crimeNames)>>
+		<<capture _cr>>
+			<<link "<<<">><<set C.crime[_cr] -= 1000>><<replace `"#statscrime-"+_cr`>><<print Math.trunc($crime[_cr].current)>><</replace>><</link>> |
+			<<link "<<">><<set C.crime[_cr] -= 100>><<replace `"#statscrime-"+_cr`>><<print Math.trunc($crime[_cr].current)>><</replace>><</link>> |
+			<<link "<">><<set C.crime[_cr] -= 10>><<replace `"#statscrime-"+_cr`>><<print Math.trunc($crime[_cr].current)>><</replace>><</link>> |
+			<<print toTitleCase(setup.crimeNames[_cr])>>: <span @id="'statscrime-'+_cr"><<print Math.trunc($crime[_cr].current)>></span> |
+			<<link ">">><<set C.crime[_cr] += 10>><<replace `"#statscrime-"+_cr`>><<print Math.trunc($crime[_cr].current)>><</replace>><</link>> |
+			<<link ">>">><<set C.crime[_cr] += 100>><<replace `"#statscrime-"+_cr`>><<print Math.trunc($crime[_cr].current)>><</replace>><</link>> |
+			<<link ">>>">><<set C.crime[_cr] += 1000>><<replace `"#statscrime-"+_cr`>><<print Math.trunc($crime[_cr].current)>><</replace>><</link>>
+			<br>
+		<</capture>>
+	<</for>>
+	<<unset _cr>>
+	<br>
+	<span class="gold">Crime Events:</span>
+	<br>
+	<span id="statscrimeevents"><<listCrimeCheats>></span>
+	<<link "Clear Crime events">><<crimeClearEvent "all">><<replace #statscrimeevents>><<listCrimeCheats>><</replace>><</link>>
+	<br><br>
 
 	<span class="gold">Fame</span>
 	<br>
@@ -2002,7 +2094,7 @@
 		<br>
 		<<domusicon>>[[Domus Street]]
 		<br>
-		<<domushouseicon>>[[Orphanage]]
+		<<homeicon>>[[Orphanage]]
 		<br>
 		<<barbicon>>[[Barb Street]]
 		<br>
@@ -2036,7 +2128,7 @@
 		<br>
 		<<highicon>>[[High Street]]
 		<br>
-		<<shoppingcentreicon>>[[Shopping Centre]]
+		<<shopicon>>[[Shopping Centre]]
 		<br>
 		<<elkicon>>[[Elk Street]]
 		<br>
@@ -2086,6 +2178,8 @@
 		<<foresticon>>[[Forest]]
 		<br>
 		<<roadicon>>[[Farm Road 1]]
+		<br>
+		<<farmicon "barn">>[[Farmlands|Farmland]]
 		<br><br>
 
 		<span class="gold">Underground</span>
@@ -2332,12 +2426,16 @@
 				<<set _menstruation.recoveryTime to null>>
 				<<set _menstruation.recoveryTimeStart to null>>
 				<<set _menstruation.recoveryStage to null>>
+				<<run delete C.npc.Alex.pregnancy.pcKnowledge>>
+				<<run delete C.npc.Alex.pregnancy.test>>
+				<<run delete C.npc.Alex.pregnancy.ultraSound>>
+				<<run delete C.npc.Alex.pregnancy.sample>>
 			<</link>>
 			<span class="description">This is a cheat, not an abortion.</span>
 			<br><br>
 		<<else>>
 			<<if ($playerPregnancyHumanDisable == "f" or $playerPregnancyBeastDisable == "f") and !playerIsPregnant()>>
-				Get pregnant with: 
+				Get pregnant with:
 				<<if $pregnancytype is "realistic">>
 					<span class="description">Instant (fetishised) pregnancy</span>
 				<</if>>
@@ -2359,7 +2457,7 @@
 				<</if>>
 				<<if $playerPregnancyBeastDisable == "f">>
 					<<if $playerPregnancyHumanDisable == "f">>
-						| 
+						|
 					<</if>>
 					<<link [[A wolf|$passage]]>>
 					<<if beastMaleChance() gt 0>> /* checks if there are male wolves, if not a foreigner wolf impregnates PC */
@@ -2377,7 +2475,7 @@
 					<</if>>
 					<<set _spermType to (_actor.nam == "Black Wolf" ? "wolf" : "human")>>
 					<<capture _actor, _spermType, _womb>>
-					| <<link [[_actor.nam|$passage]]>> 
+					| <<link [[_actor.nam|$passage]]>>
 						<<playerPregnancy _actor.nam _spermType true _womb undefined true>>
 					<</link>>
 					<</capture>>
@@ -2412,7 +2510,7 @@
 					<</if>>
 					<<if $playerPregnancyBeastDisable == "f">>
 						<<if $playerPregnancyHumanDisable == "f">>
-							| 
+							|
 						<</if>>
 						<<link "A wolf">>
 							<<if beastMaleChance() gt 0>> /* checks if there are male wolves, if not a foreigner wolf inseminates PC */
@@ -2431,7 +2529,7 @@
 						<</if>>
 						<<set _spermType to (_actor.nam === "Black Wolf" ? "wolf" : "human")>>
 						<<capture _actor, _spermType, _womb>>
-						| <<link _actor.nam>> 
+						| <<link _actor.nam>>
 							<<recordSperm `{target: "pc", spermOwner: _actor.nam, spermType: "human", genital: _womb}`>>
 							<<replace "#cheatSpermSources">>(you have $sexStats[_womb].sperm.length sources of sperm)<</replace>>
 						<</link>>
@@ -2464,10 +2562,10 @@
 			<<print _actor.nam>>:
 			<<capture _actor>>
 			<<set _linkText to "Impregnate " + _actor.pronouns.him>>
-			<<link [[_linkText|$passage]]>> 
+			<<link [[_linkText|$passage]]>>
 				<<namedNpcPregnancy _actor.nam "pc" "human" true undefined true>>
 			<</link>>
-			<<if $pregnancytype is "realistic">> 
+			<<if $pregnancytype is "realistic">>
 				<<set _linkText to "Inseminate " + _actor.pronouns.him>>
 				- <<link _linkText>>
 					<<recordSperm `{target: _actor.nam, spermOwner: "pc", spermType: "human", genital: "vagina"}`>>
@@ -2554,16 +2652,35 @@
 	<</link>>
 	<br><br>
 
-	<<link [[clear pregnancy|$passage]]>>
-		<<set _pregnancyNPC.type to null>>
-		<<set _pregnancyNPC.fetus to []>>
-		<<set _pregnancyNPC.waterBreaking to false>>
-		<<set _pregnancyNPC.timer to null>>
-		<<set _pregnancyNPC.timerEnd to null>>
-		<<set _pregnancyNPC.npcAwareOf to null>>
-		<<set _pregnancyNPC.pcAwareOf to null>>
-		<<set _pregnancyNPC.potentialFathers to []>>
-		<<set _pregnancyNPC.sperm to []>>
-		<<set _pregnancyNPC.cicleDay to 1>>
-	<</link>>
+	<<if _pregnantNPCId is 25>>
+		<<link [[clear pregnancy|$passage]]>>
+			<<set _pregnancyNPC.type to null>>
+			<<set _pregnancyNPC.fetus to []>>
+			<<set _pregnancyNPC.waterBreaking to false>>
+			<<set _pregnancyNPC.timer to null>>
+			<<set _pregnancyNPC.timerEnd to null>>
+			<<set _pregnancyNPC.npcAwareOf to null>>
+			<<set _pregnancyNPC.pcAwareOf to null>>
+			<<set _pregnancyNPC.potentialFathers to []>>
+			<<set _pregnancyNPC.sperm to []>>
+			<<set _pregnancyNPC.cicleDay to 1>>
+			<<run delete C.npc.Alex.pregnancy.selfKnowledge>>
+		<</link>>
+
+	<<else>>
+		<<link [[clear pregnancy|$passage]]>>
+			<<set _pregnancyNPC.type to null>>
+			<<set _pregnancyNPC.fetus to []>>
+			<<set _pregnancyNPC.waterBreaking to false>>
+			<<set _pregnancyNPC.timer to null>>
+			<<set _pregnancyNPC.timerEnd to null>>
+			<<set _pregnancyNPC.npcAwareOf to null>>
+			<<set _pregnancyNPC.pcAwareOf to null>>
+			<<set _pregnancyNPC.potentialFathers to []>>
+			<<set _pregnancyNPC.sperm to []>>
+			<<set _pregnancyNPC.cicleDay to 1>>
+		<</link>>
+
+	<</if>>
+
 <</widget>>

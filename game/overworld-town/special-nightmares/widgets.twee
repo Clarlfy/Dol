@@ -26,9 +26,7 @@
 			<<set $nightmareRedirect to _args[0]>>
 			<<set $nightmareExit to $passage>>
 
-			<<reroute {
-				[$nightmareRedirect] : $nightmareNext
-            }>>
+			<<run General.linkOverride({ [$nightmareRedirect]: $nightmareNext })>>
         <</if>>
     <</if>>
 <</widget>>
@@ -112,7 +110,7 @@
 	<<set $parasitepregdisable to $real_parasitepregdisable>><<unset $real_parasitepregdisable>>
 
 	<<set $sleephour to random(1, $sleephour)>>
-	<<sleep>>
+	<<sleep true>>
 <</widget>>
 
 <<widget "nightmareWakeDifficulty">>

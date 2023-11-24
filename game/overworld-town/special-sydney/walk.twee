@@ -126,7 +126,7 @@
 		"I'd love to, but can it wait until after mass?"<<set _walk to false>>
 	<<elseif Time.schoolDay and Time.hour is 6>>
 		"It's a bit early for that, isn't it?"<<set _walk to false>>
-	<<elseif Time.hour gte 18>>
+	<<elseif Time.hour gte 18 or Time.hour lte 5>>
 		"It's a bit late for that, isn't it?"<<set _walk to false>>
 	<<elseif _sydneyStatus.includes("corrupt")>>
 		"Sure, I could use some time away."<<set _walk to true>>
@@ -1641,7 +1641,7 @@ You are on the beach with Sydney.
 	<</if>>
 	<br><br>
 	<<if $worn.under_lower.type.includes("swim") and ($worn.under_upper.type.includes("swim") or $worn.under_upper.type.includes("naked")) or ($worn.upper.type.includes("swim") or $worn.upper.type.includes("naked")) and ($worn.lower.type.includes("swim") or $worn.lower.type.includes("naked"))>>
-		<<link [[Go for a swim (0:02)|Sydney Beach Swim]]>><<pass 2>><</link>>
+		<<link [[Go for a swim (0:20)|Sydney Beach Swim]]>><<pass 20>><</link>>
 		<br>
 		<<link [[Tan on the beach (1:00)|Sydney Beach Tanning]]>><<pass 60>><<npcincr Sydney love 1>><</link>><<llstress>><<glove>>
 		<br>
@@ -1723,9 +1723,9 @@ You are on the beach with Sydney.
 			<</if>>
 	<</switch>>
 	<br><br>
-	<<link [[Swim with Sydney (0:30)|Sydney Beach Swim]]>><<pass 30>><<stress -6>><<tiredness 6>><<set $seaswim to 1>><<npcincr Sydney love 1>><</link>><<gswimming>><<lstress>><<gtiredness>><<glove>>
+	<<swimicon>><<link [[Swim with Sydney (0:20)|Sydney Beach Swim]]>><<pass 20>><<stress -6>><<tiredness 6>><<set $seaswim to 1>><<npcincr Sydney love 1>><</link>><<gswimming>><<lstress>><<gtiredness>><<glove>>
 	<br>
-	<<link [[Leave the water (0:01)|Sydney Beach]]>><<pass 1>><<endevent>><<npc "Sydney">><<person1>><</link>>
+	<<beachicon>><<link [[Leave the water (0:01)|Sydney Beach]]>><<pass 1>><<endevent>><<npc "Sydney">><<person1>><</link>>
 	<br>
 <</if>>
 
@@ -1862,10 +1862,24 @@ This passage should be unreachable. If you're seeing this, you've found a bug. P
 <<location "beach">><<effects>><<run statusCheck("Sydney")>>
 You walk along the shore with Sydney.
 <<if $weather is "clear">>
-	The sun's intensity wears on both of you, but you keep your minds off the heat with idle chatter.
+	<<switch $season>>
+		<<case "spring">>
+			A gentle breeze caresses, and the warm sunlight bathes upon you both.
+		<<case "summer">>
+			The sun's intensity wears on both of you, but you keep your minds off the heat with idle chatter.
+		<<case "autumn">>
+			The weather is no longer as sweltering, as a slight chill tinges the air.
+		<<case "winter">>
+			You immerse yourselves in chatting, as the sunlight appears to dispel the chill that lingers upon you.
+	<</switch>>
 	<<tiredness 3>><<gtiredness>>
 <<else>>
-	The cool weather makes for a pleasant walk. You chat with <<him>> on the way.
+	<<switch $season>>
+		<<case "summer">>
+			The cool weather makes for a pleasant walk. You chat with <<him>> on the way.
+		<<default>>
+			The weather is chilly, causing both of you to involuntarily tighten your necks, exhaling white breath while chatting.
+	<</switch>>
 <</if>>
 <<physique 3>><<tiredness 3>>
 <br><br>
@@ -2162,7 +2176,7 @@ You reach the temple without incident.
 
 :: Elk Sydney Walk
 <<set $outside to 1>><<set $location to "adult_shop">><<effects>><<run statusCheck("Sydney")>><<sydneySchedule>>
-You nod, and Sydney smiles at you. 
+You nod, and Sydney smiles at you.
 <<if $bus isnot "rehearsal">>
 	<<He>> finishes cleaning up, and you walk to Elk Street with <<him>>.
 <<else>>
@@ -2193,6 +2207,6 @@ You chat with <<him>> on the way.
 	)>>
 <</if>>
 <br><br>
-You reach the Elk Street without incident. Sydney waves you goodbye as <<he>> enters Sirris's shop.
+You reach Elk Street without incident. Sydney waves you goodbye as <<he>> enters Sirris's shop.
 <br><br>
 <<link [[Next|Elk Street]]>><<endevent>><<set $eventskip to 1>><</link>>

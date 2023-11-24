@@ -100,7 +100,7 @@ Requires prior <<selectmodel "main">>
 		██████  ██   ██ ███████ ███████
 	-->
 
-	<<set _modeloptions.body_type to $player.gender_body>>
+	<<set _modeloptions.body_type to !$options.genderBody || $options.genderBody === "default" ? $player.gender_body : $options.genderBody>>
 
 	<<run apparentbreastsizecheck()>>
 	<<switch $player.perceived_breastsize>>
@@ -276,6 +276,8 @@ Requires prior <<selectmodel "main">>
 
 	<<set _modeloptions.freckles = $player.freckles == true and $makeup.concealer != 1>>
 
+	<<set _modeloptions.ears_position to $earsposition>>
+
 	<<set _modeloptions.toast = _toast == true>>
 
 	<!-- Eyes -->
@@ -300,6 +302,7 @@ Requires prior <<selectmodel "main">>
 	<<else>>
 		<<set _modeloptions.brows = "top">>
 	<</if>>
+	<<set _modeloptions.brows_position to $browsposition>>
 
 	<!-- Mouth -->
 	<<if $trauma gte $traumamax>>
@@ -461,6 +464,25 @@ Requires prior <<selectmodel "main">>
 	<<if $player.vaginaExist>>
 		<<set _modeloptions.clit_parasite to $parasite.clit.name>>
 	<</if>>
+	<<if _modeloptions.penis_parasite is "parasite" or _modeloptions.clit_parasite is "parasite">>
+		/* Always uses the clit image as a base */
+		<<if $earSlime.focus is "impregnation">>
+			<<set _modeloptions.clit_parasite to "parasitem">>
+		<<else>>
+			<<set _modeloptions.clit_parasite to "parasite">>
+		<</if>>
+		<<if $player.penisExist and $player.ballsExist and $player.penissize gte -1>>
+			<<set _modeloptions.penis_parasite to "parasite">>
+		<<else>>
+			<<set _modeloptions.penis_parasite to "">>
+		<</if>>
+		/* Ensure its always displayed */
+		<<if $worn.genitals.name is "chastity parasite">>
+			<<set _modeloptions['worn_genitals'] = clothesIndex("genitals", $worn.genitals)>>
+			<<set _modeloptions['worn_genitals_integrity'] = integrityKeyword($worn.genitals, "genitals")>>
+			<<set _modeloptions['worn_genitals_colour'] = $worn.genitals.colour>>
+		<</if>>
+	<</if>>
 
 	<!-- Dripping Speeds -->
 	<<set $_dripspeeds to ["", "Start", "VerySlow", "Slow", "Fast", "VeryFast"]>>
@@ -484,6 +506,7 @@ Requires prior <<selectmodel "main">>
 	<</if>>
 	<<if _chestVisible>>
 		<<set _modeloptions.nipples_parasite to $parasite.nipples.name>>
+		<<set _modeloptions.breasts_parasite to $parasite.breasts.name>>
 	<</if>>
 
 	<!--
@@ -524,14 +547,10 @@ Requires prior <<selectmodel "main">>
 Set model options & filters for player clothes
 -->
 <<widget "modelprepare-player-clothes">>
-	<<if $worn.upper.type.includes("naked") and $worn.over_upper.type.includes("naked")>>
-		<<if !$worn.under_upper.type.includes("naked") or _coverBreastsWithArm>>
-			<<set _modeloptions.breasts to "cleavage">>
-		<<else>>
-			<<set _modeloptions.breasts to "default">>
-		<</if>>
+	<<if !$worn.upper.type.includes("naked") || !$worn.under_upper.type.includes("naked") || _coverBreastsWithArm>>
+		<<set _modeloptions.breasts to "cleavage">>
 	<<else>>
-		<<set _modeloptions.breasts to "">>
+		<<set _modeloptions.breasts to "default">>
 	<</if>>
 
 	<<if $worn.under_upper.type.includes("chest_bind")>>
@@ -553,6 +572,9 @@ Set model options & filters for player clothes
 		<<set _modeloptions.hair_sides_length to "short">>
 		<<set _modeloptions.hair_fringe_length to "short">>
 	<</if>>
+
+	<<set _modeloptions.alt_position to $worn.upper.altposition is "alt">>
+	<<set _modeloptions.alt_position_neck to $worn.neck.altposition is "alt">>
 
 	<<set _modeloptions.upper_tucked to $upperTucked and !setup.clothes.upper[clothesIndex('upper', $worn.upper)].notuck and $worn.upper.outfitPrimary is undefined>>
 
@@ -593,6 +615,9 @@ Set model options & filters for player clothes
 			if (worn.accessory_colour === 'custom') {
 				_modeloptions.filters['worn_'+slot+'_acc_custom'] = worn.accessory_colourCanvasFilter || getCustomClothesColourCanvasFilter(worn.accessory_colourCustom);
 			}
+			if (worn.accessory_layer_under) {
+				_modeloptions.acc_layer_under = worn.accessory_layer_under;
+			}
 		}
 	<</twinescript>>
 
@@ -605,6 +630,7 @@ Set model options & filters for player clothes
 
 <<widget "canvas-player-base-body">>
 	<<selectmodel "main">>
+	<<set _chestVisible to !$options.neverNudeMenus>>
 	<<modelprepare-player-body>>
 
 	<!-- Reset covering -->

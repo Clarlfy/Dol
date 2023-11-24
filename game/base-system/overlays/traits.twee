@@ -19,14 +19,14 @@
 				{
 					name: "Broken Vow",
 					colour: "red",
-					has: $player.virginity.temple is false and $temple_rank isnot "prospective" and $temple_rank isnot undefined,
+					has: $player.virginity.temple isnot true and $temple_rank isnot "prospective" and $temple_rank isnot undefined,
 					text: "The temple will know.",
 				},
 				{
 					name: "Rite of Promise: $templePromised",
 					colour: "blue",
 					has: $templePromised isnot "" and $player.virginity.temple is true,
-					text: "You've been bound to another initiate. Sex with this person will not break your vows.",
+					text: "You've been bound to another member of the temple. Sex with this person will not break your vows.",
 				},
 				{
 					name: "Broken Promise: $templePromised",
@@ -38,13 +38,28 @@
 					name: "Purity boost",
 					colour: "green",
 					has: $featsPurityBoost gt 0,
+					text: () => {
+						let dailyPurity = 1;
+						if (V.fallenangel >= 2) dailyPurity -= 10;
+						if (V.player.virginity.vaginal === true && V.player.virginity.penile === true) dailyPurity += 2;
+						if (dailyPurity + V.featsPurityBoost > 0) return "You are gaining purity daily.";
+						if (dailyPurity + V.featsPurityBoost === 0) return "You are not gaining purity daily.";
+						return "You are losing purity daily.";
+					},
 					text: "You are gaining purity daily.",
 				},
 				{
 					name: "Impurity boost",
 					colour: "red",
 					has: $featsPurityBoost lt 0,
-					text: "You are losing purity daily.",
+					text: () => {
+						let dailyPurity = 1;
+						if (V.fallenangel >= 2) dailyPurity -= 10;
+						if (V.player.virginity.vaginal === true && V.player.virginity.penile === true) dailyPurity += 2;
+						if (dailyPurity + V.featsPurityBoost > 0) return "You are gaining less purity daily.";
+						if (dailyPurity + V.featsPurityBoost === 0) return "You are not gaining purity daily.";
+						return "You are losing purity daily.";
+					},
 				},
 				{
 					name: "Crossdresser",
@@ -81,6 +96,23 @@
 					colour: "red",
 					has: $backgroundTraits.includes("plantlover"),
 					text: "You're more vulnerable to aphrodisiacs and alcohol. You draw nourishment from nectar. Drinking it invigorates your body, improving physique and reducing stress. Failing to consume nectar for an extended period will take its toll on your body, and eventually cause this trait and the <<if $submissive lte 850>><span class='lewd'>Dendrophile</span><<else>><span class='lewd'>Plant Lover</span><</if>> trait to disappear.<span class='hidden'></span>",
+				},
+				{
+					name: () => {
+						return "Ear slime focus: " + $earSlime.focus;
+					},
+					colour: "lewd",
+					has: $earSlime.focus and $earSlime.focus isnot "none",
+					text: () => {
+						switch ($earSlime.focus) {
+							case "pregnancy":
+								return "You chose the path of pregnancy, causing the ear slime to amplify traits related to becoming pregnant, while weakening other traits.";
+							case "mixed":
+								return "You chose to walk the path between pregnancy and impregnation, causing the ear slime to amplify traits related to both, to a lesser degree.";
+							case "impregnation":
+								return "You chose the path of impregnation, causing the ear slime to amplify traits related to impregnating others, while weakening other traits.";
+						}
+					}
 				},
                 {
                     name: "Pregnant",
@@ -280,7 +312,7 @@
 				{
 					name: "Radiant",
 					colour: "gold",
-					has: between($angel,4,5),
+					has: $angel gte 4,
 					text: 'You are pure. Unlocks the "banish" action a number of times per day based on your angelicness, dealing heavy damage to a tentacle. Its strength is greatly increased while at maximum purity. Uses remaining today: ($angelBanish / $angelBanishMax)',
 				},
 				{
@@ -390,6 +422,12 @@
 					colour: "green",
 					has: $farm_stage gte 6,
 					text: "You know your way around a barn. Your physique is easier to maintain.",
+				},
+				{
+					name: "Knowledge: Islander language",
+					colour: "",
+					has: $islander_language gte 100,
+					text: "You can understand and speak the tongue of the islanders.",
 				},
 				{
 					name: "Knowledge: Quicksand",
@@ -711,7 +749,7 @@
 					textColour: "red",
 				},
 				{
-					name: () => V.hallucinations >= 2 || V.bestialitydisable === "t" ? "Stockholm Syndrome: Harpy" : "Stockholm Syndrome: Great Hawk",
+					name: () => V.greathawkmonster === 2 || V.bestialitydisable === "t" ? "Stockholm Syndrome: Harpy" : "Stockholm Syndrome: Great Hawk",
 					colour: "white",
 					has: $syndromebird gte 1,
 					text: "It only wants a mate.",

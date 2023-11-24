@@ -116,7 +116,7 @@ const combatActionColours = {
 		],
 		sub: [
 			/* leftaction or rightaction */
-			"leftplay", "leftgrab", "leftstroke", "leftchest", "rightplay", "rightgrab", "rightstroke", "rightchest", "leftchest", "rightchest", "leftwork", "rightwork", "leftclit", "rightclit", "handedge", "keepchoke", "leftmasturbatepussy", "rightmasturbatepussy", "leftmasturbateanus", "rightmasturbateanus", "leftmasturbatepenis", "rightmasturbatepenis", "lefthandholdkeep", "righthandholdkeep", "lefthandholdnew", "righthandholdnew", "handguide", "lubeanus", "lubepussy", "lubepenis", "removebuttplug", "dildoOtherPussyTease", "dildoOtherPussyFuck", "dildoOtherAnusTease", "dildoOtherAnusFuck", "strokerOtherPenisTease", "strokerOtherPenisFuck", "dildoSelfPussyEntrance", "dildoSelfAnusEntrance", "dildoSelfPussy", "dildoSelfAnus", "strokerSelfPenisEntrance", "strokerSelfPenis",
+			"leftplay", "leftgrab", "leftstroke", "leftchest", "rightplay", "rightgrab", "rightstroke", "rightchest", "leftchest", "rightchest", "leftwork", "rightwork", "leftclit", "rightclit", "handedge", "keepchoke", "leftmasturbatepussy", "rightmasturbatepussy", "leftmasturbateanus", "rightmasturbateanus", "leftmasturbatepenis", "rightmasturbatepenis", "lefthandholdkeep", "righthandholdkeep", "lefthandholdnew", "righthandholdnew", "handguide", "lubeanus", "lubepussy", "lubepenis", "removebuttplug", "dildoOtherPussyTease", "dildoOtherPussyFuck", "dildoOtherAnusTease", "dildoOtherAnusFuck", "strokerOtherPenisTease", "strokerOtherPenisFuck", "dildoSelfPussyEntrance", "dildoSelfAnusEntrance", "dildoSelfPussy", "dildoSelfAnus", "strokerSelfPenisEntrance", "strokerSelfPenis", "leftcovervaginalewd", "rightcovervaginalewd", "leftcoverpenislewd", "rightcoverpenislewd", "leftcoveranuslewd", "rightcoveranuslewd",
 			/* feetaction */
 			"grab", "vaginagrab", "grabrub", "vaginagrabrub", "rub",
 			/* mouthaction */
@@ -335,7 +335,7 @@ DefineMacroS("combatDefaults", combatDefaults);
  * @returns {boolean}
  */
 function combatSkillCheck(skillname, targetid = 0, basedifficulty = 1000, multiplier = 100) {
-	const skill = V[skillname + "skill"];
+	const skill = currentSkillValue(skillname + "skill");
 	const rng = V.rng * 10;
 	const arousalfactor = V.enemyarousalmax / (V.enemyarousal + 1);
 	const trust = V.enemytrust * 10;
@@ -585,7 +585,10 @@ function bulkProduceValue(plant, quantity = 250) {
 window.bulkProduceValue = bulkProduceValue;
 
 function toTitleCase(str) {
-	return str.replace(/\w\S*/g, txt => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
+	const exclude = new Set(["a", "an", "and", "as", "at", "but", "by", "for", "if", "in", "of", "on", "or", "the", "to", "up", "yet"]);
+	return str.toLowerCase().replace(/\b\w[\w']*\b/g, (word, i) => {
+		return exclude.has(word) && i !== 0 ? word : word.toUpperFirst();
+	});
 }
 window.toTitleCase = toTitleCase;
 
@@ -606,8 +609,12 @@ function getRobinLocation() {
 		T.robin_location = "sleep";
 	} else if (Time.schoolDay && between(Time.hour, 8, 15)) {
 		T.robin_location = "school";
-	} else if (Time.hour === 16 && between(Time.minute, 31, 59) && !V.daily.robin.bath) {
-		T.robin_location = "bath";
+	} else if (Time.hour === 16 && between(Time.minute, 31, 59)) {
+		if (!V.daily.robin.bath) {
+			T.robin_location = "bath";
+		} else {
+			T.robin_location = "orphanage";
+		}
 	} else if (V.halloween === 1 && between(Time.hour, 16, 18) && Time.monthDay === 31) {
 		T.robin_location = "halloween";
 	} else if ((Time.isWeekEnd()) && between(Time.hour, 9, 16) && C.npc.Robin.trauma < 80) {
@@ -1156,7 +1163,7 @@ function clothesIndex(slot, itemToIndex) {
 }
 window.clothesIndex = clothesIndex;
 
-function currentSkillValue(skill) {
+function currentSkillValue(skill, disableModifiers = 0) {
 	let result = V[skill];
 	if (!result && result !== 0) {
 		/* console.log(`currentSkillValue - skill '${skill}' unknown`); */
@@ -1166,10 +1173,11 @@ function currentSkillValue(skill) {
 		});
 		return 0;
 	}
+	// Prevents infinate loops, any call to `currentSkillValue` in this function should be written like 'currentSkillValue("skillName", disableModifiers + 1)'
+	if (disableModifiers >= 2) return result;
 	if (
 		[
-			"skulduggery", "physique", "danceskill", "swimmingskill", "athletics", "willpower", "tending", "science", "maths", "english", "history",
-		].includes(skill) &&
+			"skulduggery", "physique", "danceskill", "swimmingskill", "athletics", "willpower", "tending", "science", "maths", "english", "history", "housekeeping"].includes(skill) &&
 		V.moorLuck > 0
 	) {
 		result = Math.floor(result * (1 + V.moorLuck / 100));
@@ -1197,13 +1205,11 @@ function currentSkillValue(skill) {
 		}
 		result = Math.floor(result * (1 - playerBellySize() / T.pregnancyModifier));
 	}
-	let modifier = 1;
 	switch (skill) {
 		case "skulduggery":
-			if (V.worn.hands.type.includes("sticky_fingers")) modifier += 0.05;
-			if (V.transformationParts.traits.sharpEyes !== "disabled") modifier += 0.05;
-			if (V.fox >= 6) modifier += 0.10;
-			result = Math.floor(result * modifier);
+			if (V.worn.hands.type.includes("sticky_fingers")) result = Math.floor(result * 1.05);
+			if (V.transformationParts.traits.sharpEyes !== "disabled") result = Math.floor(result * 1.05);
+			if (V.fox >= 6) result = Math.floor(result * 1.1);
 			break;
 		case "physique":
 			if (["forest", "moor", "farm"].includes(V.location)) {
@@ -1211,7 +1217,7 @@ function currentSkillValue(skill) {
 					result = Math.floor(result * (1 - V.worn.feet.reveal / 5000));
 				}
 				if (V.worn.feet.type.includes("rugged")) {
-					result = Math.floor(result * (1 + V.feetskill / 10000));
+					result = Math.floor(result * (1 + currentSkillValue("feetskill", disableModifiers + 1) / 10000));
 				}
 			}
 			break;
@@ -1238,11 +1244,11 @@ function currentSkillValue(skill) {
 				result = Math.floor(result * 1.05);
 			}
 			if (V.worn.feet.type.includes("swim")) {
-				result = Math.floor(result * (1 + V.feetskill / 10000));
+				result = Math.floor(result * (1 + currentSkillValue("feetskill", disableModifiers + 1) / 10000));
 			} else if (V.worn.feet.type.includes("heels")) {
-				result = Math.floor(result * (0.8 + V.feetskill / 10000));
+				result = Math.floor(result * (0.8 + currentSkillValue("feetskill", disableModifiers + 1) / 10000));
 			} else if (!V.worn.feet.type.includes("naked")) {
-				result = Math.floor(result * (0.9 + V.feetskill / 10000));
+				result = Math.floor(result * (0.9 + currentSkillValue("feetskill", disableModifiers + 1) / 10000));
 			}
 			if (V.worn.feet.type.includes("shackle")) {
 				result = Math.floor(result * 0.5);
@@ -1254,19 +1260,69 @@ function currentSkillValue(skill) {
 					result = Math.floor(result * (1 - V.worn.feet.reveal / 5000));
 				}
 				if (V.worn.feet.type.includes("rugged")) {
-					result = Math.floor(result * (1 + V.feetskill / 10000));
+					result = Math.floor(result * (1 + currentSkillValue("feetskill", disableModifiers + 1) / 10000));
 				}
 			}
 			if (V.worn.feet.type.includes("shackle")) result /= 10;
 			break;
 		case "willpower":
-			if (V.parasite.left_ear.name === V.parasite.right_ear.name && V.parasite.left_ear.name === "slime") {
+			if (numberOfEarSlime() >= 2 && V.earSlime.growth > 50) {
+				result = Math.floor(result * (0.9 - Math.clamp((V.earSlime.growth - 50) / 1000, 0, 0.1)));
+			} else if (numberOfEarSlime() >= 2) {
 				result = Math.floor(result * 0.9);
 			}
 			break;
 		case "tending":
 			if (V.backgroundTraits.includes("plantlover")) {
 				result = Math.floor(result * (1 + V.trauma / (V.traumamax * 2)));
+			}
+			break;
+		case "housekeeping":
+			if (V.worn.upper.type.includes("maid")) {
+				result = Math.floor(result * 1.05);
+			}
+			if (V.worn.lower.type.includes("maid")) {
+				result = Math.floor(result * 1.05);
+			}
+			if (V.worn.head.type.includes("maid")) {
+				result = Math.floor(result * 1.05);
+			}
+			break;
+		case "vaginalskill":
+			if (V.earSlime.growth > 100) {
+				if (V.earSlime.focus === "pregnancy") {
+					result = Math.floor(result * (1 + ((V.earSlime.growth - 100) / 500)));
+				} else if (V.earSlime.focus === "impregnation") {
+					result = Math.floor(result * (1 - ((V.earSlime.growth - 100) / 400)));
+				}
+			}
+			if (playerHeatMinArousal()) {
+				result = Math.floor(result * (1 + (Math.clamp(playerHeatMinArousal(), 0, 4000) / 20000)));
+			}
+			break;
+		case "penileskill":
+			if (V.earSlime.growth > 100) {
+				if (V.earSlime.focus === "impregnation") {
+					result = Math.floor(result * (1 + ((V.earSlime.growth - 100) / 500)));
+				} else if (V.earSlime.focus === "pregnancy") {
+					result = Math.floor(result * (1 - ((V.earSlime.growth - 100) / 400)));
+				}
+			}
+			if (playerRutMinArousal()) {
+				result = Math.floor(result * (1 + (Math.clamp(playerRutMinArousal(), 0, 4000) / 20000)));
+			}
+			break;
+		case "analskill":
+			if (V.earSlime.growth > 100 && !V.player.vaginaExist && V.earSlime.focus === "pregnancy") {
+				result = Math.floor(result * (1 + ((V.earSlime.growth - 100) / 500)));
+			}
+			if (playerHeatMinArousal() && canBeMPregnant()) {
+				result = Math.floor(result * (1 + (Math.clamp(playerHeatMinArousal(), 0, 4000) / 20000)));
+			}
+			break;
+		case "seductionskill":
+			if (V.earSlime.growth > 50 && !V.earSlime.defyCooldown) {
+				result = Math.floor(result * (1 + ((V.earSlime.growth - 50) / 600)));
 			}
 			break;
 	}
@@ -1568,6 +1624,7 @@ window.msToTime = msToTime;
 function getHalloweenCostume() {
 	const upper = V.worn.upper;
 	const lower = V.worn.lower;
+	const face = V.worn.face;
 
 	T.tf = checkTFparts();
 
@@ -1583,7 +1640,7 @@ function getHalloweenCostume() {
 		return "gothic";
 	} else if (upper.name === "nun's habit" && lower.name === "nun's habit skirt") {
 		return "nun";
-	} else if (upper.name === "maid dress" && lower.name === "maid skirt") {
+	} else if (upper.name.includes("maid") && lower.name.includes("maid")) {
 		return "maid";
 	} else if (upper.name.includes("christmas") && lower.name.includes("christmas")) {
 		return "christmas";
@@ -1613,9 +1670,16 @@ function getHalloweenCostume() {
 		return "skeleton";
 	} else if (upper.name === "futuristic bodysuit" && lower.name === "futuristic bodysuit pants") {
 		return "futuresuit";
-	// This is commented out because there are no nurse lines yet.
-	// } else if (upper.name.includes("nurse") && lower.name.includes("nurse")) {
-	// 	return "nurse"; 
+	} else if (upper.name.includes("nurse") && lower.name.includes("nurse")) {
+	 	return "nurse";
+	} else if (face.name === "eyepatch") {
+		return "eyepatch";
+	} else if (face.name === "medical eyepatch") {
+		return "medical eyepatch";
+	} else if (face.name === "gas mask") {
+		return "gasmask";
+	} else if (upper.name === "rag top" && lower.name === "rag skirt") {
+		return "rags";
 
 	/* Transformations */
 	} else if (T.tf.angelHalo && T.tf.angelWings) {
@@ -1889,6 +1953,7 @@ function convertHairLengthToStage(hair, length){
 window.convertHairLengthToStage = convertHairLengthToStage;
 
 function calculateSemenReleased(){
+	if(T.deniedOrgasm) return 0;
 	let released = 30;
 
 	released += (V.semen_volume / 30);
@@ -1939,6 +2004,20 @@ function beastMaleChance(override){
 }
 window.beastMaleChance = beastMaleChance;
 
+const crimeSum = (prop, ...crimeTypes) => {
+	if (crimeTypes.length === 0) {
+		crimeTypes = Object.keys(setup.crimeNames);
+	}
+	
+	return crimeTypes.reduce((result, crimeType) => result + V.crime[crimeType][prop], 0);
+};
+
+window.crimeSumCurrent = (...args) => crimeSum("current", ...args);
+window.crimeSumHistory = (...args) => crimeSum("history", ...args);
+window.crimeSumDaily = (...args) => crimeSum("daily", ...args);
+window.crimeSumCount = (...args) => crimeSum("count", ...args);
+window.crimeSumCountHistory = (...args) => crimeSum("countHistory", ...args);
+
 /**
  * Event listener for the 'beforeunload' event. Will prompt a dialog box asking the player if he wants to leave.
  *
@@ -1965,3 +2044,19 @@ function toggleConfirmDialogUponTabClose(){
 }
 
 window.toggleConfirmDialogUponTabClose = toggleConfirmDialogUponTabClose;
+
+function numberOfEarSlime(){
+	let result = 0;
+	if (V.parasite.left_ear.name === "slime") result++;
+	if (V.parasite.right_ear.name === "slime") result++;
+	return result;
+}
+window.numberOfEarSlime = numberOfEarSlime;
+
+function earSlimeMakingMundaneRequests(){
+	if (!numberOfEarSlime()) return false;
+	// First rape requests
+	if (V.earSlime.growth + (V.earSlime.promiscuity * 10) >= 80) return false;
+	return true;
+}
+window.earSlimeMakingMundaneRequests = earSlimeMakingMundaneRequests;
