@@ -70,16 +70,17 @@ You are in the strip club on Connudatus Street. <<if Time.dayState isnot "day" a
 
 <<if Time.dayState isnot "dawn" and Time.dayState isnot "day" and $stripclubintro is 1>>
 	<<if $stripclubbartendingintro isnot 1>>
-		<<link [[Inquire about the bartending job|Strip Club Management]]>><</link>>
+		<<askicon>><<link [[Enquire about the bartending job|Strip Club Management]]>><</link>>
 		<br>
 	<</if>>
 	<<if $stripclubdancingintro isnot 1>>
-		<<link [[Inquire about the dancing job|Strip Club Management]]>><<set $phase to 1>><</link>>
+		<<askicon>><<link [[Enquire about the dancing job|Strip Club Management]]>><<set $phase to 1>><</link>>
 		<br>
 	<</if>>
 <</if>>
 <<if $bartendaction is undefined>><<set $bartendaction to "normal">><</if>>/*For the radiobutton variable that determines the PC's attitude while working.*/
 <<if Time.dayState isnot "dawn" and Time.dayState isnot "day" and $stripclubbartendingintro is 1>>
+	<<foodicon "beerbottle">>
 	<<link [[Work as a bartender (1:00)|Strip Club Bartending]]>><<pass 30>><</link>>
 	<<if $bartendaction is "normal">>
 		| <label>Work normally <<radiobutton "$bartendaction" "normal" checked>></label>
@@ -99,32 +100,32 @@ You are in the strip club on Connudatus Street. <<if Time.dayState isnot "day" a
 	<br>
 <</if>>
 <<if Time.dayState isnot "dawn" and Time.dayState isnot "day" and $stripclubdancingintro is 1>>
-<<link [[Work as a dancer (0:05)|Strip Club Dancing]]>><<danceinit>><<set $dancing to 1>><<set $venuemod to 1>><<stress -4>><<tiredness 4>><<set $dancelocation to "club">><</link>><<lstress>><<gtiredness>>
+<<brothelicon "stage">><<link [[Work as a dancer (0:05)|Strip Club Dancing]]>><<danceinit>><<set $dancing to 1>><<set $venuemod to 1>><<stress -4>><<tiredness 4>><<set $dancelocation to "club">><</link>><<lstress>><<gtiredness>>
 <br>
-<<link [[Dressing room (0:01)|Strip Club Dressing Room]]>><<pass 1>><</link>>
+<<shopicon "clothing">><<link [[Dressing room (0:01)|Strip Club Dressing Room]]>><<pass 1>><</link>>
 <br>
-<<link [[Bathroom and showers (0:01)|Strip Club Bathroom]]>><<pass 1>><</link>>
+<<bathroomicon "shower">><<link [[Bathroom and showers (0:01)|Strip Club Bathroom]]>><<pass 1>><</link>>
 <br><br>
 <</if>>
 <br>
 
 <<if $stripclubfailed is 1>>
-<<link [[Leave|Strip Club Proposition]]>><</link>>
+<<connudatusicon>><<link [[Leave|Strip Club Proposition]]>><</link>>
 <br>
 <<elseif $brothel_rivalry isnot undefined and $brothel_rivalry_timer lte 0>>
-<<link [[Leave|Strip Club Goon]]>><</link>>
+<<connudatusicon>><<link [[Leave|Strip Club Goon]]>><</link>>
 <br>
 <<elseif $stripclubintro isnot 1>>
-<<link [[Leave|Connudatus Street]]>><</link>>
+<<connudatusicon>><<link [[Leave|Connudatus Street]]>><</link>>
 <br>
 <<elseif $exposed lte 0 or Time.dayState isnot "night" and Time.dayState isnot "dusk">>
-<<link [[Leave|Connudatus Street]]>><</link>>
+<<connudatusicon>><<link [[Leave|Connudatus Street]]>><</link>>
 <br>
 <<elseif $exposed gte 2 and $exhibitionism gte 55>>
-	<<link [[Leave|Strip Club Leave Naked]]>><</link>><<if $daily.ex.day isnot 1>><<exhibitionist4>><</if>>
+	<<connudatusicon>><<link [[Leave|Strip Club Leave Naked]]>><</link>><<if $daily.ex.day isnot 1>><<exhibitionist4>><</if>>
 	<br>
 <<elseif $exposed gte 1 and $exhibitionism gte 15>>
-	<<link [[Leave|Strip Club Leave Undies]]>><</link>><<if $daily.ex.day isnot 1>><<exhibitionist2>><</if>>
+	<<connudatusicon>><<link [[Leave|Strip Club Leave Undies]]>><</link>><<if $daily.ex.day isnot 1>><<exhibitionist2>><</if>>
 	<br>
 <</if>>
 
@@ -163,7 +164,7 @@ You are in the strip club's dressing room. <<if Time.dayState isnot "day" and Ti
 :: Strip Club Mirror
 <<effects>>
 
-<<link [[Step away|Strip Club Dressing Room]]>><<unset $mirrorMenu>><<unset $bodywritingSet>><<postMirror>><</link>>
+<<getouticon>><<link [[Step away|Strip Club Dressing Room]]>><<unset $mirrorMenu>><<unset $bodywritingSet>><<postMirror>><</link>>
 <br>
 
 <<mirror>>
@@ -262,9 +263,9 @@ You are in the bathroom at the Strip Club. There are several private cubicles fo
 <<if $stress gte $stressmax>>
 	<<passoutshop>>
 <<else>>
-	<<link [[Have a shower (0:20)->Strip Club Shower]]>><<strip>><<pass 20>><<stress -1>><<set $hygiene to 0>><</link>><<lstress>>
+	<<bathroomicon "shower">><<link [[Have a shower (0:20)->Strip Club Shower]]>><<strip>><<pass 20>><<stress -1>><<set $hygiene to 0>><</link>><<lstress>>
 	<br><br>
-	<<link [[Back to the club (0:01)|Strip Club]]>><<pass 1>><</link>>
+	<<getouticon>><<link [[Back to the club (0:01)|Strip Club]]>><<pass 1>><</link>>
 	<br>
 <</if>>
 
@@ -697,7 +698,7 @@ You fulfil Darryl's order, but otherwise leave <<him>> be. After a short while <
 
 <<elseif $phase is 1>>
 <<npcincr Darryl love 2>>
-You gently enquire about what is wrong. <<if $NPCName[$NPCNameList.indexOf("Darryl")].love lte 30>>Darryl seems surprised when <<he>> looks up at you, before looking back at <<his>> drink. "It's nothing. Thank you for asking though. Sorry, I need to get back to work." <<else>>Darryl smiles, but you see a sadness in <<his>> eyes. "I'm fine, just something I have to deal with. Thank you for asking though."<</if>> <<He>> stands up to leave.
+You gently enquire about what is wrong. <<if C.npc.Darryl.love lte 30>>Darryl seems surprised when <<he>> looks up at you, before looking back at <<his>> drink. "It's nothing. Thank you for asking though. Sorry, I need to get back to work." <<else>>Darryl smiles, but you see a sadness in <<his>> eyes. "I'm fine, just something I have to deal with. Thank you for asking though."<</if>> <<He>> stands up to leave.
 <</if>>
 
 <<tipreceive>>
@@ -805,7 +806,7 @@ You manage to knock <<him>> prone. <<He>> struggles to stand up, but it gives yo
 
 <</if>>
 
-<<npc Darryl>><<person1>>Darryl rushes over to you, <<His>> hair a tangled mess. "Are you alright? I tried to get someone over here as fast as I could!"
+<<npc Darryl>><<person1>>Darryl rushes over to you, <<his>> hair a tangled mess. "Are you alright? I tried to get someone over here as fast as I could!"
 <br><br>
 
 <<npcincr Darryl love 10>>

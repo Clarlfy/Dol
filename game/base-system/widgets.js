@@ -47,7 +47,7 @@ const hairStyleCap = {
 		pigtails: 300,
 		ponytail: 300,
 		short: 100,
-		"shaved": 100,
+		shaved: 100,
 	},
 	fringetype: {
 		default: 100,
@@ -69,8 +69,8 @@ const hairStyleCap = {
 		"ringlet curl": 300,
 		curtain: 200,
 		trident: 200,
-		"buzzcut": 100,
-		"mohawk": 100,
+		buzzcut: 100,
+		mohawk: 100,
 	},
 };
 
@@ -137,6 +137,7 @@ function genderappearancecheck() {
 	addfemininityofclothingarticle("face", V.worn.face);
 	addfemininityofclothingarticle("neck", V.worn.neck);
 	addfemininityofclothingarticle("legs", V.worn.legs);
+	addfemininityofclothingarticle("handheld", V.worn.handheld);
 	addfemininityofclothingarticle("feet", V.worn.feet);
 	/* Hair length */
 	if (V.worn.over_head.hood !== 1 && V.worn.head.hood !== 1) {
@@ -254,7 +255,7 @@ function genderappearancecheck() {
 		if (V.worn.under_upper.exposed >= 1) {
 			/* Exposed breasts */
 			T.breast_indicator = 1;
-			addfemininityfromfactor((V.player.perceived_breastsize - 0.5) * 100, (V.player.perceived_breastsize > 0 ? "Exposed breasts" : "Exposed flat chest"));
+			addfemininityfromfactor((V.player.perceived_breastsize - 0.5) * 100, V.player.perceived_breastsize > 0 ? "Exposed breasts" : "Exposed flat chest");
 		} else {
 			/* Breasts covered by only underwear */
 			addfemininityfromfactor(Math.clamp((V.player.perceived_breastsize - 2) * 100, 0, Infinity), "Breast size visible through underwear");
@@ -418,14 +419,14 @@ function bodywritingExposureCheck(overwrite, skipRng) {
 		if (
 			(V.worn.over_lower.exposed >= 1 || V.worn.over_lower.anus_exposed >= 1) &&
 			(V.worn.lower.exposed >= 1 || V.worn.lower.anus_exposed >= 1) &&
-			(V.worn.under_lower.exposed >= 1 || !V.worn.under_lower.type.includes("athletic"))
+			(V.worn.under_lower.exposed >= 1 || !V.worn.under_lower.type.includes("covered"))
 		) {
 			T.visible_areas.push("left_bottom", "right_bottom");
 		}
-		if (V.worn.over_lower.exposed >= 1 && V.worn.lower.exposed >= 1 && (V.worn.under_lower.exposed >= 1 || !V.worn.under_lower.type.includes("athletic"))) {
+		if (V.worn.over_lower.exposed >= 1 && V.worn.lower.exposed >= 1 && (V.worn.under_lower.exposed >= 1 || !V.worn.under_lower.type.includes("covered"))) {
 			T.visible_areas.push("pubic");
 		}
-		if (V.worn.over_lower.vagina_exposed >= 1 && V.worn.lower.vagina_exposed >= 1 && !V.worn.under_lower.type.includes("athletic")) {
+		if (V.worn.over_lower.vagina_exposed >= 1 && V.worn.lower.vagina_exposed >= 1 && !V.worn.under_lower.type.includes("covered")) {
 			T.visible_areas.push("left_thigh", "right_thigh");
 		}
 

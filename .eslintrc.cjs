@@ -24,6 +24,8 @@ module.exports = {
 		Template: "readonly",
 		UI: "readonly",
 		UIBar: "readonly",
+		idb: "readonly",
+		wikifier: "readonly",
 		// SugarCube functions
 		clone: "readonly",
 		either: "readonly",
@@ -115,6 +117,7 @@ module.exports = {
 		playerHasStrapon: "readonly",
 		registerGeneratedPattern: "readonly",
 		registerImagePattern: "readonly",
+		returnTimeFormat: "readonly",
 		rgbToHsv: "readonly",
 		selfOr: "readonly",
 		settingsConvert: "readonly",
@@ -189,6 +192,8 @@ module.exports = {
 	// Keep rules grouped by plugin and sorted alphabetically
 	rules: {
 		"object-shorthand": ["error", "always"],
+
+		"es-x/no-object-hasown": "off",
 
 		// SugarCube extends native objects and we follow it
 		"no-extend-native": "off",

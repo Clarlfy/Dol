@@ -14,27 +14,36 @@ You are beside your bunk in the temple quarters. There's a cupboard for your clo
 <<elseif Time.dayState is "dusk">>
 	Some of the monks and nuns are preparing for bed.
 <</if>>
-<br><br>		
-
-<<bedicon>><<link [[Strip and get in bed|Temple Bunk Bed]]>><<undressSleep "Temple Bunk Bed">><</link>>
-<br>
-<<listsleepoutfits "Temple Bunk Bed">>
+<br><br>
+<<if $earSlime.event and $earSlime.noSleep>>
+	<<if $possessed>>
+		<<ind>><span class="purple">The slime in your head is silent.</span>
+	<<else>>
+		<<ind>><span class="red">The slime wants you to <<print $earSlime.event>> before you can go to bed.</span>
+	<</if>>
+	<br>
+<<else>>
+	<<bedicon>><<link [[Strip and get in bed|Temple Bunk Bed]]>><<undressSleep "Temple Bunk Bed">><</link>>
+	<br>
+	<<listsleepoutfits "Temple Bunk Bed">>
+	<br>
+<</if>>
 <<roomoptions>>
-<br>
 <<wardrobeicon>><<link [[Wardrobe|Temple Wardrobe]]>><</link>>
 <br>
 <<mirroricon>><<link [[Mirror|Temple Mirror]]>><<preMirror>><<endevent>><</link>>
 <br><br>
-<<ind>><<link [[Leave|Temple Quarters]]>><</link>>
+<<getouticon>><<link [[Leave|Temple Quarters]]>><</link>>
 
 <br><br>
+<<ind>><<link [[Settings|Temple Settings]]>><</link>>
+<br>
+<<attitudesControlCheck>>
 <<if $attitudesControl.showGoldLink is true>>
 	<span class="goldLink"><<link [[Attitudes]]>><<set $attitudesExitPassage to $passage>><</link>> </span><span class="red">!!</span>
 <<else>>
 	<<ind>><<link [[Attitudes]]>><<set $attitudesExitPassage to $passage>><</link>>
 <</if>>
-<br>
-<<ind>><<link [[Settings|Temple Settings]]>><</link>>
 <br>
 
 
@@ -46,7 +55,7 @@ You are beside your bunk in the temple quarters. There's a cupboard for your clo
 
 :: Temple Mirror
 <<effects>>
-<<link [[Step away|Temple Bunk]]>><<unset $mirrorMenu>><<unset $bodywritingSet>><</link>>
+<<getouticon>><<link [[Step away|Temple Bunk]]>><<unset $mirrorMenu>><<unset $bodywritingSet>><</link>>
 <br>
 <<mirror "reflection">>
 <br><br>
@@ -55,7 +64,7 @@ You are beside your bunk in the temple quarters. There's a cupboard for your clo
 <<effects>>
 <<wearoutfit>>
 
-<<if $location is "temple" and random(0,100) lt 3 + Math.floor($earSlime.growth / 100) - $earSlime.eventTimer and !$earSlime.event>>
+<<if numberOfEarSlime() and $location is "temple" and random(0,100) lt 3 + Math.floor($earSlime.growth / 100) - $earSlime.eventTimer and !$earSlime.event>>
 	<<set $slimeBedExit to "Temple Bunk Bed">>
 	<<set $slimeBedroomExit to "Temple Bunk">>
 	<<setSlimeSleepEvents>>

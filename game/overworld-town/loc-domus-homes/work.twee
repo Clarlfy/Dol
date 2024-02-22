@@ -4,7 +4,9 @@
 You walk up to one of the homes and knock on the door.
 <br><br>
 
-<<if $rng gte 96>><!-- Modified for Beast People -->
+<<cleareventpool>>
+
+<<addinlineevent "domus_tease" .5>>
 	<<beastNEWinit 1 dog>>
 
 	You hear a bark. A <<beasttype>> emerges from a kennel and runs towards you. <<bHis>> chain pulls taut, preventing <<bhim>> from getting any closer.
@@ -18,8 +20,9 @@ You walk up to one of the homes and knock on the door.
 	<</if>>
 	<<link [[Ignore|Domus House Ignore]]>><</link>>
 	<br>
+<</addinlineevent>>
 
-<<elseif $rng gte 91>><!-- Modified for Beast People -->
+<<addinlineevent "domus_pet" .5>>
 	<<beastNEWinit 1 dog>>
 
 	You hear a growl. A <<beasttype>> emerges from a kennel and paces towards you.
@@ -28,94 +31,103 @@ You walk up to one of the homes and knock on the door.
 	<</if>>
 	<br><br>
 
-	<<link [[Pet it|Domus Entrance Pet]]>><</link>>
+	<<animalicon "dog">><<link [[Pet it|Domus Entrance Pet]]>><</link>>
 	<br>
-	<<link [[Run|Domus Entrance Run]]>><<transform cat 1>><</link>>
+	<<domusicon>><<link [[Run|Domus Entrance Run]]>><<transform cat 1>><</link>>
 	<br>
+<</addinlineevent>>
 
-<<elseif $rng gte 76>> /*~15%*/
+<<addinlineevent "domus_no_response" 1.5>>
 	There's no response.
 	<br><br>
 
-	<<link [[Break in|Domus House Lock]]>><</link>>
+	<<lockpickicon>><<link [[Break in|Domus House Lock]]>><</link>>
 	<br>
-	<<link [[Go to the next house (0:02)|Domus House Knock]]>><<pass 2>><</link>>
+	<<dooricon "domus">><<link [[Go to the next house (0:02)|Domus House Knock]]>><<pass 2>><</link>>
 	<br>
-	<<link [[Stop|Domus Street]]>><</link>>
+	<<getouticon>><<link [[Stop|Domus Street]]>><</link>>
 	<br>
+<</addinlineevent>>
 
-<<elseif $rng gte 66>> /*10%*/
+<<addinlineevent "domus_model">>
 	<<generate1>><<person1>>
 	A <<person>> answers the door. "You're not-" <<he>> pauses. "Are you here for the life-modelling work?" <<he>> asks.
 	<br><br>
 
-	<<link [[Nod|Domus Model Intro]]>><</link>>
+	<<ind>><<link [[Nod|Domus Model Intro]]>><</link>>
 	<br>
-	<<link [[Say you've got the wrong address and leave|Domus Street]]>><<endevent>><</link>>
+	<<domusicon>><<link [[Say you've got the wrong address and leave|Domus Street]]>><<endevent>><</link>>
 	<br>
+<</addinlineevent>>
 
-<<elseif $rng gte 56>> /*10%*/
+<<addinlineevent "domus_errand">>
 	<<generate1>><<person1>>
 	A <<person>> answers the door. <<He>> blinks at you. "Yeah?"
 	<br>
 	Some people cheer in a room behind.
 	<br><br>
 
-	<<link [[Ask for work|Domus Errand Intro]]>><</link>>
+	<<askicon>><<link [[Ask for work|Domus Errand Intro]]>><</link>>
 	<br>
-	<<link [[Say you've got the wrong address and leave|Domus Street]]>><<endevent>><</link>>
+	<<domusicon>><<link [[Say you've got the wrong address and leave|Domus Street]]>><<endevent>><</link>>
 	<br>
+<</addinlineevent>>
 
-<<elseif $rng gte 51>> /*5%*/
+<<addinlineevent "domus_shy" .5>>
 	<<generate1>><<person1>>
 	A <<person>> answers the door. "Yeah? How can I help you?" <<he>> asks.
 	<br><br>
 
-	<<link [[Ask for work|Domus Shy Intro]]>><</link>>
+	<<askicon>><<link [[Ask for work|Domus Shy Intro]]>><</link>>
 	<br>
-	<<link [[Say you've got the wrong address and leave|Domus Street]]>><<endevent>><</link>>
+	<<domusicon>><<link [[Say you've got the wrong address and leave|Domus Street]]>><<endevent>><</link>>
 	<br>
+<</addinlineevent>>
 
-<<elseif $rng gte 41>>
+<<addinlineevent "domus_gutters">>
 	<<generate1>><<person1>>
 	A <<person>> answers the door. "How can I help you?" <<he>> asks.
 	<br><br>
 
-	<<link [[Ask for work|Domus Gutters Intro]]>><</link>>
+	<<askicon>><<link [[Ask for work|Domus Gutters Intro]]>><</link>>
 	<br>
-	<<link [[Say you've got the wrong address and leave|Domus Street]]>><<endevent>><</link>>
+	<<domusicon>><<link [[Say you've got the wrong address and leave|Domus Street]]>><<endevent>><</link>>
 	<br>
+<</addinlineevent>>
 
-<<elseif $rng gte 31>>
+<<addinlineevent "domus_lounge">>
 	<<generate1>><<person1>>
 	A <<person>> answers the door. "Whaddya want?" <<he>> says.
 	<br><br>
 
-	<<link [[Ask for work|Domus Lounge Intro]]>><</link>>
+	<<askicon>><<link [[Ask for work|Domus Lounge Intro]]>><</link>>
 	<br>
-	<<link [[Say you've got the wrong address and leave|Domus Street]]>><<endevent>><</link>>
+	<<domusicon>><<link [[Say you've got the wrong address and leave|Domus Street]]>><<endevent>><</link>>
 	<br>
+<</addinlineevent>>
 
-<<elseif $rng gte 26>>
+<<addinlineevent "domus_tech" .5>>
 	<<generate1>><<person1>>
 	A <<person1>><<person>> answers the door. <<He>> seems annoyed. "What is it?"
 	<br><br>
 
-	<<link [[Ask for work|Domus Tech Support Intro]]>><</link>>
+	<<askicon>><<link [[Ask for work|Domus Tech Support Intro]]>><</link>>
 	<br>
-	<<link [["Say you've got the wrong address and leave"|Domus Street]]>><<endevent>><</link>>
+	<<domusicon>><<link [["Say you've got the wrong address and leave"|Domus Street]]>><<endevent>><</link>>
+<</addinlineevent>>
 
-<<elseif $rng gte 21>>
+<<addinlineevent "domus_delivery" .5>>
 	<<generate1>><<person1>>
 	A <<person>> answers the door. "Oh, you're a cutie," <<he>> says. "Is there anything I can do for you?"
 	<br><br>
 
-	<<link [[Ask for work|Domus Delivery Intro]]>><</link>>
+	<<askicon>><<link [[Ask for work|Domus Delivery Intro]]>><</link>>
 	<br>
-	<<link [[Say you've got the wrong address and leave|Domus Street]]>><<endevent>><</link>>
+	<<domusicon>><<link [[Say you've got the wrong address and leave|Domus Street]]>><<endevent>><</link>>
 	<br>
+<</addinlineevent>>
 
-<<elseif $rng gte 16>>
+<<addinlineevent "domus_babysit" .5>>
 	<<generate1>><<person1>>
 	You knock on the door. A <<person>> opens it.
 	<br><br>
@@ -126,11 +138,12 @@ You walk up to one of the homes and knock on the door.
 	You think you hear a faint humming coming from the backroom.
 	<br><br>
 
-	<<link [[Ask for work|Domus Babysitting Intro]]>><</link>>
+	<<askicon>><<link [[Ask for work|Domus Babysitting Intro]]>><</link>>
 	<br>
-	<<link [[Say you've got the wrong address and leave|Domus Street]]>><<endevent>><</link>>
+	<<domusicon>><<link [[Say you've got the wrong address and leave|Domus Street]]>><<endevent>><</link>>
+<</addinlineevent>>
 
-<<elseif $rng gte 11>>
+<<addinlineevent "domus_painting" .5>>
 	<<generate1>><<generatep2>><<person1>>
 	A <<person>> answers the door. "Yes?" <<he>> says.
 	<br><br>
@@ -156,41 +169,65 @@ You walk up to one of the homes and knock on the door.
 	<</if>>
 	<br><br>
 
-	<<link [[Ask for work|Domus Painting Intro]]>><</link>>
+	<<askicon>><<link [[Ask for work|Domus Painting Intro]]>><</link>>
 	<br>
-	<<link [[Say you've got the wrong address and leave|Domus Street]]>><<endevent>><</link>>
+	<<domusicon>><<link [[Say you've got the wrong address and leave|Domus Street]]>><<endevent>><</link>>
 	<br>
+<</addinlineevent>>
 
-
-<<else>>
+<<addinlineevent "domus_homework">>
 	<<generatey1>><<person1>>
 	A <<person>> answers the door. "Hello!" <<he>> says.
 	<br><br>
 
-	<<link [[Ask for work|Domus Homework Intro]]>><</link>>
+	<<askicon>><<link [[Ask for work|Domus Homework Intro]]>><</link>>
 	<br>
-	<<link [[Say you've got the wrong address and leave|Domus Street]]>><<endevent>><</link>>
+	<<domusicon>><<link [[Say you've got the wrong address and leave|Domus Street]]>><<endevent>><</link>>
 	<br>
+<</addinlineevent>>
 
-<</if>>
+<<runeventpool>>
 
 :: Domus Babysitting Intro
 <<set $outside to 0>>
 <<effects>>
 
-The <<personsimple>> looks hesitant at first, but one look at your face seems to do the trick.<br><br>
+The <<personsimple>> looks hesitant at first,
 
-"I have a job, last minute shit. My children are too young to stay alone but I don't trust any of my neighbours. Can you watch them for about three hours? <<printmoney 300>> each. Can't go any higher than that."
-<br><br>
+<<if $exposed gt 0 or ["split dress", "short ballgown", "large towel", "cropped hoodie", "slut shirt,", "tie-front top", "towel top"].includes($worn.upper.name) or ["split dress skirt", "short ballgown skirt", "micro pleated skirt", "miniskirt", "towel skirt"].includes($worn.lower.name)>>
+	scanning your body critically. <<He>> shakes <<his>> head. "I need someone to babysit, but you're dressed far too indecently. Cover yourself up, why don't you?" <<He>> slams the door in your face.
+	<br><br>
 
-<<link [[Accept (3:00)|Domus Babysitting Accept]]>><</link>>
-<br>
-<<link [[Refuse|Domus Babysitting Refuse]]>><</link>>
+	<<dooricon "domus">><<link [[Go to the next house (0:02)|Domus House Knock]]>><<pass 2>><</link>>
+	<br>
+	<<getouticon>><<link [[Stop|Domus Street]]>><</link>>
+	<br>
+	<<endevent>>
+<<elseif $liquidcount gte 1>>
+	and <<he>> eyes the lewd fluids glistening on your skin. <<His>> nose wrinkles in disgust. "I need someone to babysit, but I'm certainly not letting a slut covered in cum around my kids. Go take a fucking shower." <<He>> slams the door in your face.
+	<br><br>
+
+	<<dooricon "domus">><<link [[Go to the next house (0:02)|Domus House Knock]]>><<pass 2>><</link>>
+	<br>
+	<<getouticon>><<link [[Stop|Domus Street]]>><</link>>
+	<br>
+	<<endevent>>
+<<else>>
+	but one look at your face seems to do the trick.<br><br>
+
+	"I have a job, last minute shit. My children are too young to stay alone but I don't trust any of my neighbours. Can you watch them for about three hours? <<printmoney 300>> each. Can't go any higher than that."
+	<br><br>
+
+	<<ind>><<link [[Accept (3:00)|Domus Babysitting Accept]]>><</link>>
+	<br>
+	<<refuseicon>><<link [[Refuse|Domus Babysitting Refuse]]>><</link>>
+
+<</if>>
 
 :: Domus Babysitting Accept
 
 <<effects>>
-"Great," he says. "Thanks. Come on in, they don't bite."
+"Great," <<he>> says. "Thanks. Come on in, they don't bite."
 <br><br>
 
 You enter the small house and meet the kids playing in the backroom. They're awfully young. The second one doesn't even talk. Their parent gives you a short speech before leaving.
@@ -249,16 +286,16 @@ You accept the <<moneyGain 11>>. As you're leaving the house, you catch yourself
 "Something's wrong with my television," <<he>> explains. "<<printmoney 1000>> in it for you if you can figure it out."
 <br><br>
 
-<<link [[Accept (0:15)|Domus Tech Support Accept]]>><</link>>
+<<ind>><<link [[Accept (0:15)|Domus Tech Support Accept]]>><</link>>
 <br>
-<<link [[Refuse|Domus Street]]>><<endevent>><</link>>
+<<refuseicon>><<link [[Refuse|Domus Street]]>><<endevent>><</link>>
 
 :: Domus Tech Support Accept
 <<effects>><<set $outside to 0>>
 <<He>> leads you to the living room. There's a manual lying on the coffee table.
 <br><br>
 
-You follow along with the troubleshooting guide in the manual, running through the steps one-by-one until you figure out the problem: 
+You follow along with the troubleshooting guide in the manual, running through the steps one-by-one until you figure out the problem:
 <<switch random(1,5)>>
     <<case 1>>
         it's not plugged into the wall.
@@ -281,7 +318,7 @@ You follow along with the troubleshooting guide in the manual, running through t
 
 <<addinlineevent "tech_support_normal" 4>>
 
-	You turn it on just to make sure. There's 
+	You turn it on just to make sure. There's
     <<switch random(1,4)>>
         <<case 1>>
             a news broadcast
@@ -330,10 +367,10 @@ The <<person1>><<person>> freezes. <<He>> looks absolutely horrified.
 <br><br>
 
 <<if $promiscuity gte 55 and $awareness gte 200>>
-    <<link [[Seduce|Domus Tech Support Seduce]]>><</link>><<promiscuous4>>
+   <<ind>><<link [[Seduce|Domus Tech Support Seduce]]>><</link>><<promiscuous4>>
     <br>
 <</if>>
-<<link [[Ask for your payment|Domus Tech Support Ask]]>><</link>>
+<<askicon>><<link [[Ask for your payment|Domus Tech Support Ask]]>><</link>>
 
 :: Domus Tech Support Seduce
 <<effects>>
@@ -357,7 +394,7 @@ You walk over in front of the <<person1>><<person>> and kneel down, head between
 
     You've made <<moneyGain 10>>.
     <br><br>
-    
+
     <<link [[Next|Domus Street]]>><<pass 15>><<endevent>><</link>>
 
 <</if>>
@@ -400,7 +437,7 @@ You walk over in front of the <<person1>><<person>> and kneel down, head between
 
     <<endcombat>>
     <<clotheson>>
-    
+
     <<link [[Next|Domus Street]]>><<pass 15>><</link>>
 
 <<elseif $enemyarousal gte $enemyarousalmax and $consensual is 0>>
@@ -420,7 +457,7 @@ You walk over in front of the <<person1>><<person>> and kneel down, head between
     <<He>> frowns. "Oh. I thought you wanted to..."
     <br><br>
 
-    <<He>> bolts to his feet. "S-sorry! Thanks for fixing the TV," <<he>> says, hurriedly escorting you out. A wad of bills is shoved into your hand as you're practically pushed out the door.
+    <<He>> bolts to <<his>> feet. "S-sorry! Thanks for fixing the TV," <<he>> says, hurriedly escorting you out. A wad of bills is shoved into your hand as you're practically pushed out the door.
     <br><br>
 
     You've made <<moneyGain 10>>.
@@ -460,9 +497,9 @@ You've made <<moneyGain 15>>.
 	"I do need some help actually," <<he>> says. "My gutters need cleaning out. Should take a few hours. I'll give you £25 for it."
 	<br><br>
 
-	<<link [[Accept|Domus Gutters]]>><<housekeeping 1 100>><</link>><<ghousekeeping 100>>
+	<<ind>><<link [[Accept|Domus Gutters]]>><<housekeeping 1 100>><</link>><<ghousekeeping 100>>
 	<br>
-	<<link [[Refuse|Domus Street]]>><<endevent>><</link>>
+	<<refuseicon>><<link [[Refuse|Domus Street]]>><<endevent>><</link>>
 	<br>
 <<else>>
 	"I'm sorry," <<he>> says. "There's nothing I need done. Goodbye."
@@ -480,9 +517,9 @@ You've made <<moneyGain 15>>.
 	"Yeah, I got something I need doing," <<he>> says. "I'll give you £10 if you clean my lounge. Might take an hour."
 	<br><br>
 
-	<<link [[Accept|Domus Lounge]]>><<housekeeping 1 100>><</link>><<ghousekeeping 100>>
+	<<ind>><<link [[Accept|Domus Lounge]]>><<housekeeping 1 100>><</link>><<ghousekeeping 100>>
 	<br>
-	<<link [[Refuse|Domus Street]]>><<endevent>><</link>>
+	<<refuseicon>><<link [[Refuse|Domus Street]]>><<endevent>><</link>>
 	<br>
 <<else>>
 	"There's nothing you can help with," <<he>> says, scratching <<his>> arm. "Get lost."
@@ -500,9 +537,9 @@ You've made <<moneyGain 15>>.
 	The <<person>> thinks for a moment. "I need something delivered," <<he>> says. "Should only take ten minutes to get there and back, and you'll get £5."
 	<br><br>
 
-	<<link [[Accept|Domus Delivery]]>><<housekeeping 1 100>><</link>><<ghousekeeping 100>>
+	<<ind>><<link [[Accept|Domus Delivery]]>><<housekeeping 1 100>><</link>><<ghousekeeping 100>>
 	<br>
-	<<link [[Refuse|Domus Street]]>><<endevent>><</link>>
+	<<refuseicon>><<link [[Refuse|Domus Street]]>><<endevent>><</link>>
 	<br>
 <<else>>
 	"There's nothing I need," <<he>> says, leaning against the door frame. "You'd best be careful, a cute thing like you is gonna attract attention."
@@ -526,9 +563,9 @@ You've made <<moneyGain 15>>.
 	The <<person1>><<person>> looks back to you. "That's an idea. We'll give you £50 to paint the spare room. Should take six hours."
 	<br><br>
 
-	<<link [[Accept|Domus Painting]]>><<housekeeping 1 100>><</link>><<ghousekeeping 100>>
+	<<ind>><<link [[Accept|Domus Painting]]>><<housekeeping 1 100>><</link>><<ghousekeeping 100>>
 	<br>
-	<<link [[Refuse|Domus Street]]>><<endevent>><</link>>
+	<<refuseicon>><<link [[Refuse|Domus Street]]>><<endevent>><</link>>
 	<br>
 <<else>>
 	The <<person>> turns to the <<person2>><<person>>. "Do we have any jobs that need doing?" <<he>> says.
@@ -552,9 +589,9 @@ You've made <<moneyGain 15>>.
 	"I'm having trouble with homework," <<he>> says. "I'll give you £5 if you help."
 	<br><br>
 
-	<<link [[Accept (1:00)|Domus Homework]]>><<housekeeping 1 100>><</link>><<ghousekeeping 100>>
+	<<ind>><<link [[Accept (1:00)|Domus Homework]]>><<housekeeping 1 100>><</link>><<ghousekeeping 100>>
 	<br>
-	<<link [[Refuse|Domus Street]]>><<endevent>><</link>>
+	<<refuseicon>><<link [[Refuse|Domus Street]]>><<endevent>><</link>>
 	<br>
 <<else>>
 	"I don't know," <<he>> says. "You'll have to come back when my parents are home."
@@ -598,10 +635,10 @@ You've made <<moneyGain 15>>.
 		You cannot go nude while wearing a $worn.genitals.name.
 		<br>
 	<<else>>
-		<<link [[Accept and go nude (2:00)|Domus Model]]>><</link>>
+		<<ind>><<link [[Accept and go nude (2:00)|Domus Model]]>><</link>>
 	<</if>>
 	<br>
-	<<link [[Sneak away|Domus Street]]>><<endevent>><</link>>
+	<<sneakicon>><<link [[Sneak away|Domus Street]]>><<endevent>><</link>>
 	<br>
 <<else>>
 	"I'm afraid you're not suitable," <<he>> says. "I don't think my artists would be comfortable painting you."
@@ -620,9 +657,9 @@ You've made <<moneyGain 15>>.
 	No one wants to miss it. Be an angel and grab them for us. Shouldn't take 10 minutes. I'll pay you £5."
 	<br><br>
 
-	<<link [[Accept (0:10)|Domus Errand]]>><<housekeeping 1 100>><</link>><<ghousekeeping 100>>
+	<<ind>><<link [[Accept (0:10)|Domus Errand]]>><<housekeeping 1 100>><</link>><<ghousekeeping 100>>
 	<br>
-	<<link [[Refuse|Domus Street]]>><<endevent>><</link>>
+	<<refuseicon>><<link [[Refuse|Domus Street]]>><<endevent>><</link>>
 	<br>
 <<else>>
 	"What? Work? No," <<he>> shuts the door.
@@ -640,9 +677,9 @@ You've made <<moneyGain 15>>.
 	"My kid's shy," <<he>> says. "I'll give you £10 if you can help out for an hour or so. More if you actually do some good."
 	<br><br>
 
-	<<link [[Accept (1:00)|Domus Shy]]>><</link>>
+	<<ind>><<link [[Accept (1:00)|Domus Shy]]>><</link>>
 	<br>
-	<<link [[Refuse|Domus Street]]>><<endevent>><</link>>
+	<<refuseicon>><<link [[Refuse|Domus Street]]>><<endevent>><</link>>
 	<br>
 <<else>>
 	"With all due respect, kid," <<he>> says. "Go bug someone else."
@@ -1239,11 +1276,11 @@ You enter a lavish antechamber as a <<person1>><<person>> descends a staircase. 
 	<</if>>
 	<br><br>
 
-	<<link [[Break in|Domus House Lock]]>><</link>>
+	<<lockpickicon>><<link [[Break in|Domus House Lock]]>><</link>>
 	<br>
-	<<link [[Go to the next house (0:02)|Domus House Knock]]>><<pass 2>><</link>>
+	<<dooricon "domus">><<link [[Go to the next house (0:02)|Domus House Knock]]>><<pass 2>><</link>>
 	<br>
-	<<link [[Stop|Domus Street]]>><</link>>
+	<<getouticon>><<link [[Stop|Domus Street]]>><</link>>
 	<br>
 	<<endevent>>
 
@@ -1324,11 +1361,11 @@ You enter a lavish antechamber as a <<person1>><<person>> descends a staircase. 
 	No one answered the door.
 	<br><br>
 
-	<<link [[Break in|Domus House Lock]]>><</link>>
+	<<lockpickicon>><<link [[Break in|Domus House Lock]]>><</link>>
 	<br>
-	<<link [[Go to the next house (0:02)|Domus House Knock]]>><<pass 2>><</link>>
+	<<dooricon "domus">><<link [[Go to the next house (0:02)|Domus House Knock]]>><<pass 2>><</link>>
 	<br>
-	<<link [[Stop|Domus Street]]>><</link>>
+	<<getouticon>><<link [[Stop|Domus Street]]>><</link>>
 	<br>
 
 <<elseif $enemyhealth lte 0>>
@@ -1347,11 +1384,11 @@ You enter a lavish antechamber as a <<person1>><<person>> descends a staircase. 
 	No one answered the door.
 	<br><br>
 
-	<<link [[Break in|Domus House Lock]]>><</link>>
+	<<lockpickicon>><<link [[Break in|Domus House Lock]]>><</link>>
 	<br>
-	<<link [[Go to the next house (0:02)|Domus House Knock]]>><<pass 2>><</link>>
+	<<dooricon "domus">><<link [[Go to the next house (0:02)|Domus House Knock]]>><<pass 2>><</link>>
 	<br>
-	<<link [[Stop|Domus Street]]>><</link>>
+	<<getouticon>><<link [[Stop|Domus Street]]>><</link>>
 	<br>
 
 <<elseif $alarm is 1>><<set $rescued += 1>>
@@ -1557,11 +1594,11 @@ You turn your back to the <<beasttype>>, bend over, and wiggle your <<bottom>>. 
 	You turn back to the door.
 	<br><br>
 
-	<<link [[Break in|Domus House Lock]]>><</link>>
+	<<lockpickicon>><<link [[Break in|Domus House Lock]]>><</link>>
 	<br>
-	<<link [[Go to the next house (0:02)|Domus House Knock]]>><<pass 2>><</link>>
+	<<dooricon "domus">><<link [[Go to the next house (0:02)|Domus House Knock]]>><<pass 2>><</link>>
 	<br>
-	<<link [[Stop|Domus Street]]>><</link>>
+	<<getouticon>><<link [[Stop|Domus Street]]>><</link>>
 	<br>
 
 <</if>>
@@ -1573,11 +1610,11 @@ You turn your back to the <<beasttype>>, bend over, and wiggle your <<bottom>>. 
 You ignore the <<beasttype>> and turn back to the door. <<bHe>> slowly calms down.
 <br><br>
 
-<<link [[Break in|Domus House Lock]]>><</link>>
+<<lockpickicon>><<link [[Break in|Domus House Lock]]>><</link>>
 <br>
-<<link [[Go to the next house (0:02)|Domus House Knock]]>><<pass 2>><</link>>
+<<dooricon "domus">><<link [[Go to the next house (0:02)|Domus House Knock]]>><<pass 2>><</link>>
 <br>
-<<link [[Stop|Domus Street]]>><</link>>
+<<getouticon>><<link [[Stop|Domus Street]]>><</link>>
 <br>
 <<endevent>>
 
@@ -1884,14 +1921,14 @@ The bathroom is <<print either("small","tiny","very clean")>>.
 			"Authentic? <span class="red">I've got just the thing.</span>" Hands release your waist and you hear footsteps behind. A door opens. A whistle.
 			A moment later a <<beasttype>> bounds in and rushes over to you.
 			<br><br>
-			<<link [[Next|Domus Model Dog]]>><<set $molestationstart to 1>><<bind>><<facewear 4>><</link>>
+			<<link [[Next|Domus Model Dog]]>><<set $molestationstart to 1>><<bindtemp>><<facewear 4>><</link>>
 		<<else>>
 			"Finally," the <<person2>><<person>> mutters. You feel something hard brush against your butt.
 			<br><br>
 			<<endevent>> /* clears out the initial person1 from combat */
 			<<generate1>><<set $NPCList[0] to clone($model_dom)>> /* sets the dom character to person1*/
 			<<if $NPCList[0].gender is "f">><<npcstrapon 0>><</if>>
-			<<link [[Next|Domus Model BDSM Rape]]>><<set $molestationstart to 1>><<bind>><<facewear 4>><</link>>
+			<<link [[Next|Domus Model BDSM Rape]]>><<set $molestationstart to 1>><<bindtemp>><<facewear 4>><</link>>
 		<</if>>
 	<</if>>
 <</if>>
@@ -2098,7 +2135,7 @@ You've made <<moneyGain 30>>.
 	<<set $phase to 0>>
 
 	<<link [[Next|Domus Model Pillory Wait]]>><</link>>
-	<br>	
+	<br>
 <</if>>
 
 
@@ -2202,7 +2239,7 @@ time on the phone arranging it. Such chemistry! Such acting! Remarkable... You'l
 <<He>> waves to the bathroom. "Take your time. You were great today. Wow."
 <<lstress>><<stress -2>>
 <br><br>
-<<link [[Enter bathroom|Domus Model Rape End]]>><<set $worn.face.type.push("broken")>><<faceruined>><<endevent>><<unbind>><</link>>
+<<link [[Enter bathroom|Domus Model Rape End]]>><<set $worn.face.type.push("broken")>><<faceruined>><<endevent>><<unbindtemp>><</link>>
 
 
 :: Domus Model Rape End

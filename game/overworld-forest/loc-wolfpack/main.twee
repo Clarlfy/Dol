@@ -256,13 +256,13 @@ The black dog lurks on the outskirts of the clearing. The <<wolf_cave_plural>> t
 <<bHe>> lies beneath a large fern, and watches you approach.
 <br><br>
 
-<<link [[Relax (0:30)|Wolf Cave Dog Relax]]>><<set $daily.wolfCaveDog to 1>><<pass 30>><<trauma -6>><<stress -6>><</link>><<ltrauma>><<lstress>>
+<<ind>><<link [[Relax (0:30)|Wolf Cave Dog Relax]]>><<set $daily.wolfCaveDog to 1>><<pass 30>><<trauma -6>><<stress -6>><</link>><<ltrauma>><<lstress>>
 <br>
-<<link [[Encourage to play with the pups|Wolf Cave Dog Play]]>><<set $daily.wolfCaveDog to 1>><</link>>
+<<ind>><<link [[Encourage to play with the pups|Wolf Cave Dog Play]]>><<set $daily.wolfCaveDog to 1>><</link>>
 <br><br>
 
 
-<<link [[Leave|Wolf Cave Clearing]]>><<endevent>><</link>>
+<<getouticon>><<link [[Leave|Wolf Cave Clearing]]>><<endevent>><</link>>
 <br>
 
 :: Wolf Cave Dog Relax
@@ -270,7 +270,7 @@ The black dog lurks on the outskirts of the clearing. The <<wolf_cave_plural>> t
 You sit beside the <<beasttype>>, and chat.
 <<if $monster is 1>>
 	<<if $rng gte 81>>
-		"This my <<if $NPCName[$NPCNameList.indexOf("Black Wolf")].pronoun is "f">>half-sister's<<else>>half-brother's<</if>> pack," <<bhe>> says. "Not welcome here. Not welcome anywhere. I have nowhere else."
+		"This my <<if C.npc["Black Wolf"].pronoun is "f">>half-sister's<<else>>half-brother's<</if>> pack," <<bhe>> says. "Not welcome here. Not welcome anywhere. I have nowhere else."
 	<<elseif $rng gte 61>>
 		"Stay away from big human caves," <<bhe>> says. "Danger."
 	<<elseif $rng gte 41>>

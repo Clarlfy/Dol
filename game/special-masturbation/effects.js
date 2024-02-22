@@ -61,7 +61,7 @@ function masturbationeffects() {
 	if (V.corruptionMasturbation) {
 		if (V.leftarm === "bound" && V.rightarm === "bound") {
 			sWikifier(
-				'The slimes in your ear make you fight against the binds around your arms. You make no progress, <span class="blue">and it gives up.</span><<arousal 600 "masturbation">><<stress 6>><<gstress>><<garousal>>'
+				'The slime in your ear makes you fight against the binds around your arms. You make no progress, <span class="blue">and it gives up.</span><<arousal 600 "masturbation">><<stress 6>><<gstress>><<garousal>>'
 			);
 			fragment.append(" ");
 			V.rightaction = "mrest";
@@ -73,7 +73,7 @@ function masturbationeffects() {
 			(playerHeatMinArousal() + playerRutMinArousal() >= 1000 && V.earSlime.growth >= 100 && V.earSlime.defyCooldown)
 		) {
 			sWikifier(
-				'The slimes in your ear feel that it\'s not worth trying to force you to masturbate in your current state, <span class="blue">and it lets you go.</span>'
+				'The slime in your ear feel it\'s not worth trying to force you to masturbate in your current state, <span class="blue">and it lets you go.</span>'
 			);
 			fragment.append(" ");
 			V.corruptionMasturbation = false;
@@ -81,15 +81,14 @@ function masturbationeffects() {
 		} else {
 			if (V.orgasmdown >= 2) {
 				if (V.corruptionMasturbationCount === undefined || V.corruptionMasturbationCount === null) V.corruptionMasturbationCount = random(2, 6);
-				V.corruptionMasturbationCount--;
-				if (V.corruptionMasturbationCount === 0) {
+				if (V.corruptionMasturbationCount <= 0) {
 					V.corruptionMasturbation = false;
 					delete V.corruptionMasturbationCount;
 					if (V.awareness < 200) {
 						// Prevents the PC from continuing actions that they normally are unable to do yet
 						if (V.mouth === "mpenis") {
 							sWikifier(
-								'<span class="green">With the loss of the control from the slimes in your ear, you remove your <<penis>> from your mouth and move away.</span>'
+								'<span class="green">With the loss of the control from the slime in your ear, you remove your <<penis>> from your mouth and move away.</span>'
 							);
 							fragment.append(" ");
 							V.mouthactiondefault = "rest";
@@ -97,9 +96,7 @@ function masturbationeffects() {
 							V.mouth = 0;
 							V.penisuse = 0;
 						} else if (V.mouth === "mpenisentrance") {
-							sWikifier(
-								'<span class="green">With the loss of the control from the slimes in your ear, you move away from your <<penis>>.</span>'
-							);
+							sWikifier('<span class="green">With the loss of the control from the slime in your ear, you move away from your <<penis>>.</span>');
 							fragment.append(" ");
 							V.mouthactiondefault = "rest";
 							V.mouthaction = 0;
@@ -107,7 +104,7 @@ function masturbationeffects() {
 							V.penisuse = 0;
 						} else if (V.mouth === "mchastityparasiteentrance") {
 							sWikifier(
-								'<span class="green">With the loss of the control from the slimes in your ear, you move away from your chastity parasite.</span>'
+								'<span class="green">With the loss of the control from the slime in your ear, you move away from your chastity parasite.</span>'
 							);
 							fragment.append(" ");
 							V.mouthactiondefault = "rest";
@@ -115,9 +112,7 @@ function masturbationeffects() {
 							V.mouth = 0;
 							V.penisuse = 0;
 						} else if (V.mouth === "mvaginaentrance") {
-							sWikifier(
-								'<span class="green">With the loss of the control from the slimes in your ear, you move away from your <<pussy>>.</span>'
-							);
+							sWikifier('<span class="green">With the loss of the control from the slime in your ear, you move away from your <<pussy>>.</span>');
 							fragment.append(" ");
 							V.mouthactiondefault = "rest";
 							V.mouthaction = 0;
@@ -134,6 +129,9 @@ function masturbationeffects() {
 		sWikifier("<<dynamicblock id=control-caption>><<controlcaption>><</dynamicblock>>");
 		fragment.append(possessedMasturbation(span, br, sWikifier));
 	}
+
+	// Reset the record of the players current actions
+	V.masturbationActions = {};
 
 	fragment.append(masturbationeffectsVaginaAnus(otherVariables));
 
@@ -259,6 +257,10 @@ function masturbationeffects() {
 	fragment.append(br());
 	fragment.append(br());
 
+	if (V.masturbationAudience) {
+		fragment.append(masturbationAudience());
+	}
+
 	return fragment;
 }
 
@@ -280,6 +282,7 @@ function masturbationeffectsArms(
 	const otherArmAction = otherArm + "action";
 
 	const clearAction = defaultAction => {
+		if (V[armAction] && V[armAction] !== "mrest") V.masturbationActions[armAction] = V[armAction];
 		V[armActionDefault] = defaultAction !== undefined ? defaultAction : V[armAction];
 		V[armAction] = 0;
 		if (doubleAction) {
@@ -455,6 +458,18 @@ function masturbationeffectsArms(
 		V.rightarm = 0;
 		doubleAction = false;
 	}
+	if (V[armAction] === "mpickupdildo") {
+		const currentlySelectedToy = V["selectedToy" + (arm === "left" ? "Left" : "Right")];
+		if (
+			currentlySelectedToy === V["currentToy" + (arm === "left" ? "Right" : "Left")] ||
+			currentlySelectedToy === V.currentToyVagina ||
+			currentlySelectedToy === V.currentToyAnus
+		) {
+			// The player can only a toy in one type of action
+			V[armAction] = 0;
+			doubleAction = false;
+		}
+	}
 	if (V[armAction] === "mpickupdildo" && V[otherArmAction] === "mpickupdildo" && V.selectedToyLeft === V.selectedToyRight) {
 		// The player can only pick up a toy with one hand
 		V.rightaction = 0;
@@ -529,7 +544,7 @@ function masturbationeffectsArms(
 	// End of Action Corrections
 
 	// Action setup
-	const handsOn = doubleAction ? 2 : 1;
+	let handsOn = doubleAction ? 2 : 1;
 	const altText = {};
 
 	wikifier("ballsize");
@@ -649,12 +664,22 @@ function masturbationeffectsArms(
 			}
 			clearAction(); // Needs to run after any breastfeed widget
 			break;
-		case "mchastity":
-			clearAction();
+		case "mchastity": // Old usage
+		case "mpenischastity":
+		case "mvaginachastity":
+			if (arm === "left" && ["mchastity", "mpenischastity", "mvaginachastity"].includes(V[otherArmAction])) {
+				doubleAction = true;
+				handsOn = 2;
+			}
+			altText.target = "<<genitals 1>>";
+			if (V[armAction] !== "mchastity" && (!doubleAction || V[armAction] === V[otherArmAction])) {
+				altText.target = V[armAction] === "mpenischastity" ? "<<penis>>" : "<<pussy>>";
+			}
 			sWikifier(
-				`You try to dig your fingers beneath your ${V.worn.genitals.name}, but to no avail. Your <<genitals 1>> aches for your touch, but there's nothing you can do.<<gstress>>`
+				`You try to dig your fingers beneath your ${V.worn.genitals.name}, but to no avail. Your ${altText.target} aches for your touch, but there's nothing you can do.<<gstress>>`
 			);
 			wikifier("stress", handsOn);
+			clearAction();
 			break;
 		case "mpenisentrance":
 			clearAction("mpenisglans");
@@ -1025,11 +1050,10 @@ function masturbationeffectsArms(
 			if (
 				playerIsPregnant() &&
 				playerPregnancyProgress() >= 0.1 &&
-				V.player.penissize === -1 &&
-				random(0, 100) >= 75 &&
-				(!V.daily.chastityParasizeSizeReduction || V.daily.chastityParasizeSizeReduction < 400)
+				V.player.penissize <= -1 &&
+				(!V.daily.chastityParasizeSizeReduction || V.daily.chastityParasizeSizeReduction < 150)
 			) {
-				V.penisgrowthtimer++;
+				V.penisgrowthtimer += 3;
 				V.daily.chastityParasizeSizeReduction = (V.daily.chastityParasizeSizeReduction || 0) + 1;
 			}
 			break;
@@ -2674,6 +2698,7 @@ function masturbationeffectsMouth({
 	};
 
 	const clearAction = defaultAction => {
+		if (V.mouthaction && V.mouthaction !== "mrest") V.masturbationActions.mouthaction = V.mouthaction;
 		V.mouthactiondefault = defaultAction !== undefined ? defaultAction : V.mouthaction;
 		V.mouthaction = 0;
 	};
