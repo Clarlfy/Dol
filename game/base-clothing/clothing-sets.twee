@@ -75,6 +75,10 @@
 			<<set _passage to "Temple Bunk Bed">>
 			<<set $wardrobe_location to "temple">>
 			<<set $storeLocation to "Temple Bunk Bed">>
+		<<case "Pirate Bed Lie">>
+			<<set _passage to "Pirate Bed Lie">>
+			<<set $wardrobe_location to "pirate">>
+			<<set $storeLocation to "Pirate Bed Lie">>
 		<<default>>
 			<<set _passage to "Bed">>
 			<<set $wardrobe_location to "wardrobe">>
@@ -96,12 +100,18 @@
 				<br>
 			<</if>>
 		<</for>>
-	<<else>>
+	<<elseif $outfit.find(outfitSet => outfitSet.type.includes("sleep"))>>
+		<<icon "cross.png" "infront">>
+		<<if _passage is "Bed">>
+			<<furnitureicon _bed.iconFile>>
+		<<else>>
+			<<bedicon>>
+		<</if>>
 		<<if $possessed>>
-			<span class="red">The slime in your head is silent.</span>
+			<span class="purple">The slime in your head is silent.</span>
 			<br>
 		<<else>>
-			<span class="red">The slime is not allowing you to sleep with anything on.</span>
+			<span class="purple">The slime is not allowing you to sleep with anything on.</span>
 			<br>
 		<</if>>
 	<</if>>
@@ -209,9 +219,9 @@
 		<<storeon $storeLocation>>
 	<<elseif $wear_outfit isnot "none">>
 		<<set _equip to setup.clothingLayer.all>>
-		<<set _equipSkip to {"over_upper":false, "over_lower":false, "upper":false, "lower":false, "under_upper":false, "under_lower":false, "over_head":false, "head":false, "face":false, "neck":false, "hands":false, "legs":false, "feet":false}>>
-		<<set _storeItemSkip to {"over_upper":false, "over_lower":false, "upper":false, "lower":false, "under_upper":false, "under_lower":false, "over_head":false, "head":false, "face":false, "neck":false, "hands":false, "legs":false, "feet":false}>>
-		<<set _equipDamageValue to {"over_upper":3, "over_lower":3, "upper":3, "lower":3, "under_upper":3, "under_lower":3, "over_head":1, "head":1, "face":1, "neck":1, "hands":1, "legs":1, "feet":1}>>
+		<<set _equipSkip to {"over_upper":false, "over_lower":false, "upper":false, "lower":false, "under_upper":false, "under_lower":false, "over_head":false, "head":false, "face":false, "neck":false, "hands":false, "handheld":false, "legs":false, "feet":false}>>
+		<<set _storeItemSkip to {"over_upper":false, "over_lower":false, "upper":false, "lower":false, "under_upper":false, "under_lower":false, "over_head":false, "head":false, "face":false, "neck":false, "hands":false, "handheld":false, "legs":false, "feet":false}>>
+		<<set _equipDamageValue to {"over_upper":3, "over_lower":3, "upper":3, "lower":3, "under_upper":3, "under_lower":3, "over_head":1, "head":1, "face":1, "neck":1, "hands":1, "handheld":1, "legs":1, "feet":1}>>
 		<<set _corruptionEquipSkip to ["over_upper","over_lower","upper", "lower", "under_upper", "under_lower"]>>
 		<<set _towels to ["towel top","large towel","towel skirt"]>>
 		<<set _notEquipped to {}>>
@@ -273,7 +283,7 @@
 					<<unset _randomColour>>
 					<<unset _randomColourAcc>>
 					<<for $_equipIndex, $_wardrobeItem range _selectedWardrobe[$_slot]>>
-						<<if $_incomingItemName isnot $_wardrobeItem.name>>
+						<<if $_incomingItemName isnot $_wardrobeItem.name or ($_wardrobeItem.outfitSecondary and !["broken", "split"].includes($_wardrobeItem.outfitSecondary[1]))>>
 							<<continue>>
 						<</if>>
 						/* Check for saved colors in clothing set */
@@ -353,7 +363,7 @@
 								<<set $daily.corruptionSlimeClothes to random(_baseCorruption * 5, _baseCorruption * 25) - currentSkillValue('willpower')>>
 							<</if>>
 							<<if $earSlime.forcedCommando isnot undefined and ($_slot is "under_lower" or ($_wardrobeItem.outfitPrimary and $_wardrobeItem.outfitPrimary.under_lower and !["broken","split"].includes($_wardrobeItem.outfitPrimary.under_lower)))>>
-								<<if (_earSlimeEnableSwimwear and $_wardrobeItem.type.includes("swim")) or (_earSlimeEnableDancewear and $_wardrobeItem.type.includes("dance"))>>
+								<<if $_wardrobeItem.type.includes("naked") or (_earSlimeEnableSwimwear and $_wardrobeItem.type.includes("swim")) or (_earSlimeEnableDancewear and $_wardrobeItem.type.includes("dance"))>>
 								<<elseif $earSlime.forcedCommando gt 0>>
 									<<set _notEquipped[$_slot] to {"name": $_incomingItemName, "reason": "corruption_slime_deny_commando"}>>
 									<<break>>
@@ -517,12 +527,16 @@
 		<</if>>
 	<</if>>
 
+	<<if $worn.under_lower.type.includes("naked")>>
+		<<set $worn.under_lower.exposedType to "notWorn">>
+	<</if>>
+
 	<<if $wear_outfit isnot "none" and _notEquipped>>
 		<<if Object.values(_notEquipped).length gt 0>>
 			<<set _resultStrings to {}>>
 			<<set _locationName to ($wardrobes[$wardrobe_location] is undefined ? "wardrobe" : $wardrobe_location)>>
 			<<set _wardrobeName to $wardrobes[_locationName].name + (!$wardrobes[_locationName].name.includes("locker") ? " wardrobe" : "")>>
-			<<run Object.values(_notEquipped).forEach(notEquippedItem => {
+			<<run Object.entries(_notEquipped).forEach(([slot, notEquippedItem]) => {
 				switch (notEquippedItem.reason) {
 					case "not found":
 						if (_resultStrings.notFound === undefined) {
@@ -633,6 +647,7 @@
 						_resultStrings.cursedUnequip.names.push(notEquippedItem.name);
 						break;
 					case "not found piece":
+						if (V.worn[slot].name === notEquippedItem.name) break;
 						if (_resultStrings.notFoundPiece === undefined) {
 							_resultStrings.notFoundPiece = {
 								"start": "You were unable to fully equip your ",

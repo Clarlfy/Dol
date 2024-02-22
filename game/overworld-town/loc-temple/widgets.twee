@@ -231,7 +231,7 @@
 				<br>
 			<</if>>
 		<</if>>
-		<<if $insecurity_pregnancy gte 1 and $acceptance_pregnancy lte 999 and playerBellySize() gte 8 and $daily.lakeMeditate isnot 1>>
+		<<if $insecurity_pregnancy gte 1 and $acceptance_pregnancy lte 999 and playerBellySize() gte 8 and $daily.templePray isnot 1>>
 			<<set _pregnancyLink to (playerAwareTheyArePregnant() ? "Pray about your pregnant belly (1:00)" : "Pray about your pregnant looking belly (1:00)")>>
 			<<link [[_pregnancyLink|_prayPassage]]>>
 				<<pass 60>><<set $phase to 10>><<set $daily.templePray to 1>>
@@ -447,7 +447,7 @@
 		<<else>>
 			<<He>> replies, saying, "Looks like it. No wedding ring,
 			<<if $worn.hands.name isnot "naked">>
-				it might just be under <<pher>> <<print $worn.hands.name>>s though."
+				it might just be under <<pher>> <<print $worn.hands.name>> though."
 			<<else>>
 				though. We should say a prayer for <<phim>>."
 			<</if>>
@@ -681,13 +681,13 @@
 	<br>
 	Grace:
 	<div class="meter">
-		<<set $percent=Math.floor((($grace + 100)/ 100)*50)>>
-		<<print '<div class="redbar" style="width:' + $percent + '%"></div>'>>
+		<<set _percent to Math.floor((($grace + 100)/ 100)*50)>>
+		<<print '<div class="redbar" style="width:' + _percent + '%"></div>'>>
 	</div>
 	<</if>>
 	<br>
 
-	<<if $NPCName[$NPCNameList.indexOf("Sydney")].init is 1 and _sydney_location is "temple">>
+	<<if C.npc.Sydney.init is 1 and _sydney_location is "temple">>
 		<<set _sydneyTemple to true>>
 	<</if>>
 <</widget>>
@@ -733,10 +733,14 @@
 <</silently>><<print _text_output>><</widget>>
 
 <<widget "endconfession">>
-	<<set $daily.confessed to $confession>>
 	<<unset $attendant>>
 	<<unset $confession>>
 	<<endevent>>
+<</widget>>
+
+<<widget "endconfessionself">>
+	<<set $daily.confessed to $confession>>
+	<<endconfession>>
 <</widget>>
 
 <<widget "temple_bailey_options">>
@@ -771,3 +775,6 @@
 	<<set $renttime to 7>><<set $rentday to Time.weekDay>>
 <</widget>>
 
+<<widget "temple_spear_mission_end">>
+	<<unset $temple_spear_mission_winter>>
+<</widget>>

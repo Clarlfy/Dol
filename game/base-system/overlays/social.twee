@@ -113,7 +113,8 @@
 		</div>
 		<div id="secondary-npcs" class="relation-box-list">
 			<<for _ik= 0; _ik lt _specialNPCs.length; _ik++>>
-				<<relation-box $NPCName[$NPCNameList.indexOf(_specialNPCs[_ik])] _npcConfig[_specialNPCs[_ik]]>>
+				<<set $_npc to $NPCName[$NPCNameList.indexOf(_specialNPCs[_ik])]>>
+				<<relation-box $_npc _npcConfig[_specialNPCs[_ik]]>>
 				<<set _initNPC += _npcData.init>>
 			<</for>>
 		</div>
@@ -208,7 +209,7 @@
 					{ requiredValue: 240,	color: 'teal',		description: 'very cool.'},
 					{ requiredValue: 400,	color: 'green',		preText: 'Your fellow students ', description: 'aspire to be seen with you.'}
 				]}>>
-				<<set _teacherBoxConfig = { name : "Teachers", icon : "img/misc/icon/school.png", description: "<<relation-text _teacherRepConfig>> <<statbar $delinquency 1000>>"}>>
+				<<set _teacherBoxConfig = { name : "Teachers", icon : "img/misc/icon/school.png", description: "<<relation-text _teacherRepConfig>> <<statbar 0 $delinquency 1000>>"}>>
 				<<set _studentBoxConfig = { name : "Students", icon : "img/misc/icon/schoolnew.png", description: "<<relation-text _studentRepConfig>> <<statbarinverted $cool $coolmax>>"}>>
 
 				/*Crossdressing*/
@@ -307,6 +308,26 @@
 					]}>>
 					<<set _dockBoxConfig = { name : "Docks", icon : "img/misc/icon/mer.png", description : '<<relation-text _dockRepConfig>>'}>>
 				<</if>>
+				/*Pirates */
+				<<set _pirateStatusConfig = { currentValue: $pirate_rank, secondaryValue: $pirate_status, preText: 'The pirates view you as  ', states : [
+						{ requiredValue: 0, secondaryStates : [
+							{ requiredValue: 0,	color: 'red',	description: 'wretched scum.'},
+							{ requiredValue: 10,	color: 'pink',	description: 'worthless scum.'},
+							{ requiredValue: 30,	color: 'pink',	description: 'pathetic scum.'},
+							{ requiredValue: 50,	color: 'pink',	description: 'sloppy scum.'},
+							{ requiredValue: 70,	color: 'pink',	description: 'endearing scum.'},
+							{ requiredValue: 90,	color: 'purple',	description: 'scum no longer.'},
+						]},
+						{ requiredValue: 1, secondaryStates : [
+							{ requiredValue: 0,	color: 'blue',	description: 'a scummy mate.'},
+							{ requiredValue: 10,	color: 'blue',	description: 'a useless mate.'},
+							{ requiredValue: 30,	color: 'blue',	description: 'an untested mate.'},
+							{ requiredValue: 50,	color: 'blue',	description: 'a second-class mate.'},
+							{ requiredValue: 70,	color: 'blue',	description: 'a mate in good standing.'},
+							{ requiredValue: 90,	color: 'lblue',		description: 'a first-class mate.'},
+						]},
+					]}>>
+					<<set _pirateBoxConfig = { name : "Pirate Rank", icon : "img/misc/icon/mer.png", description: "<<relation-text _pirateStatusConfig>>"}>>
 			<</silently>>
 			<<relation-box-simple _policeBoxConfig>>
 			<<relation-box-simple _orphanageBoxConfig>>
@@ -325,6 +346,9 @@
 			<</if>>
 			<<if $dockwork gte 2>>
 				<<relation-box-simple _dockBoxConfig>>
+			<</if>>
+			<<if $pirate_rank gte 0>>
+				<<relation-box-simple _pirateBoxConfig>>
 			<</if>>
 				<<relation-box-wolves>>
 

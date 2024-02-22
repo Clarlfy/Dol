@@ -3,7 +3,7 @@
 
 <<set _kylar to $NPCList[0]>>
 
-<<if $NPCName[$NPCNameList.indexOf("Kylar")].lust gte 100>>
+<<if C.npc.Kylar.lust gte 100>>
 	<<switch $syndromekylarbuild>>
 		<<case 4>>
 			Kylar crawls towards you, and pulls <<himself>> up your legs.
@@ -23,7 +23,7 @@
 				or
 				(_kylar.penis isnot "none" and ($genderknown.includes("Kylar") ? $player.vaginaExist : $player.gender_appearance is "f") )
 			)>>
-				<<if $pronoun is "f">>
+				<<if C.npc.Kylar.vagina isnot "none">>
 					"Your sperm is so delicious," <<he>> says. "It must be potent. S-so potent. I need you to mark me again and again."
 				<<else>>
 					"I need to mark you with my sperm," <<he>> says. "S-so the universe knows you're mine. N-no one else's!"
@@ -67,7 +67,7 @@
 				or
 				(_kylar.penis isnot "none" and ($genderknown.includes("Kylar") ? $player.vaginaExist : $player.gender_appearance is "f") )
 			)>>
-				<<if $pronoun is "m">>
+				<<if C.npc.Kylar.vagina is "none">>
 					<<He>> rubs your belly. "I'm going to get you pregnant with my child. I-I'm fertile. I'm sure of it!"
 				<<else>>
 					<<He>> rubs <<his>> belly. "I'm going to get pregnant with your child. I-I'm fertile. I'm sure of it!"
@@ -95,7 +95,7 @@
 		<<default>>
 			<<kylarStockholmDefaultRape>>
 		<</switch>>
-<<elseif $NPCName[$NPCNameList.indexOf("Kylar")].rage gte 100>>
+<<elseif C.npc.Kylar.rage gte 100>>
 
 	"I don't understand," Kylar says. <<He>> sounds irritated. "I'm being so good to you. So very good. Are-" <span class="pink"><<His>> fist clenches around the knife.</span> "Are you thinking of someone else? Is that it?" There's anger in <<his>> voice now. Anger and fear.
 	<br><br>
