@@ -6,7 +6,7 @@ Macro.add("modelselect", {
 	},
 });
 
-Macro.add("canvas-render", {
+Macro.add("animate", {
 	handler() {
 		const canvas = T.modelclass.canvas || T.modelclass.createCanvas();
 		T.modelclass.animate(canvas, T.modeloptions, Renderer.defaultListener);

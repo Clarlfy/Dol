@@ -235,8 +235,8 @@ const zi = ZIndices;
 /**
  * @type {CanvasModelOptions}
  */
-const combat = {
-	name: "combat",
+const combatMain = {
+	name: "combatMain",
 	width: 256,
 	height: 256,
 	frames: 4,
@@ -686,8 +686,7 @@ const combat = {
 	},
 };
 
-// Sets the model to "combat".
-Renderer.CanvasModels.combat = combat;
+Renderer.CanvasModels.combatMain = combatMain;
 
 function genClothingLayer(slot, overrideOptions) {
 	/**
@@ -825,44 +824,41 @@ function isChestActive() {
 	return activeUse;
 }
 
-Renderer.Animations["sex-2f-idle"] = {
-	keyframes: [
-		{
-			frame: 0,
-			duration: 2000,
-		},
-		{
-			frame: 2,
-			duration: 2000,
-		},
-	],
-};
+function buildCombatGroups() {
+	console.log("buildCombatGroups");
+	// Display PC if appropriate.
 
-Renderer.Animations["sex-1f-idle"] = {
-	keyframes: [
-		{
-			frame: 1,
-			duration: 1000,
-		},
-	],
-};
+	// Generate layers for available NPCs.
+	for (let i = 0; i < V.NPCList.length; i++) {
+		const npc = V.NPCList[i];
+		// Only show active NPCs.
+		if (!npc.active) {
+			continue;
+		}
 
-Renderer.Animations["sex-4f-slow"] = {
-	frames: 4,
-	duration: 330,
-};
+		// Determine type of NPC
+		switch (npc.type) {
+			case "human":
+				// Generate layers for human NPC.
+				break;
+		}
+	}
+}
+window.buildCombatGroups = buildCombatGroups;
 
-Renderer.Animations["sex-4f-mid"] = {
-	frames: 4,
-	duration: 170,
-};
+Macro.add("modelbuild_combat_groups", {
+	handler() {
+		buildCombatGroups();
+	},
+});
 
-Renderer.Animations["sex-4f-fast"] = {
-	frames: 4,
-	duration: 110,
-};
+function prepareCombatGroups() {
+	console.log("prepareCombatGroups");
+}
+window.prepareCombatGroups = prepareCombatGroups;
 
-Renderer.Animations["sex-4f-vfast"] = {
-	frames: 4,
-	duration: 80,
-};
+Macro.add("modelprepare_combat_groups", {
+	handler() {
+		prepareCombatGroups();
+	},
+});
