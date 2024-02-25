@@ -24,6 +24,7 @@ module.exports = {
 		Template: "readonly",
 		UI: "readonly",
 		UIBar: "readonly",
+		PRNGWrapper: "readonly",
 		idb: "readonly",
 		wikifier: "readonly",
 		// SugarCube functions

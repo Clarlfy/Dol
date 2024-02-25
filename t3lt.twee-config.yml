@@ -231,6 +231,10 @@ sugarcube-2:
       name: actionskissback
     actionsman:
       name: actionsman
+      description: |-
+        Displays the old combat renderer first.
+
+        Displays all controls for the player to select what the PC will do next round.
     actionsmoan:
       name: actionsmoan
     actionsmock:
@@ -2894,6 +2898,9 @@ sugarcube-2:
       name: connudatuswallet
     consensual:
       name: consensual
+      description: |-
+        Raises awareness at low awareness.
+        Sets $trueconsensual to 1.
     consensualman:
       name: consensualman
       tags: ["unused"]
@@ -3610,6 +3617,8 @@ sugarcube-2:
       name: effectsmakeup
     effectsman:
       name: effectsman
+      description: |-
+        Displays text of the PC's actions for this round.
     effectsorgasm:
       name: effectsorgasm
     effectspain:
@@ -5314,16 +5323,28 @@ sugarcube-2:
       name: generate_veteran_guard
     generate1:
       name: generate1
+      description: |-
+        Generates an NPC at index 0. Seen at `V.NPCList[0]`.
     generate2:
       name: generate2
+      description: |-
+        Generates an NPC at index 1. Seen at V.NPCList[1].
     generate3:
       name: generate3
+      description: |-
+        Generates an NPC at index 2. Seen at V.NPCList[2].
     generate4:
       name: generate4
+      description: |-
+        Generates an NPC at index 3. Seen at V.NPCList[3].
     generate5:
       name: generate5
+      description: |-
+        Generates an NPC at index 4. Seen at V.NPCList[4].
     generate6:
       name: generate6
+      description: |-
+        Generates an NPC at index 5. Seen at V.NPCList[5].
     generateActionsAbomination:
       name: generateActionsAbomination
     generateActionsMachine:
@@ -8934,6 +8955,8 @@ sugarcube-2:
       name: maleChanceSplitControls
     man:
       name: man
+      description: |-
+        Displays text of the NPC's actions for this round.
     man-combat:
       name: man-combat
     man-pursuit:
@@ -9215,6 +9238,10 @@ sugarcube-2:
       name: molestbusinit
     molested:
       name: molested
+      description: |-
+        Raises awareness at low awareness.
+        Sets up flashbacks if enabled.
+        Increments molestation stats if $consensual is 0.
     moleststat:
       name: moleststat
     molestTrait:
@@ -10789,16 +10816,28 @@ sugarcube-2:
       name: person_dance
     person1:
       name: person1
+      description: |-
+        Selects the NPC at index 0. Other widgets, such as `<<he>>` will point to the NPC to display the correct he/she variant.
     person2:
       name: person2
+      description: |-
+        Selects the NPC at index 1. Other widgets, such as `<<he>>` will point to the NPC to display the correct he/she variant.
     person3:
       name: person3
+      description: |-
+        Selects the NPC at index 2. Other widgets, such as `<<he>>` will point to the NPC to display the correct he/she variant.
     person4:
       name: person4
+      description: |-
+        Selects the NPC at index 3. Other widgets, such as `<<he>>` will point to the NPC to display the correct he/she variant.
     person5:
       name: person5
+      description: |-
+        Selects the NPC at index 4. Other widgets, such as `<<he>>` will point to the NPC to display the correct he/she variant.
     person6:
       name: person6
+      description: |-
+        Selects the NPC at index 5. Other widgets, such as `<<he>>` will point to the NPC to display the correct he/she variant.
     personname:
       name: personname
     personpenis:
@@ -12785,6 +12824,10 @@ sugarcube-2:
       name: stateabomination
     stateman:
       name: stateman
+      description: |-
+        Displays the statuses of the NPCs currently in combat.
+
+        He looks eager. He looks aroused. He looks calm. He looks cautious.
     statetentacles:
       name: statetentacles
     statistics:

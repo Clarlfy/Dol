@@ -108,3 +108,45 @@ const ZIndices = {
 	frontArm: 28,
 };
 window.ZIndices = ZIndices;
+
+Renderer.Animations["sex-2f-idle"] = {
+	keyframes: [
+		{
+			frame: 0,
+			duration: 2000,
+		},
+		{
+			frame: 2,
+			duration: 2000,
+		},
+	],
+};
+
+Renderer.Animations["sex-1f-idle"] = {
+	keyframes: [
+		{
+			frame: 1,
+			duration: 1000,
+		},
+	],
+};
+
+Renderer.Animations["sex-4f-slow"] = {
+	frames: 4,
+	duration: 330,
+};
+
+Renderer.Animations["sex-4f-mid"] = {
+	frames: 4,
+	duration: 170,
+};
+
+Renderer.Animations["sex-4f-fast"] = {
+	frames: 4,
+	duration: 110,
+};
+
+Renderer.Animations["sex-4f-vfast"] = {
+	frames: 4,
+	duration: 80,
+};
