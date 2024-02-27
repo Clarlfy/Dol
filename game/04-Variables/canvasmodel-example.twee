@@ -53,6 +53,14 @@ Debugging:
 	<<set $sexstart to 0>>
 	<div class="combat-init">
 		<p>Init</p>
+		<<switch $demo.type>>
+			<<case "human">>
+				<p>Man</p>
+				<<maninit>>
+			<<case "bestial">>
+				<p>Beast</p>
+				<<beastCombatInit>>
+		<</switch>>
 		<<if $demo.consent>>
 			<<consensual>>
 			<<set $consensual to 1>>
