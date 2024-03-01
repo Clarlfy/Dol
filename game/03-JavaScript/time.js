@@ -51,7 +51,6 @@
 */
 
 /* eslint-disable jsdoc/require-description-complete-sentence */
-/* eslint-disable no-undef */
 const Time = (() => {
 	const moonPhases = {
 		new: {
@@ -638,6 +637,11 @@ function dayPassed() {
 		V.pound.tasks = [];
 	}
 	V.renttime--;
+	// Not seen bailey for more than 2 weeks, tracks missed rent
+	if (V.renttime < 0 && V.renttime % 7 === 0) {
+		V.baileyRefusedToPayTotal += V.rentmoney + (V.babyRent || 0);
+		V.baileyRefusedToPayTotalStat += V.rentmoney + (V.babyRent || 0);
+	}
 
 	if (V.flashbacktown > 0) V.flashbacktown--;
 	if (V.flashbackhome > 0) V.flashbackhome--;

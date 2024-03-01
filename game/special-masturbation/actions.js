@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 function masturbationActions() {
 	const fragment = document.createDocumentFragment();
 
@@ -109,6 +108,7 @@ function masturbationActions() {
 		fragment.append(wikifier("orgasm"));
 		fragment.append(wikifier("promiscuity1"));
 		V.masturbationorgasmstat++;
+		V.masturbationOrgasmTimeStat = Time.date.timeStamp;
 		V.masturbationorgasm++;
 		if (V.femaleclimax !== 1 && !T.deniedOrgasm && V.worn.genitals.name !== "chastity parasite" && V.mouth !== "mpenis") {
 			V.masturbationorgasmsemen++;
