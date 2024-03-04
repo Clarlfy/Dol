@@ -1,3 +1,4 @@
+/* eslint-disable jsdoc/no-undefined-types */
 /**
  * @typedef {object} CanvasModelOptions
  * @property {string} name Model name, for debugging.
@@ -70,7 +71,7 @@
  * @property {"up"|"down"} legFrontPosition The position the front leg is in.
  * @property {1|2|3|4|5} blush The volume of blush on the player, higher is more.
  * @property {1|2|3|4|5} tears The volume of tears the player displays, higher is more.
- * @property {Object<string, ClothingState>} clothing Template.
+ * @property {Object<string, ClothingState>} clothes Template.
  * @property {object} filters The filters for layers.
  */
 
@@ -124,6 +125,7 @@
 /**
  * @typedef ClothingState
  * @type {object}
+ * @property {ClothesItem} item The clothing item's setup with worn properties copied over.
  * @property {string} name The name of the clothing directory.
  * @property {string} state The state of the clothing, the file name.
  * @property {number} alpha The percent of the alpha channel. 1 is 100%, 0 is 0%.
@@ -235,8 +237,8 @@ const zi = ZIndices;
 /**
  * @type {CanvasModelOptions}
  */
-const combatMain = {
-	name: "combatMain",
+const combatMainPc = {
+	name: "combatMainPc",
 	width: 256,
 	height: 256,
 	frames: 4,
@@ -262,7 +264,7 @@ const combatMain = {
 		console.log("Combat-model defaultOptions");
 		return {
 			root: "img/newsex/",
-			position: "doggy",
+			position: "missionary",
 			showPlayer: true,
 			showFace: true,
 			showClothing: true,
@@ -270,7 +272,10 @@ const combatMain = {
 			inOral: false,
 			animSpeed: 1,
 			hairType: "default",
-			filters: {},
+			filters: {
+				worn: {},
+			},
+			clothes: {},
 		};
 	},
 	/*
@@ -280,129 +285,11 @@ const combatMain = {
 	 *	██      ██   ██ ██      ██      ██   ██ ██    ██ ██      ██           ██      ██
 	 *	██      ██   ██ ███████ ██      ██   ██  ██████   ██████ ███████ ███████ ███████
 	 */
+	/**
+	 * @param {any} options
+	 */
 	preprocess(options) {
-		console.log("Combat-model preprocess", JSON.parse(JSON.stringify(options)));
-		/**
-		 * For colour name, lookup its canvas filter and merge with sprite prefilter.
-		 *
-		 * @param {object} dict map in setup.colours to lookup in
-		 * @param {string} key colour name.
-		 * @param {string} debugName used when reporting errors
-		 * @param {string} customFilterName key in options.filters
-		 * @param {string} prefilterName name of prefilter to apply
-		 * @returns {any} CompositeLayerParams - Check TS docs for model.d.ts
-		 */
-		function lookupColour(dict, key, debugName, customFilterName, prefilterName) {
-			let filter;
-			if (key === "custom") {
-				filter = clone(options.filters[customFilterName]);
-				if (!filter) {
-					console.error("custom " + debugName + " colour not configured");
-					return {};
-				}
-			} else {
-				const record = dict[key];
-				if (!record) {
-					console.error("unknown " + debugName + " colour: " + key);
-					return {};
-				}
-				filter = clone(record.canvasfilter);
-			}
-
-			if (prefilterName) {
-				Renderer.mergeLayerData(filter, setup.colours.sprite_prefilters[prefilterName], true);
-			}
-			return filter;
-		}
-
-		if (!["doggy", "missionary"].includes(V.position)) {
-			Errors.report("Position not set to any valid values", V.position);
-			options.position = "missionary";
-		} else {
-			options.position = V.position;
-		}
-
-		options.src = options.root + options.position + "/";
-
-		options.hairLength = V.hairlengthstage;
-		options.hairType = V.hairtype || options.hairType;
-
-		options.breastsExposed = false;
-
-		// Remove later
-		T.leg_position = "down";
-		if (!["up", "down"].includes(T.leg_position)) {
-			Errors.report("Position not set to any valid values", T.leg_position);
-			options.legBackPosition = "down";
-			options.legFrontPosition = "down";
-		} else {
-			options.legBackPosition = T.leg_position;
-			options.legFrontPosition = T.leg_position;
-		}
-
-		options.blush = Math.clamp(0, 0, 5);
-		options.tears = Math.clamp(0, 0, 5);
-
-		options.animKey = isActive() ? "sex-4f-vfast" : "sex-2f-idle";
-		options.animKeyStill = isActive() ? "sex-4f-vfast" : "sex-1f-idle";
-
-		options.clothing = {};
-		for (const slot of setup.clothes_all_slots) {
-			const wornItem = V.worn[slot];
-			const setupItem = setup.clothes[slot][wornItem.index];
-			// Initialise the setup variable for the slot.
-			options["worn_" + slot + "_setup"] = setupItem;
-			// Initialise the filter variable, will be set later if applicable.
-			options.filters["worn_" + slot] = Renderer.emptyLayerFilter();
-			if (wornItem) {
-				if (typeof wornItem === "object" && wornItem != null) {
-					const model = genClothingModel(slot, wornItem);
-					if (model != null) {
-						options.clothing[slot] = model;
-					}
-				}
-			}
-			if (setupItem.colour_sidebar) {
-				options.filters["worn_" + slot] = lookupColour(
-					setup.colours.clothes_map, // Dictionary
-					options["worn_" + slot + "_colour"], // Key
-					slot + " clothing",
-					"worn_" + slot + "_custom",
-					setupItem.prefilter
-				);
-			}
-			if (setupItem.accessory_colour_sidebar) {
-				options.filters["worn_" + slot + "_acc"] = lookupColour(
-					setup.colours.clothes_map, // Dictionary
-					options["worn_" + slot + "_acc_colour"], // Key
-					slot + " accessory",
-					"worn_" + slot + "_acc_custom",
-					setupItem.prefilter
-				);
-			}
-		}
-
-		options.skin_type = V.skinColor.natural;
-		options.skin_tone = V.skinColor.range / 100;
-
-		options.hair_colour = V.haircolour || "red";
-		options.left_eye = V.eyeselect || "red";
-		options.right_eye = V.eyeselect || "red";
-
-		options.filters.left_eye = lookupColour(setup.colours.eyes_map, options.left_eye, "eyes", "eyes_custom", "eyes");
-		options.filters.right_eye = lookupColour(setup.colours.eyes_map, options.right_eye, "eyes", "eyes_custom", "eyes");
-		options.filters.hair = lookupColour(setup.colours.hair_map, options.hair_colour, "hair", "hair_custom", "hair");
-		options.filters.hair_fringe = lookupColour(
-			setup.colours.hair_map,
-			options.hair_fringe_colour || options.hair_colour,
-			"hair_fringe",
-			"hair_fringe_custom",
-			"hair_fringe"
-		);
-
-		console.log("Colour maps:", JSON.parse(JSON.stringify(setup.colours)));
-		console.log("Clothing:", options.clothing);
-		console.log("Filters:", JSON.parse(JSON.stringify(options.filters)));
+		console.log("combatMainPc-Preprocess:", JSON.parse(JSON.stringify(options)));
 	},
 	layers: {
 		/*
@@ -503,10 +390,10 @@ const combatMain = {
 		},
 		frontbreast: {
 			srcfn(options) {
-				return options.src + "body/breasts/" + options.breast_size + ".png";
+				return options.src + "body/breasts/" + options.breastSize + ".png";
 			},
 			showfn(options) {
-				if (!options.breast_size) return false;
+				if (!options.breastSize) return false;
 				const result = options.showPlayer && options.breastsExposed;
 				return !!result;
 			},
@@ -643,18 +530,18 @@ const combatMain = {
 		headwear: genClothingLayer("head"),
 		legwearLeft: genClothingLayer("legs", {
 			srcfn(options) {
-				const clothing = options.clothing.legs;
-				if (clothing == null) return "";
-				const path = options.src + "clothing/legs/" + clothing.name + "/" + clothing.state + "l.png";
+				const clothes = options.clothes.legs;
+				if (clothes == null || clothes.name == null) return "";
+				const path = options.src + "clothing/legs/" + clothes.name + "/" + clothes.state + "l.png";
 				console.log("legs", "Path:", path);
 				return path;
 			},
 		}),
 		legwearRight: genClothingLayer("legs", {
 			srcfn(options) {
-				const clothing = options.clothing.legs;
-				if (clothing == null) return "";
-				const path = options.src + "clothing/legs/" + clothing.name + "/" + clothing.state + "r.png";
+				const clothes = options.clothes.legs;
+				if (clothes == null || clothes.name == null) return "";
+				const path = options.src + "clothing/legs/" + clothes.name + "/" + clothes.state + "r.png";
 				console.log("legs", "Path:", path);
 				return path;
 			},
@@ -676,39 +563,65 @@ const combatMain = {
 		upper: genClothingLayer("upper"),
 		upperBreasts: genClothingLayer("upper", {
 			srcfn(options) {
-				const clothing = options.clothing.upper;
-				if (clothing == null) return "";
-				const path = options.src + "clothing/upper/" + clothing.name + "/breasts/" + options.breast_size + ".png";
+				const clothes = options.clothes.upper;
+				if (clothes == null || clothes.name == null) return "";
+				const path = options.src + "clothing/upper/" + clothes.name + "/breasts/" + options.breastSize + ".png";
 				console.log("upper", "Path:", path);
 				return path;
 			},
 		}),
+		upperBackSleeves: genClothingLayer("upper", {
+			srcfn(options) {
+				const clothes = options.clothes.upper;
+				if (clothes == null || clothes.name == null) return "";
+				const path = options.src + "clothing/upper/" + clothes.name + "/sleeves/" + clothes.sleeves + ".png";
+				console.log("upper", "Path:", path);
+				return path;
+			},
+			z: 100,
+		}),
+		upperFrontSleeves: genClothingLayer("upper", {
+			srcfn(options) {
+				const clothes = options.clothes.upper;
+				if (clothes == null || clothes.name == null) return "";
+				const path = options.src + "clothing/upper/" + clothes.name + "/sleeves/" + clothes.sleeves + ".png";
+				console.log("upper", "Path:", path);
+				return path;
+			},
+			z: 100,
+		}),
 	},
 };
 
-Renderer.CanvasModels.combatMain = combatMain;
+Renderer.CanvasModels.combatMainPc = combatMainPc;
 
-function genClothingLayer(slot, overrideOptions) {
+/**
+ *
+ * @param {string} slot
+ * @param {CanvasModelLayer} overrideOptions
+ * @returns {CanvasModelLayer}
+ */
+function genClothingLayer(slot, overrideOptions = {}) {
 	/**
 	 * @type {CanvasModelLayer}
 	 */
 	const defaults = {
 		srcfn(options) {
-			const clothing = options.clothing[slot];
-			if (clothing == null) return "";
-			const path = options.src + "clothing/" + slot + "/" + clothing.name + "/" + clothing.state + ".png";
+			const clothes = options.clothes[slot];
+			if (clothes == null || clothes.name == null) return "";
+			const path = options.src + "clothing/" + slot + "/" + clothes.name + "/" + clothes.state + ".png";
 			console.log(slot, "Path:", path);
 			return path;
 		},
 		showfn(options) {
-			const clothing = options.clothing[slot];
-			const show = options.showClothing && clothing != null;
+			const clothes = options.clothes[slot];
+			const show = options.showClothing && clothes != null;
 			console.log(slot, "Show?:", show);
 			return !!show;
 		},
 		alphafn(options) {
-			const clothing = options.clothing[slot];
-			const alpha = clothing.alpha;
+			const clothes = options.clothes[slot];
+			const alpha = clothes.alpha;
 			console.log(slot, "Alpha:", alpha);
 			return alpha;
 		},
@@ -716,7 +629,7 @@ function genClothingLayer(slot, overrideOptions) {
 			return options.animKey;
 		},
 		filtersfn(options) {
-			const filter = "worn_" + slot;
+			const filter = `worn_${slot}_main`;
 			console.log(slot, "Filters:", filter, options.filters[filter]);
 			return [filter];
 		},
@@ -724,141 +637,3 @@ function genClothingLayer(slot, overrideOptions) {
 	};
 	return Object.assign(defaults, overrideOptions);
 }
-
-/**
- * Retrieves the clothing model to use for displaying.
- *
- * @param {string} slot The bodypart key of which the clothing is on.
- * @param {ClothingModel} wornItem The item worn at the slot provided.
- * @returns {ClothingState} The clothing state
- */
-function genClothingModel(slot, wornItem) {
-	const index = wornItem.index;
-	// If index is zero, assume it's the naked object. Do not render anything.
-	if (index === 0) return null;
-	/** @type {ClothingModel} */
-	const base = setup.clothes[slot];
-	if (base == null) return null;
-	const item = base[index];
-	if (item == null) return null;
-	const img = item.combat_img;
-	// -- Select model from clothes object --
-	// If the combat_img property is a valid string, for example, "skirt", it will return the model name and state object.
-	if (typeof img === "string" && !!img)
-		return {
-			name: img,
-			state: wornItem.state,
-			alpha: 1,
-		};
-	// -- Default to preset value --
-	// To specify a sprite model to use, you should add combat_img with the name of the sprite to the clothes object.
-	// The map below is used to specify a global sprite model for when combat_img cannot be found on the clothes object
-	// relevant to its position on the player. If lower is set to "skirt", every piece of clothing on the lower part will
-	// display the skirt model in combat.
-	// Use null, remove the key, or use any false value to display nothing/naked.
-	const map = {
-		face: null,
-		feet: null,
-		genitals: null,
-		hands: null,
-		head: null,
-		legs: null,
-		lower: "skirt",
-		neck: null,
-		over_head: null,
-		over_lower: null,
-		over_upper: null,
-		under_lower: null,
-		under_upper: null,
-		upper: "top",
-	};
-	if (map[slot]) {
-		return {
-			name: map[slot],
-			state: wornItem.state,
-			alpha: 1,
-		};
-	}
-	// -- Fallback --
-	// Return null to indicate that nothing should be displayed - Naked.
-	return null;
-}
-
-function isActive() {
-	return isVaginaActive() || isAnusActive() || isMouthActive() || isPenisActive() || isArmActive() || isChestActive();
-}
-
-function isVaginaActive() {
-	const activeState = ["penetrated", "doublepenetrated", "othermouth", "tentacleentrance", "tentacleimminent", "tentacle", "tentacledeep"].includes(
-		V.vaginastate
-	);
-	const activeUse = ["tentaclerub"].includes(V.vaginause);
-	return activeState || activeUse;
-}
-
-function isAnusActive() {
-	const activeState = ["penetrated", "doublepenetrated", "cheeks", "othermouth", "tentacleentrance", "tentacleimminent", "tentacle", "tentacledeep"].includes(
-		V.anusstate
-	);
-	const activeUse = ["tentaclerub"].includes(V.anususe);
-	return activeState || activeUse;
-}
-
-function isMouthActive() {
-	const activeState = ["penetrated", "kiss", "tentacleentrance", "tentacleimminent", "tentacle", "tentacledeep"].includes(V.mouthstate);
-	return activeState;
-}
-
-function isPenisActive() {
-	const activeState = ["penetrated", "otheranus", "othermouth", "tentacleentrance", "tentacleimminent", "tentacle", "tentacledeep"].includes(V.penisstate);
-	const activeUse = ["tentaclerub"].includes(V.penisuse);
-	return activeState || activeUse;
-}
-
-function isArmActive() {
-	return ["penis"].includes(V.rightarm) || ["penis"].includes(V.leftarm);
-}
-
-function isChestActive() {
-	const activeUse = ["penis"].includes(V.chestuse);
-	return activeUse;
-}
-
-function buildCombatGroups() {
-	console.log("buildCombatGroups");
-	// Display PC if appropriate.
-
-	// Generate layers for available NPCs.
-	for (let i = 0; i < V.NPCList.length; i++) {
-		const npc = V.NPCList[i];
-		// Only show active NPCs.
-		if (!npc.active) {
-			continue;
-		}
-
-		// Determine type of NPC
-		switch (npc.type) {
-			case "human":
-				// Generate layers for human NPC.
-				break;
-		}
-	}
-}
-window.buildCombatGroups = buildCombatGroups;
-
-Macro.add("modelbuild_combat_groups", {
-	handler() {
-		buildCombatGroups();
-	},
-});
-
-function prepareCombatGroups() {
-	console.log("prepareCombatGroups");
-}
-window.prepareCombatGroups = prepareCombatGroups;
-
-Macro.add("modelprepare_combat_groups", {
-	handler() {
-		prepareCombatGroups();
-	},
-});

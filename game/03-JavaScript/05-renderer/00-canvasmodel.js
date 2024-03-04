@@ -33,7 +33,7 @@
 
 /**
  * @typedef {object} CanvasModelLayer
- * @property {boolean} [show] Show this layer, default false (if no show:true or showfn present, needs explicit <<showlayer>>). Do not use undefined/null/0/"" to hide layer!
+ * @property {boolean} [show] Show this layer, default false (if no show:true or showfn present, needs explicit `<<showlayer>>`). Do not use undefined/null/0/"" to hide layer!
  * @property {string} [src] Image path. Either `src` or `srcfn` is required.
  * @property {number} [z] Z-index (rendering order), higher=above, lower=below. Either `z` of `zfn` is required.
  * @property {number} [alpha] Layer opacity, from 0 (invisible) to 1 (opaque, default).
@@ -52,23 +52,23 @@
  * @property {number} [height] Layer subsprite width, default = model height.
  *
  * The following functions can be used instead of constant properties. Their arguments are (options) where options are model options provided in render call (from _modeloptions variable for <<rendermodel>>/<<animatemodel>> widget).
- * @property {Function} [showfn] (options)=>boolean Function generating `show` property. Should return boolean, do not use undefined/null/0/"" to hide layer, use of !! (double not) operator recommended.
- * @property {Function} [srcfn] (options)=>string.
- * @property {Function} [zfn] (options)=>number.
- * @property {Function} [alphafn] (options)=>number.
- * @property {Function} [desaturatefn] (options)=>boolean.
- * @property {Function} [brightnessfn] (options)=>number.
- * @property {Function} [contrastftn] (options)=>number.
- * @property {Function} [blendModefn] (options)=>(string|object).
- * @property {Function} [blendfn] (options)=>string.
- * @property {Function} [masksrcfn] (options)=>string.
- * @property {Function} [animationfn] (options)=>string.
- * @property {Function} [framesfn] (options)=>number[].
- * @property {Function} [filtersfn] (options)=>string[].
- * @property {Function} [dxfn] (options)=>number.
- * @property {Function} [dyfn] (options)=>number.
- * @property {Function} [widthfn] (options)=>number.
- * @property {Function} [heightfn] (options)=>number.
+ * @property {function(Options): boolean} [showfn] (options)=>boolean Function generating `show` property. Should return boolean, do not use undefined/null/0/"" to hide layer, use of !! (double not) operator recommended.
+ * @property {function(Options): string} [srcfn] (options)=>string.
+ * @property {function(Options): number} [zfn] (options)=>number.
+ * @property {function(Options): number} [alphafn] (options)=>number.
+ * @property {function(Options): boolean} [desaturatefn] (options)=>boolean.
+ * @property {function(Options): number} [brightnessfn] (options)=>number.
+ * @property {function(Options): number} [contrastftn] (options)=>number.
+ * @property {function(Options): (string|object)} [blendModefn] (options)=>(string|object).
+ * @property {function(Options): string} [blendfn] (options)=>string.
+ * @property {function(Options): string} [masksrcfn] (options)=>string.
+ * @property {function(Options): string} [animationfn] (options)=>string.
+ * @property {function(Options): number[]} [framesfn] (options)=>number[].
+ * @property {function(Options): string[]} [filtersfn] (options)=>string[].
+ * @property {function(Options): number} [dxfn] (options)=>number.
+ * @property {function(Options): number} [dyfn] (options)=>number.
+ * @property {function(Options): number} [widthfn] (options)=>number.
+ * @property {function(Options): number} [heightfn] (options)=>number.
  */
 
 /**

@@ -52,13 +52,12 @@ Debugging:
 <<if $sexstart is 1>>
 	<<set $sexstart to 0>>
 	<div class="combat-init">
-		<p>Init</p>
 		<<switch $demo.type>>
 			<<case "human">>
-				<p>Man</p>
+				<p class="text-muted">Man init</p>
 				<<maninit>>
 			<<case "bestial">>
-				<p>Beast</p>
+				<p class="text-muted">Beast init</p>
 				<<beastCombatInit>>
 		<</switch>>
 		<<if $demo.consent>>
@@ -74,39 +73,42 @@ Debugging:
 
 <<if $demo.type is "tentacles">>
 	<div class="combat-state">
-		<p>State tentacles</p>
+		<p class="text-muted">State tentacles</p>
 		<<statetentacles>>
 	</div>
 <</if>>
 
 <div class="combat-effects">
-	<p>Effects</p>
+	<p class="text-muted">Effects</p>
 	<<effects>>
 </div>
 <div class="combat-effectsman">
-	<p>Effects man</p>
+	<p class="text-muted">Effects man</p>
 	<<effectsman>>
 </div>
 <div class="combat-man">
 	<<switch $demo.type>>
 		<<case "human">>
-			<p>Man</p>
+			<p class="text-muted">Man</p>
 			<<man>>
 		<<case "bestial">>
-			<p>Beast</p>
+			<p class="text-muted">Beast</p>
 			<<beast>>
 	<</switch>>
 </div>
 
 <<if $demo.type.includes("human")>>
 	<div class="combat-state">
-		<p>State man</p>
+		<p class="text-muted">State man</p>
 		<<stateman>>
 	</div>
 <</if>>
-<<animateCombat>>
 <div class="combat-actions">
-	<p>Actions man</p>
+	<p class="text-muted">Animate combat</p>
+	<<animateCombat>>
+</div>
+<div class="combat-actions">
+	<p class="text-muted">Actions man</p>
 	<<actionsman>>
 </div>
 <span id="next"><<link [[Next|$passage]]>><</link>></span><<nexttext>>
@@ -186,32 +188,45 @@ Debugging:
 			<!-- Top row - Contains miniture viewports -->
 			<div class="combat-close">
 				<div class="combat-close-chest">
-					<<modelselect "combatCloseChest" "combatCloseChest">>
-					<<animate>>
+					<!-- <<modelselect "combatCloseChest" "combatCloseChest">> -->
+					<!-- <<animate>> -->
 				</div>
 				<div class="combat-close-vagina">
-					<<modelselect "combatCloseVagina" "combatCloseVagina">>
-					<<animate>>
+					<!-- <<modelselect "combatCloseVagina" "combatCloseVagina">> -->
+					<!-- <<animate>> -->
 				</div>
 				<div class="combat-close-penis">
-					<<modelselect "combatClosePenis" "combatClosePenis">>
-					<<animate>>
+					<!-- <<modelselect "combatClosePenis" "combatClosePenis">> -->
+					<!-- <<animate>> -->
 				</div>
 				<div class="combat-close-arse">
-					<<modelselect "combatCloseArse" "combatCloseArse">>
-					<<animate>>
+					<!-- <<modelselect "combatCloseArse" "combatCloseArse">> -->
+					<!-- <<animate>> -->
 				</div>
 			</div>
-			<!-- Main canvas container -->
-			<div class="combat-main">
-				<!-- Select the base model for combat-main -->
-				<<modelselect "combatMain" "combatMain">>
-				<!-- Build layer groups -->
-				<<modelbuild_combat_groups>>
-				<!-- Build model options -->
-				<<modelprepare_combat_groups>>
-				<!-- Take the model, compile from layer groups and options, then display an animated canvas. -->
-				<<animate>>
+			<!-- Main canvas container. -->
+			<div class="combat-main d-flex justify-content-center">
+				<<newcanvasstart 256 256>>
+
+				<!-- Compile PC layers. -->
+				<<newcanvasselect "combatMainPc" "combatMainPc">>
+				<!-- Load T.modelOptions from PC data. -->
+				<<mapplayertooptions>>
+				<!-- Compile PC model and push to layer pipeline. -->
+				<<newcanvascompile>>
+
+				<!--
+				Loop over NPCList
+					If NPC is human:
+						<<newcanvasselect "combatMainHuman" "combatMainHuman">>
+						Load T.modelOptions from npc data
+						<<newcanvascompile>>
+					If NPC is beast:
+						<<newcanvasselect "combatMainBeast" "combatMainBeast">>
+						Load T.modelOptions from npc data
+						<<newcanvascompile>>
+				-->
+				<<newcanvasanimate "border border-primary">>
 			</div>
 		</div>
 	</div>

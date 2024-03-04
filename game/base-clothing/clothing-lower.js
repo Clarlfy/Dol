@@ -2705,6 +2705,7 @@ function initLower() {
 			name: "cheerleading skirt",
 			name_cap: "Cheerleading skirt",
 			variable: "cheerleader",
+			combatImg: "skirt",
 			integrity: 100,
 			integrity_max: 100,
 			fabric_strength: 30,

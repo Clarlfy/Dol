@@ -2768,6 +2768,7 @@ function initUpper() {
 			name: "gym shirt",
 			name_cap: "Gym shirt",
 			variable: "gymshirt",
+			combatImg: "top",
 			integrity: 140,
 			integrity_max: 140,
 			fabric_strength: 20,
