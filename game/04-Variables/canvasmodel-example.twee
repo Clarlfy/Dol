@@ -215,6 +215,14 @@ Debugging:
 				<!-- Compile PC model and push to layer pipeline. -->
 				<<newcanvascompile>>
 
+				<<for $_npc range $NPCList>>
+					<<run console.log("compile npc:", $_npc)>>
+					<<if $_npc.type is "human">>
+						<<newcanvasselect "combatMainNpc" "combatMainNpc">>
+						<<mapnpctooptions>>
+						<<newcanvascompile>>
+					<</if>>
+				<</for>>
 				<!--
 				Loop over NPCList
 					If NPC is human:

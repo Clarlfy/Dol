@@ -233,6 +233,7 @@ module.exports = {
 		isLoveInterest: "readonly",
 		skinColor: "readonly",
 		nullable: "readonly",
+		combat: "readonly",
 	},
 
 	ignorePatterns: [

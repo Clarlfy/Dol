@@ -25,15 +25,17 @@ function mapPlayerToOptions(options) {
 	// Set breast exposed, for example, an NPC had pushed clothing aside to make tits fall out
 	options.breastsExposed = false;
 
-	// Remove later (why?)
-	T.leg_position = "down";
-	if (!["up", "down"].includes(T.leg_position)) {
-		Errors.report("Position not set to any valid values", T.leg_position);
-		options.legBackPosition = "down";
-		options.legFrontPosition = "down";
+	// Copied from <<leg_position>> - Centralise usage later
+	const parts = [V.anususe, V.vaginause, V.chestuse, V.mouthuse];
+	if (V.machine && V.machine.tattoo && ["left_thigh", "right_thigh"].includes(V.machine.tattoo.use)) {
+		options.legFrontPosition = "up";
+		options.legBackPosition = "up";
+	} else if (parts.includes("penis") || parts.includes(1)) {
+		options.legFrontPosition = "up";
+		options.legBackPosition = "up";
 	} else {
-		options.legBackPosition = T.leg_position;
-		options.legFrontPosition = T.leg_position;
+		options.legFrontPosition = "down";
+		options.legBackPosition = "down";
 	}
 
 	// Set values for blush and tears
@@ -41,8 +43,8 @@ function mapPlayerToOptions(options) {
 	options.tears = Math.clamp(0, 0, 5);
 
 	// Set animation speed
-	options.animKey = isActive() ? "sex-4f-vfast" : "sex-2f-idle";
-	options.animKeyStill = isActive() ? "sex-4f-vfast" : "sex-1f-idle";
+	options.animKey = combat.isActive() ? "sex-4f-vfast" : "sex-2f-idle";
+	options.animKeyStill = combat.isActive() ? "sex-4f-vfast" : "sex-1f-idle";
 
 	// Clothing filters and options
 	for (const slot of setup.clothes_all_slots) {
@@ -57,21 +59,30 @@ function mapPlayerToOptions(options) {
 
 		const clothing = Object.assign({}, setupObj, wornObj);
 
+		let state = clothing.state || "full";
+		if (slot === "lower" && clothing.state === "waist" && clothing.skirt_down === 0) {
+			state = "hips";
+		}
+
 		/**
 		 * @type {ClothingState}
 		 */
 		const clothes = {
 			item: clothing,
 			name: clothing.combatImg,
-			state: clothing.state,
+			state,
 			sleeves: "front",
 			alpha: 1,
 		};
+		options.clothes = options.clothes || {};
 		options.clothes[slot] = clothes;
 
 		const mainFilterKey = `worn_${slot}_main`;
 		const accFilterKey = `worn_${slot}_acc`;
 
+		options.filters = options.filters || {
+			worn: {},
+		};
 		options.filters.worn[slot] = {};
 		options.filters[mainFilterKey] = clothing.colour_sidebar
 			? lookupColour(
@@ -97,6 +108,13 @@ function mapPlayerToOptions(options) {
 			options.filters[accFilterKey] = Renderer.emptyLayerFilter();
 		}
 	}
+
+	/** @type {Penetrator} */
+	const penetrator = {
+		show: (V.player.penisExist || playerHasStrapon()) && V.worn.lower.exposed >= 2 && V.worn.under_lower.exposed >= 1,
+		type: "human",
+	};
+	options.penetrator = penetrator;
 
 	options.breastSize = Math.clamp(V.player.perceived_breastsize / 3, 0, 4);
 
@@ -166,44 +184,4 @@ function lookupColour(options, dict, key, debugName, customFilterName, prefilter
 		Renderer.mergeLayerData(filter, setup.colours.sprite_prefilters[prefilterName], true);
 	}
 	return filter;
-}
-
-function isActive() {
-	return isVaginaActive() || isAnusActive() || isMouthActive() || isPenisActive() || isArmActive() || isChestActive();
-}
-
-function isVaginaActive() {
-	const activeState = ["penetrated", "doublepenetrated", "othermouth", "tentacleentrance", "tentacleimminent", "tentacle", "tentacledeep"].includes(
-		V.vaginastate
-	);
-	const activeUse = ["tentaclerub"].includes(V.vaginause);
-	return activeState || activeUse;
-}
-
-function isAnusActive() {
-	const activeState = ["penetrated", "doublepenetrated", "cheeks", "othermouth", "tentacleentrance", "tentacleimminent", "tentacle", "tentacledeep"].includes(
-		V.anusstate
-	);
-	const activeUse = ["tentaclerub"].includes(V.anususe);
-	return activeState || activeUse;
-}
-
-function isMouthActive() {
-	const activeState = ["penetrated", "kiss", "tentacleentrance", "tentacleimminent", "tentacle", "tentacledeep"].includes(V.mouthstate);
-	return activeState;
-}
-
-function isPenisActive() {
-	const activeState = ["penetrated", "otheranus", "othermouth", "tentacleentrance", "tentacleimminent", "tentacle", "tentacledeep"].includes(V.penisstate);
-	const activeUse = ["tentaclerub"].includes(V.penisuse);
-	return activeState || activeUse;
-}
-
-function isArmActive() {
-	return ["penis"].includes(V.rightarm) || ["penis"].includes(V.leftarm);
-}
-
-function isChestActive() {
-	const activeUse = ["penis"].includes(V.chestuse);
-	return activeUse;
 }

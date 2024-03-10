@@ -242,7 +242,6 @@ const combatMainPc = {
 	width: 256,
 	height: 256,
 	frames: 4,
-	/* Ask Aim about how this could be used? */
 	/*
 	 *	 ██████  ███████ ███    ██ ███████ ██████   █████  ████████ ███████ ██████
 	 *	██       ██      ████   ██ ██      ██   ██ ██   ██    ██    ██      ██   ██
@@ -251,6 +250,7 @@ const combatMainPc = {
 	 *	 ██████  ███████ ██   ████ ███████ ██   ██ ██   ██    ██    ███████ ██████
 	 */
 	generatedOptions() {
+		/* Ask Aim about how this could be used? */
 		return [];
 	},
 	/*
