@@ -94,6 +94,7 @@ function initFace() {
 			name: "surgical mask",
 			name_cap: "Surgical mask",
 			variable: "surgicalmask",
+			combatImg: "surgicalmask",
 			integrity: 20,
 			integrity_max: 20,
 			fabric_strength: 20,
