@@ -1,4 +1,37 @@
-/* eslint-disable jsdoc/no-undefined-types */
+/**
+ * @typedef Options
+ * @type {object}
+ * @property {"img/sex/"} root The root directory.
+ * @property {"doggy"|"missionary"} position The position.
+ * @property {boolean} showPlayer Flag to show the player model.
+ * @property {boolean} showClothing Flag to show the clothing layers.
+ * @property {boolean} showNPCs Flag to show the NPC model(s).
+ * @property {number} animSpeed The global speed to play animations.
+ * Computed
+ * @property {string} src The computed directory path for the position.
+ * @property {string} animKey The key used for fetching the animation configuration.
+ * @property {string} animKeyStill The key used for fetching the animation configuration for true still sprites.
+ * @property {number} breastSize The size of the player breasts.
+ * @property {number} breastsExposed Whether the breasts are shown.
+ * @property {string} hairType The type of hair.
+ * @property {string} hairLength The named stage of the hair length.
+ * @property {"up"|"down"} legBackPosition The position the back leg is in.
+ * @property {"up"|"down"} legFrontPosition The position the front leg is in.
+ * @property {1|2|3|4|5} blush The volume of blush on the player, higher is more.
+ * @property {1|2|3|4|5} tears The volume of tears the player displays, higher is more.
+ * @property {Object<string, ClothingState>} clothes Template.
+ * @property {object} filters The filters for layers.
+ */
+
+/**
+ * @typedef ClothingState
+ * @type {object}
+ * @property {ClothesItem} item The clothing item's setup with worn properties copied over.
+ * @property {string} name The name of the clothing directory.
+ * @property {string} state The state of the clothing, the file name.
+ * @property {number} alpha The percent of the alpha channel. 1 is 100%, 0 is 0%.
+ */
+
 /**
  *
  * @param {Options} options
@@ -23,7 +56,7 @@ function mapPlayerToOptions(options) {
 	options.hairType = "default";
 
 	// Set breast exposed, for example, an NPC had pushed clothing aside to make tits fall out
-	options.breastsExposed = false;
+	options.breastsExposed = true;
 
 	// Copied from <<leg_position>> - Centralise usage later
 	const parts = [V.anususe, V.vaginause, V.chestuse, V.mouthuse];
@@ -71,9 +104,11 @@ function mapPlayerToOptions(options) {
 			item: clothing,
 			name: clothing.combatImg,
 			state,
-			sleeves: "front",
 			alpha: 1,
 		};
+		if (["upper", "under_upper", "over_upper"].includes(slot)) {
+			clothes.sleeves = "front";
+		}
 		options.clothes = options.clothes || {};
 		options.clothes[slot] = clothes;
 
