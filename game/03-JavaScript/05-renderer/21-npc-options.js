@@ -119,17 +119,11 @@ function mapNpcToPenetratorOptions(npc) {
 			penetrator.state = "penetrateddouble";
 			return penetrator;
 		case "penisentrance":
-			penetrator.position = "penis";
-			penetrator.state = "entrance";
-			return penetrator;
+			return null;
 		case "penisimminent":
-			penetrator.position = "penis";
-			penetrator.state = "imminent";
-			return penetrator;
+			return null;
 		case "penis":
-			penetrator.position = "penis";
-			penetrator.state = "frotting";
-			return penetrator;
+			return null;
 		case "vaginaentrance":
 			penetrator.position = "vagina";
 			penetrator.state = "entrance";
