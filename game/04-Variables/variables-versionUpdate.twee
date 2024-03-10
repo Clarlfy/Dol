@@ -3573,7 +3573,7 @@
 	/* Code that should not be moved into a check like above */
 	<<set $runWardrobeSanityChecker to true>>
 
-	<<if $objectVersion.updateClothes lt 46 or $objectVersion.updateClothes is undefined>>
+	<<if $objectVersion.updateClothes lt 47 or $objectVersion.updateClothes is undefined>>
 		<<updateClothes>>
 		<<if $objectVersion.updateClothes lt 38>>
 			<!-- V0.4.0.7 return items stuck in $store without proper .location -->
@@ -3584,7 +3584,7 @@
 			<!--Should'nt need to re-run that often-->
 			<<run clothesDataTrimmerLoop()>>
 		<</if>>
-		<<set $objectVersion.updateClothes to 46>>
+		<<set $objectVersion.updateClothes to 47>>
 		<!--If you have added any `colour_combat` or `accessory_colour_combat` to clothes that need their `colour` or `accessory_colour`, this will clear them.
 		Remove `colour_combat` or `accessory_colour_combat` where this is the case, they are independant so `colour_combat` will only clear `colour`-->
 	<</if>>
@@ -5027,6 +5027,29 @@
 		<<unset $shopListMax>>
 	<</if>>
 
+	<<if $baileyPaidStat is undefined>>
+		<<set $baileyPaidStat to 0>>
+		/* Dupicate stats are intentional to use as a potential gameplay mode */
+		<<set $baileyRefusedToPayTotal to 0>>
+		<<set $baileyRefusedToPayTotalStat to 0>>
+	<</if>>
+
 	<!-- V0.4.6.0 Removed a legacy variable that was never needed -->
 	<<unset $robin_naked_room_clothes>>
+
+	<!-- v <= 0.4.5.3: Consolidated these into $speechSextoyState -->
+	<<unset $speechsextoyangry>>
+	<<unset $speechsextoyshocked>>
+	<<unset $speechsextoyaroused>>
+	<<unset $speechsextoydisappointed>>
+	
+	/*Added npc generation and pronoun widgets to the livestock horse passages*/
+	<<if $livestock_horse_rescued is $pronoun >>
+		<<set $livestock_horse_rescued  to true>>
+	<</if>>
+
+	/*Adds Gift Variable for Office Manager for old saves"
+	<<if $managerGift is undefined>>
+		<<set $managerGift to 1>>
+	<</if>>
 <</widget>>

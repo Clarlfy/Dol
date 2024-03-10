@@ -23,19 +23,19 @@ declare interface ClothesItem {
 	strap: number;
 	open: number;
 	word: "a";
-	state: string;
-	state_base: string;
-	state_top: string;
-	state_top_base: string;
+	state: string?;
+	state_base: string?;
+	state_top: string?;
+	state_top_base: string?;
 	plural: number;
 	/**
 	 * key in setup.colours.prefilters identifying preprocessing required for canvas renderer.
 	 * default is "clothes"
 	 */
 	prefilter?: string;
-	colour: string|0;
+	colour: string | 0;
 	colour_options: string[];
-	colour_sidebar: 0|1;
+	colour_sidebar: 0 | 1;
 	exposed: number;
 	exposed_base: number;
 	vagina_exposed: number;
@@ -51,15 +51,15 @@ declare interface ClothesItem {
 	description: string;
 	shop: string[];
 	accessory: number;
-	accessory_colour: string|0;
+	accessory_colour: string | 0;
 	accessory_colour_options: string[];
 	accessory_colour_sidebar: number;
 	/**
 	 * if 1, then accessory files are integrity-dependent "acc_(tattered|torn|frayed|full).png"
 	 */
-	accessory_integrity_img?: 0|1;
-	high_img: 0|1;
-	back_img: 0|1;
+	accessory_integrity_img?: 0 | 1;
+	high_img: 0 | 1;
+	back_img: 0 | 1;
 	/**
 	 * Recolouring of back image
 	 * * "" (default) - depending on colour_sidebar
@@ -67,7 +67,7 @@ declare interface ClothesItem {
 	 * * "primary" - use primary/main colour
 	 * * "secondary" - use secondary/accessory colour
 	 */
-	back_img_colour?: ""|"no"|"primary"|"secondary";
+	back_img_colour?: "" | "no" | "primary" | "secondary";
 	/**
 	 * (For upper, over_upper, under_upper slots)
 	 * 1 if has sleeve images, named (left|right)[_cover].png".
@@ -89,7 +89,7 @@ declare interface ClothesItem {
 	 * * "primary" - use primary/main colour
 	 * * "secondary" - use secondary/accessory colour
 	 */
-	sleeve_colour?: ""|"no"|"primary"|"secondary";
+	sleeve_colour?: "" | "no" | "primary" | "secondary";
 	breast_img: number;
 	cursed: number;
 	location: number;
@@ -103,6 +103,10 @@ declare interface ClothesItem {
 	 * if 1, this item has mask.png image to cut out hair & animal ears layers
 	 */
 	mask_img?: number;
+	/**
+	 * Specifies the image directory the combat renderer uses
+	 */
+	combatImg: string?;
 	// TODO list and document other options
 }
 

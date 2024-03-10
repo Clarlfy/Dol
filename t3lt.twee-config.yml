@@ -42,6 +42,8 @@ sugarcube-2:
     loveInterestDesc: '`"Robin"` | `"Whitney"` | `"Kylar"` | `"Sydney"` | `"Eden"` | `"Avery"` | `"Alex"` | `"Great Hawk"` | `"Black Wolf"`'
     namedNPC: '"Avery"|"Bailey"|"Briar"|"Charlie"|"Darryl"|"Doren"|"Eden"|"Gwylan"|"Harper"|"Jordan"|"Kylar"|"Landry"|"Leighton"|"Mason"|"Morgan"|"River"|"Robin"|"Sam"|"Sirris"|"Whitney"|"Winter"|"Black Wolf"|"Niki"|"Quinn"|"Remy"|"Alex"|"Great Hawk"|"Wren"|"Sydney"|"Ivory Wraith"|"Zephyr"'
     namedNPCDesc: '`"Avery"` | `"Bailey"` | `"Briar"` | `"Charlie"` | `"Darryl"` | `"Doren"` | `"Eden"` | `"Gwylan"` | `"Harper"` | `"Jordan"` | `"Kylar"` | `"Landry"` | `"Leighton"` | `"Mason"` | `"Morgan"` | `"River"` | `"Robin"` | `"Sam"` | `"Sirris"` | `"Whitney"` | `"Winter"` | `"Black Wolf"` | `"Niki"` | `"Quinn"` | `"Remy"` | `"Alex"` | `"Great Hawk"` | `"Wren"` | `"Sydney"` | `"Ivory Wraith"` | `"Zephyr"`'
+    plantTypes: '"apple"|"baby_bottle_of_breast_milk"|"banana"|"bird_egg"|"blackberry"|"blood_lemon"|"bottle_of_breast_milk"|"bottle_of_milk"|"bottle_of_semen"|"broccoli"|"cabbage"|"carnation"|"chicken_egg"|"daisy"|"garlic_bulb"|"ghostshroom"|"lemon"|"lily"|"lotus"|"mushroom"|"onion"|"orange"|"orchid"|"peach"|"pear"|"plum"|"plumeria"|"poppy"|"potato"|"red_rose"|"strange_flower"|"strawberry"|"truffle"|"tulip"|"turnip"|"white_rose"|"wild_carrot"|"wild_honeycomb"|"wolfshroom"'
+    plantTypesDesc: '`"apple"` | `"baby_bottle_of_breast_milk"` | `"banana"` | `"bird_egg"` | `"blackberry"` | `"blood_lemon"` | `"bottle_of_breast_milk"` | `"bottle_of_milk"` | `"bottle_of_semen"` | `"broccoli"` | `"cabbage"` | `"carnation"` | `"chicken_egg"` | `"daisy"` | `"garlic_bulb"` | `"ghostshroom"` | `"lemon"` | `"lily"` | `"lotus"` | `"mushroom"` | `"onion"` | `"orange"` | `"orchid"` | `"peach"` | `"pear"` | `"plum"` | `"plumeria"` | `"poppy"` | `"potato"` | `"red_rose"` | `"strange_flower"` | `"strawberry"` | `"truffle"` | `"tulip"` | `"turnip"` | `"white_rose"` | `"wild_carrot"` | `"wild_honeycomb"` | `"wolfshroom"`'
     pronouns: he, him, girl, girlfriend, sir, lass
     virginityTypes: '"vaginal"|"penile"|"anal"|"oral"|"kiss"|"handholding"'
     virginityTypesDesc: '`"vaginal"` | `"penile"` | `"anal"` | `"oral"` | `"kiss"` | `"handholding"`'
@@ -231,6 +233,10 @@ sugarcube-2:
       name: actionskissback
     actionsman:
       name: actionsman
+      description: |-
+        Displays the old combat renderer first.
+
+        Displays all controls for the player to select what the PC will do next round.
     actionsmoan:
       name: actionsmoan
     actionsmock:
@@ -3610,6 +3616,8 @@ sugarcube-2:
       name: effectsmakeup
     effectsman:
       name: effectsman
+      description: |-
+        Displays text of the PC's actions for this round.
     effectsorgasm:
       name: effectsorgasm
     effectspain:
@@ -4684,6 +4692,9 @@ sugarcube-2:
       name: farm_upgrades_current
     farm_upgrades_status:
       name: farm_upgrades_status
+    farm_var_set:
+      description: |-
+        Resets farm vars if appropriate
     farm_work:
       name: farm_work
     farm_work_time:
@@ -5314,16 +5325,28 @@ sugarcube-2:
       name: generate_veteran_guard
     generate1:
       name: generate1
+      description: |-
+        Generates an NPC at index 0. Seen at `V.NPCList[0]`.
     generate2:
       name: generate2
+      description: |-
+        Generates an NPC at index 1. Seen at V.NPCList[1].
     generate3:
       name: generate3
+      description: |-
+        Generates an NPC at index 2. Seen at V.NPCList[2].
     generate4:
       name: generate4
+      description: |-
+        Generates an NPC at index 3. Seen at V.NPCList[3].
     generate5:
       name: generate5
+      description: |-
+        Generates an NPC at index 4. Seen at V.NPCList[4].
     generate6:
       name: generate6
+      description: |-
+        Generates an NPC at index 5. Seen at V.NPCList[5].
     generateActionsAbomination:
       name: generateActionsAbomination
     generateActionsMachine:
@@ -8146,6 +8169,15 @@ sugarcube-2:
       name: livestock_horses
     livestock_init:
       name: livestock_init
+    livestock_lock_cleanup:
+      description: |-
+        Unsets farm lock variables
+    livestock_lock_desc:
+      description: |-
+        Prints description of farm lock strength
+
+        `$farmLockStr` is a measure of how damaged the farm lock is where 100 is undamaged (0-100)
+      tags: ["text"]
     livestock_obey:
       description: |-
         Adds obedience in being cattle to pc's state
@@ -8160,6 +8192,14 @@ sugarcube-2:
       name: livestock_obey_description
     livestock_overhear:
       name: livestock_overhear
+    livestock_patrol:
+      description: |-
+        Prints description of farm guard location and how effective your attempt to break the lock is
+
+        Decreases `$farmLockStr` based on physique 
+
+        `$farmPatrol` is a measure of how far the farmhand is where 0 is near (0-100)
+      tags: ["text","stat"]
     livestock_sleep:
       name: livestock_sleep
     livestockescape:
@@ -8672,27 +8712,6 @@ sugarcube-2:
 
         Out of date and underutilised. Consider refactoring
       tags: ["text", "refactor"]
-    lock_effect:
-      description: |-
-        Applies effects of incrementally breaking the farm lock
-
-        `$lockGuard` is a measure of how far the farmhand is where 0 is near (0-100)
-      tags: ["text"]
-    lock_effect2:
-      description: |-
-        Unsets farm lock variables
-    lock_guard:
-      description: |-
-        Prints description of farm guard location
-
-        `$lockGuard` is a measure of how far the farmhand is where 0 is near (0-100)
-      tags: ["text"]
-    lock_strength:
-      description: |-
-        Prints description of farm lock strength
-
-        `$lockStrength` is a measure of how damaged the farm lock is where 100 is undamaged (0-100)
-      tags: ["text"]
     locker_suspicion:
       description: |-
         Adds suspicion of being the panty thief to pc's state
@@ -8934,6 +8953,8 @@ sugarcube-2:
       name: maleChanceSplitControls
     man:
       name: man
+      description: |-
+        Displays text of the NPC's actions for this round.
     man-combat:
       name: man-combat
     man-pursuit:
@@ -9215,6 +9236,10 @@ sugarcube-2:
       name: molestbusinit
     molested:
       name: molested
+      description: |-
+        Raises awareness at low awareness.
+        Sets up flashbacks if enabled.
+        Increments molestation stats if $consensual is 0.
     moleststat:
       name: moleststat
     molestTrait:
@@ -10789,14 +10814,24 @@ sugarcube-2:
       name: person_dance
     person1:
       name: person1
+      description: |-
+        Selects the NPC at index 0. Other widgets, such as `<<he>>` will point to the NPC to display the correct he/she variant.
     person2:
       name: person2
+      description: |-
+        Selects the NPC at index 1. Other widgets, such as `<<he>>` will point to the NPC to display the correct he/she variant.
     person3:
       name: person3
+      description: |-
+        Selects the NPC at index 2. Other widgets, such as `<<he>>` will point to the NPC to display the correct he/she variant.
     person4:
       name: person4
+      description: |-
+        Selects the NPC at index 3. Other widgets, such as `<<he>>` will point to the NPC to display the correct he/she variant.
     person5:
       name: person5
+      description: |-
+        Selects the NPC at index 4. Other widgets, such as `<<he>>` will point to the NPC to display the correct he/she variant.
     person6:
       name: person6
     personname:
@@ -12785,10 +12820,22 @@ sugarcube-2:
       name: stateabomination
     stateman:
       name: stateman
+      description: |-
+        Displays the statuses of the NPCs currently in combat.
+
+        He looks eager. He looks aroused. He looks calm. He looks cautious.
     statetentacles:
       name: statetentacles
     statistics:
       name: statistics
+    statisticsTimeCompare:
+      description: |-
+        Prints time since provided DateTime in statistics formatting
+        
+        `<<statisticsTimeCompare datetime>>`
+        - **datetime**: `DateTime|timestamp` - timestamp or DateTime object to be checked against
+      parameters:
+        - 'number|var|bareword'
     statsCaption:
       name: statsCaption
     statsMoneyNoImg:
@@ -13360,7 +13407,19 @@ sugarcube-2:
     tending_harvest:
       name: tending_harvest
     tending_pick:
-      name: tending_pick
+      description: |-
+        Gives the pc a random number of plants, modified by traits
+        
+        `<<tending_pick type min? max?>>`
+        - **type**: `string` - type of plant to pick
+          - %plantTypesDesc%
+        - **min** _optional_: `number` - min number of plants to pick
+          - Defaults to `1`
+        - **max** _optional_: `object` - max number of plants to pick
+          - Defaults to `5`
+      parameters:
+        - '%plantTypes%'
+        - '%plantTypes% &+ number &+ number'
     tending_season_notice:
       name: tending_season_notice
     tending_text:
@@ -13984,6 +14043,10 @@ sugarcube-2:
       tags: ["refactor"]
     underwater:
       name: underwater
+    underwearTypeText:
+      description: |-
+        Prints "underwear" or more specific type as appropriate
+      tags: ["text"]
     underworld_nickname:
       description: |-
         Prints pc's nickname used in the underworld
@@ -14539,6 +14602,22 @@ sugarcube-2:
       name: whitneyRescueEnd
     whitneyRescueExit:
       name: whitneyRescueExit
+    whitneyShoppingData:
+      description: |-
+        Stores Whitney's clothes and reactions from statics into temporary variables
+      tags: ["temp"]
+    whitneyShoppingPicker:
+      description: |-
+        Replaces pc's worn clothes with a temporary choice from Whitney
+
+        Relies on temporary variables from `<<whitneyShoppingData>>`
+      tags: ["temp"]
+    whitneyShoppingPickerChoice:
+      description: |-
+        Replaces pc's worn clothes with a permanent choice from Whitney
+
+        Relies on temporary variables from `<<whitneyShoppingData>>`
+      tags: ["temp"]
     wHunt:
       name: wHunt
     wife:

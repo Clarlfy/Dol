@@ -259,6 +259,9 @@
 		<</if>>
 
 		<div id="overlayButtons">
+			<<button "COMBAT DEMO">>
+				<<run Engine.play("Combat Demo Preparation")>>
+			<</button>>
 			<<button CHARACTERISTICS>>
 				<<overlayReplace "characteristics">>
 			<</button>>

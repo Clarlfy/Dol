@@ -30,6 +30,7 @@ window.DOL = {
 	setup,
 	Wikifier,
 	Template,
+	PRNGWrapper,
 };
 
 /* Make each of these namespaces available at the top level as well */

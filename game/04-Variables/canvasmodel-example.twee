@@ -1,354 +1,158 @@
+:: Combat Demo Preparation
+
+<<set $demo to $demo or {
+	type: "human",
+	position: "missionary",
+	consent: true,
+	debug: true,
+}>>
+
+<<endcombat>>
+
+Configure setup for the combat system:<br><br>
+
+Type: 
+<div>
+	<label><<radiobutton "$demo.type" "human" autocheck>> Human</label>
+	<label><<radiobutton "$demo.type" "animal" autocheck>> Bestial</label>
+</div>
+
+Consent:
+<div>
+	<label><<radiobutton "$demo.consent" true autocheck>> Consensual</label>
+	<label><<radiobutton "$demo.consent" false autocheck>> Non-con</label>
+</div>
+
+Debugging:
+<div>
+	<label><<radiobutton "$demo.debug" true autocheck>> Enabled</label>
+	<label><<radiobutton "$demo.debug" false autocheck>> Disabled</label>
+</div>
+
+<div id="combat-setup">
+	<<combatsetup>>
+</div>
+
+<<combatdemotools>>
+
+<<set $sexstart to 1>>
+
+<br>
+<<link [[Start|Combat Demo]]>><</link>>
+
 :: Combat Demo
 
-<<if !$combatDemoCombatType>>
-	<<set $combatDemoCombatType to "human">>
-	<<set $combatDemoCombatconsensual to 1>>
-	<<set $combatDemoCombatText to 1>>
-	<<set $combatDemoDebugText to 1>>
-	<<set $combatDemoPosition to 0>>
-<</if>>
+<<set $demo to $demo or {
+	type: "human",
+	position: "missionary",
+	consent: true,
+	debug: true,
+}>>
 
 <<if $sexstart is 1>>
 	<<set $sexstart to 0>>
-	<<set $pain to 0>>
-	<<set $stress to 0>>
-	<<set $trauma to 0>>
-	<<set $arousal to 0>>
 	<div class="combat-init">
-		<p>Init</p>
-		<<if $combatDemoCombatconsensual>>
+		<<switch $demo.type>>
+			<<case "human">>
+				<p class="text-muted">Man init</p>
+				<<maninit>>
+			<<case "bestial">>
+				<p class="text-muted">Beast init</p>
+				<<beastCombatInit>>
+		<</switch>>
+		<<if $demo.consent>>
 			<<consensual>>
+			<<set $consensual to 1>>
 		<<else>>
 			<<molested>>
+			<<set $consensual to 0>>
 		<</if>>
-		<<switch $combatDemoCombatType>>
-			<<case "human">>
-				<<generate1>>
-				<<person1>>
-				<<maninit>>
-			<<case "human wall">>
-				<<generate1>>
-				<<person1>>
-				<<maninit>>
-				<<set $position to "wall">>
-			<<case "human oral wall">>
-				<<generate1>>
-				<<person1>>
-				<<maninit>>
-				<<stuck_in_wall_oral>>
-			<<case "human gangbang">>
-				<<generate1>>
-				<<person1>>
-				<<generate2>>
-				<<generate3>>
-				<<generate4>>
-				<<generate5>>
-				<<generate6>>
-				<<maninit>>
-			<<case "wolf">>
-				<<beastNEWinit 1 wolf>>
-				<<beastCombatInit>>
-				<<beastTrainGenerate>>
-			<<case "dog">>
-				<<beastNEWinit 1 dog>>
-				<<beastCombatInit>>
-				<<beastTrainGenerate>>
-			<<case "dolphin">>
-				<<beastNEWinit 1 dolphin>>
-				<<beastCombatInit>>
-				<<beastTrainGenerate>>
-			<<case "cat">>
-				<<beastNEWinit 1 cat>>
-				<<beastCombatInit>>
-				<<beastTrainGenerate>>
-			<<case "cow">>
-				<<beastNEWinit 1 cow>>
-				<<beastCombatInit>>
-				<<beastTrainGenerate>>
-			<<case "bear">>
-				<<beastNEWinit 1 bear>>
-				<<beastCombatInit>>
-				<<beastTrainGenerate>>
-			<<case "fox">>
-				<<beastNEWinit 1 fox>>
-				<<beastCombatInit>>
-				<<beastTrainGenerate>>
-			<<case "horse">>
-				<<beastNEWinit 1 horse>>
-				<<beastCombatInit>>
-				<<beastTrainGenerate>>
-			<<case "lizard">>
-				<<beastNEWinit 1 lizard>>
-				<<beastCombatInit>>
-				<<beastTrainGenerate>>
-			<<case "boar">>
-				<<beastNEWinit 1 boar>>
-				<<beastCombatInit>>
-				<<beastTrainGenerate>>
-			<<case "pig">>
-				<<beastNEWinit 1 boar>>
-				<<beastCombatInit>>
-				<<beastTrainGenerate>>
-			<<case "creature">>
-				<<beastNEWinit 1 creature>>
-				<<beastCombatInit>>
-				<<beastTrainGenerate>>
-			<<case "hawk">>
-				<<beastNEWinit 1 hawk>>
-				<<beastCombatInit>>
-				<<beastTrainGenerate>>
-			<<case "fish">>
-				<<set $enemytype to "swarm">>
-				<<swarminit "fish" "container" "shaking" "shatter" "steady" 4 6>>
-			<<case "snakes">>
-				<<set $enemytype to "swarm">>
-				<<swarminit "snakes" "swarm" "slithering" "slither" "keep back" 10 0>>
-			<<case "spiders">>
-				<<set $enemytype to "swarm">>
-				<<swarminit "spiders" "sac" "slipping" "break" "steady" 1 9>>
-			<<case "slimes">>
-				<<set $enemytype to "swarm">>
-				<<swarminit "slimes" "slime mass" "moving towards you" "encircle you" "fend off" 8 0>>
-			<<case "pale slimes">>
-				<<set $enemytype to "swarm">>
-				<<swarminit "pale slimes" "slime mass" "moving towards you" "encircle you" "fend off" 8 0>>
-			<<case "maggots">>
-				<<set $enemytype to "swarm">>
-				<<swarminit "maggots" "swarm" "crawling" "crawl" "keep back" 2 8>>
-			<<case "worms">>
-				<<set $enemytype to "swarm">>
-				<<swarminit "worms" "jar" "held above the terrarium" "fall into the terrarium" "block" 0 10>>
-			<<case "eels">>
-				<<set $enemytype to "swarm">>
-				<<swarminit "eels" "swarm" "moving towards you" "encircle you" "fend off" 1 9>>
-			<<case "tentacles">>
-				<<set $combat to 1>>
-				<<set $enemytype to "tentacles">>
-				<<tentaclestart 8 15>>
-		<</switch>>
-		<<if $position isnot "wall" and $combatDemoPosition>>
-			<<set $position to $combatDemoPosition>>
-		<</if>>
+		<<set $position to $demo.position>>
 	</div>
 <</if>>
 
-<<if $combatDemoCombatType is "tentacles">>
+<<if $demo.type is "tentacles">>
 	<div class="combat-state">
-		<p>State tentacles</p>
+		<p class="text-muted">State tentacles</p>
 		<<statetentacles>>
 	</div>
 <</if>>
 
 <div class="combat-effects">
-	<p>Effects</p>
+	<p class="text-muted">Effects</p>
 	<<effects>>
 </div>
 <div class="combat-effectsman">
-	<<if $combatDemoCombatType is "tentacles">>
-		<p>Effects Tentacles</p>
-		<<effectstentacles>>
-	<<elseif ["fish", "snakes", "spiders", "slimes", "pale slimes", "maggots", "worms", "eels"].includes($combatDemoCombatType)>>
-		<p>Swarm Effects</p>
-		<<swarmeffects>>
-	<<else>>
-		<p>Effects man</p>
-		<<effectsman>>
-	<</if>>
+	<p class="text-muted">Effects man</p>
+	<<effectsman>>
 </div>
-<div id="combat-man" @class="'combat-man' + ($combatDemoCombatText ? '' : ' hidden')">
-	<<switch $combatDemoCombatType>>
-		<<case "human" "human wall" "human oral wall" "human gangbang">>
-			<p>man</p>
+<div class="combat-man">
+	<<switch $demo.type>>
+		<<case "human">>
+			<p class="text-muted">Man</p>
 			<<man>>
-		<<case "wolf" "dog" "dolphin" "cat" "cow" "bear" "fox" "horse" "lizard" "boar" "pig" "creature" "hawk">>
-			<p>Beast</p>
-			<<beast $enemyno>>
-		<<case "fish" "snakes" "spiders" "slimes" "pale slimes" "maggots" "worms" "eels">>
-			<p>Swarm</p>
-			<<swarm>>
-		<<case "tentacles">>
-			<p>Tentacles</p>
-			<<tentacles>>
+		<<case "bestial">>
+			<p class="text-muted">Beast</p>
+			<<beast>>
 	<</switch>>
 </div>
 
-<<if $combatDemoCombatType.includes("human")>>
+<<if $demo.type.includes("human")>>
 	<div class="combat-state">
-		<p>State man</p>
+		<p class="text-muted">State man</p>
 		<<stateman>>
 	</div>
 <</if>>
-<<combat-render>>
 <div class="combat-actions">
-	<<if $combatDemoCombatType is "tentacles">>
-		<p>Actions Tentacles</p>
-		<<actionstentacles>>
-	<<elseif ["fish", "snakes", "spiders", "slimes", "pale slimes", "maggots", "worms", "eels"].includes($combatDemoCombatType)>>
-		<p>Swarm actions</p>
-		<<swarmactions>>
-	<<else>>
-		<p>Actions man</p>
-		<<actionsman>>
-	<</if>>
+	<p class="text-muted">Animate combat</p>
+	<<animateCombat>>
 </div>
-<<link [[Next|$passage]]>><</link>><br>
+<div class="combat-actions">
+	<p class="text-muted">Actions man</p>
+	<<actionsman>>
+</div>
+<span id="next"><<link [[Next|$passage]]>><</link>></span><<nexttext>>
 <<link [[Bedroom|Bedroom]]>>
-	<<unset $combatDemoCombatType>>
-	<<unset $combatDemoCombatconsensual>>
-	<<unset $combatDemoCombatText>>
-	<<unset $combatDemoDebugText>>
-	<<unset $humanCombat>>
-	<<unset $beastCombat>>
-	<<unset $swarmCombat>>
-	<<endcombat>><<endevent>>
-<</link>><br>
-
-<br>
-<<link "Enable Combat Text">>
-	<<set $combatDemoCombatText to 1>>
-	<<removeclass "#combat-man" "hidden">>
-<</link>> |
-<<link "Disable Combat Text">>
-	<<set $combatDemoCombatText to 0>>
-	<<addclass "#combat-man" "hidden">>
-<</link>> |
-<br>
-<<link "Enable Debug Text">>
-	<<set $combatDemoDebugText to 1>>
-	<<removeclass "#combatDebug" "hidden">>
-<</link>> |
-<<link "Disable Debug Text">>
-	<<set $combatDemoDebugText to 0>>
-	<<addclass "#combatDebug" "hidden">>
-<</link>> |
+	<<endcombatdemo>>
+<</link>>
 <br><br>
 
-These will restart combat:
+<<combatdemotools>>
 <br>
-Human Combat:
-<<listbox "$humanCombat" autoselect>>
-	<<option "human">>
-	<<option "human gangbang">>
-	<<option "human wall">>
-	<<option "human oral wall">>
-<</listbox>>
-<<link [[Set|$passage]]>>
-	<<set $combatDemoCombatType to $humanCombat>>
-	<<endcombat>><<endevent>>
-	<<set $sexstart to 1>>
-<</link>> |<br><br>
 
-Beast Combat:
-<<listbox "$beastCombat" autoselect>>
-	<<option "wolf">>
-	<<option "dog">>
-	<<option "dolphin">>
-	<<option "cat">>
-	<<option "cow">>
-	<<option "bear">>
-	<<option "fox">>
-	<<option "horse">>
-	<<option "lizard">>
-	<<option "boar">>
-	<<option "pig">>
-	<<option "creature">>
-	<<option "hawk">>
-<</listbox>>
-<<link [[Set|$passage]]>>
-	<<set $combatDemoCombatType to $beastCombat>>
-	<<endcombat>><<endevent>>
-	<<set $sexstart to 1>>
-<</link>> |<br><br>
-
-Swarm Combat:
-<<listbox "$swarmCombat" autoselect>>
-	<<option "fish">>
-	<<option "snakes">>
-	<<option "spiders">>
-	<<option "slimes">>
-	<<option "pale slimes">>
-	<<option "maggots">>
-	<<option "worms">>
-	<<option "eels">>
-<</listbox>>
-<<link [[Set|$passage]]>>
-	<<set $combatDemoCombatType to $swarmCombat>>
-	<<endcombat>><<endevent>>
-	<<set $sexstart to 1>>
-<</link>> |<br><br>
-
-<<link [[Tentacles Combat|$passage]]>>
-	<<set $combatDemoCombatType to "tentacles">>
-	<<endcombat>><<endevent>>
-	<<set $sexstart to 1>>
-<</link>> |
-
-<br><br>
-<<if $combatDemoCombatconsensual>>
+<<if $demo.consent>>
 	<<link [[Set to Rape|$passage]]>>
-		<<set $combatDemoCombatconsensual to 0>>
-		<<endcombat>><<endevent>>
+		<<set $demo.consent to false>>
+		<<endcombat>>
 		<<set $sexstart to 1>>
 	<</link>>
 <<else>>
 	<<link [[Set to Consensual|$passage]]>>
-		<<set $combatDemoCombatconsensual to 1>>
-		<<endcombat>><<endevent>>
+		<<set $demo.consent to true>>
+		<<endcombat>>
 		<<set $sexstart to 1>>
 	<</link>>
 <</if>>
-<br><br><br>
+<br><br>
+
 <<if $position isnot "wall">>
 	<<link [[Set to missionary|$passage]]>>
-		<<set $combatDemoPosition to "missionary">>
-		<<endcombat>><<endevent>>
+		<<set $demo.position to "missionary">>
+		<<endcombat>>
 		<<set $sexstart to 1>>
 	<</link>> |
 	<<link [[Set to doggy|$passage]]>>
-		<<set $combatDemoPosition to "doggy">>
-		<<endcombat>><<endevent>>
+		<<set $demo.position to "doggy">>
+		<<endcombat>>
 		<<set $sexstart to 1>>
 	<</link>> |
 	<<link [[Dont set position|$passage]]>>
-		<<set $combatDemoPosition to 0>>
-		<<endcombat>><<endevent>>
+		<<set $demo.position to 0>>
+		<<endcombat>>
 		<<set $sexstart to 1>>
 	<</link>> |
 	<br><br>
 <</if>>
-
-:: Combat Widgets [widget]
-
-<<widget "combat-render">>
-	<<modelselect "combat" "combat">>
-	<<modelprepare-player-body>>
-	<<modelprepare-player-clothes>>
-	<!-- Centres the inner grid -->
-	<div class="flex-row flex-centre">
-		<!-- Organises canvas windows into a grid -->
-		<div class="combat-grid">
-			<!-- Top row - Contains miniture viewports -->
-			<div class="combat-close">
-				<div class="combat-close-chest">
-					/* <<canvas-render>> */
-				</div>
-				<div class="combat-close-vagina">
-					/* <<canvas-render>> */
-				</div>
-				<div class="combat-close-penis">
-					/* <<canvas-render>> */
-				</div>
-				<div class="combat-close-arse">
-					/* <<canvas-render>> */
-				</div>
-			</div>
-			<!-- Main canvas container -->
-			<div class="combat-main">
-				<<canvas-render>>
-			</div>
-		</div>
-	</div>
-<</widget>>
 
 :: CanvasModel Example
 <<link [[Bedroom]]>><</link>>
@@ -373,3 +177,141 @@ Swarm Combat:
 
 <!-- Editor hooks to "last model" -->
 <<canvasModelEditor>>
+
+:: Combat Demo Widgets [widget]
+
+<<widget "animateCombat">>
+	<!-- Centres the inner grid -->
+	<div class="flex-row flex-centre">
+		<!-- Organises canvas windows into a grid -->
+		<div class="combat-grid">
+			<!-- Top row - Contains miniture viewports -->
+			<div class="combat-close d-flex flex-row justify-content-center">
+				<<set $_closeOptions to getCloseOptions()>>
+				<div class="combat-close-chest">
+					<<newcanvasstart 64 64>>
+					<<newcanvasselect "combatCloseChest" "combatCloseChest">>
+					<<newcanvascompile $_closeOptions>>
+					<<newcanvasanimate `"border " + ($_closeOptions.showChest ? "border-primary" : "border-dark")`>>
+				</div>
+				<div class="combat-close-vagina">
+					<<newcanvasstart 64 64>>
+					<<newcanvasselect "combatCloseVagina" "combatCloseVagina">>
+					<<newcanvascompile $_closeOptions>>
+					<<newcanvasanimate `"border " + ($_closeOptions.showVagina ? "border-primary" : "border-dark")`>>
+				</div>
+				<div class="combat-close-penis">
+					<<newcanvasstart 64 64>>
+					<<newcanvasselect "combatClosePenis" "combatClosePenis">>
+					<<newcanvascompile $_closeOptions>>
+					<<newcanvasanimate `"border " + ($_closeOptions.showPenis ? "border-primary" : "border-dark")`>>
+				</div>
+				<div class="combat-close-arse">
+					<<newcanvasstart 64 64>>
+					<<newcanvasselect "combatCloseArse" "combatCloseArse">>
+					<<newcanvascompile $_closeOptions>>
+					<<newcanvasanimate `"border " + ($_closeOptions.showArse ? "border-primary" : "border-dark")`>>
+				</div>
+			</div>
+			<!-- Main canvas container. -->
+			<div class="combat-main d-flex justify-content-center">
+				<<newcanvasstart 256 256>>
+
+				<!-- Compile PC layers. -->
+				<<newcanvasselect "combatMainPc" "combatMainPc">>
+				<!-- Load T.modelOptions from PC data. -->
+				<<mapplayertooptions>>
+				<!-- Compile PC model and push to layer pipeline. -->
+				<<newcanvascompile>>
+
+				<<for $_npc range $NPCList>>
+					<<run console.log("compile npc:", $_npc)>>
+					<<if $_npc.type is "human">>
+						<<newcanvasselect "combatMainNpc" "combatMainNpc">>
+						<<mapnpctooptions>>
+						<<newcanvascompile>>
+					<</if>>
+				<</for>>
+				<!--
+				Loop over NPCList
+					If NPC is human:
+						<<newcanvasselect "combatMainHuman" "combatMainHuman">>
+						Load T.modelOptions from npc data
+						<<newcanvascompile>>
+					If NPC is beast:
+						<<newcanvasselect "combatMainBeast" "combatMainBeast">>
+						Load T.modelOptions from npc data
+						<<newcanvascompile>>
+				-->
+				<<newcanvasanimate "border border-primary">>
+			</div>
+		</div>
+	</div>
+<</widget>>
+
+<<widget "endcombatdemo">>
+	<<run delete $demo>>
+	<<endcombat>>
+<</widget>>
+
+<<widget "combatsetup">>
+	<div class="d-flex flex-horizontal flex-wrap gap-2 my-2">
+		<<for _i = 0; _i lt $NPCList.length; _i++>>
+			<<set _npc to $NPCList[_i]>>
+			<<if _npc.type eq null>>
+				<<continue>>
+			<</if>>
+			<<capture _npc>>
+				<div class="p-2 border border-primary">
+					Type: <<- _npc.type>>
+					Sex: <<- _npc.gender>>
+					Appearance: <<- _npc.pronoun>>
+				</div>
+			<</capture>>
+		<</for>>
+	</div>
+
+	<div class="d-flex flex-vertical">
+		<<button "Add human">>
+			<<generateNPC `$NPCList.countWith(a => a.type) + 1`>>
+			<<replace "#combat-setup">>
+				<<combatsetup>>
+			<</replace>>
+		<</button>>
+		<<listbox "_animalType" autoselect>>
+			<<optionsfrom $BeastList>>
+		<</listbox>>
+		<<button `"Set " + _animalType`>>
+			<<beastNEWinit `$NPCList.countWith(a => a.type) + 1` _animalType>>
+			<<replace "#combat-setup">>
+				<<combatsetup>>
+			<</replace>>
+		<</button>>
+		<<button "Clear">>
+			<<endevent>>
+			<<replace "#combat-setup">>
+				<<combatsetup>>
+			<</replace>>
+		<</button>>
+	</div>
+<</widget>>
+
+<<widget "combatdemotools">>
+	Tools:
+	<div>
+		<div id="tools-random-peek">
+			Next random: <<- State.prng.peek(1)>>
+		</div>
+		<<button "Randomly shift RNG">>
+			<<script>>
+				const iterations = Math.trunc(Math.random() * 1000);
+				for (let index = 0; index < iterations; index++) {
+					State.random();
+				}
+			<</script>>
+			<<replace "#tools-random-peek">>
+				Next random: <<- State.prng.peek(1)>>
+			<</replace>>
+		<</button>>
+	</div>
+<</widget>>

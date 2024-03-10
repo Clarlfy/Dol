@@ -2560,8 +2560,8 @@ function initLower() {
 
 		{
 			index: 53,
-			name: "football shorts",
-			name_cap: "Football shorts",
+			name: "foreign football shorts",
+			name_cap: "Foreign football shorts",
 			variable: "football",
 			integrity: 200,
 			integrity_max: 200,
@@ -2705,6 +2705,7 @@ function initLower() {
 			name: "cheerleading skirt",
 			name_cap: "Cheerleading skirt",
 			variable: "cheerleader",
+			combatImg: "skirt",
 			integrity: 100,
 			integrity_max: 100,
 			fabric_strength: 30,
@@ -3085,8 +3086,8 @@ function initLower() {
 
 		{
 			index: 64,
-			name: "soccer shorts",
-			name_cap: "Soccer shorts",
+			name: "football shorts",
+			name_cap: "Football shorts",
 			variable: "soccer",
 			integrity: 120,
 			integrity_max: 120,
