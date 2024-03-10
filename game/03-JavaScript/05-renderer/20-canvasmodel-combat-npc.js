@@ -59,6 +59,19 @@ const combatMainNpc = {
 	},
 	/** @type {Object<string, CanvasModelLayerNpc>} */
 	layers: {
+		baseShadow: {
+			srcfn(options) {
+				const path = `${options.src}shadow/${options.type}/vagina.png`;
+				return path;
+			},
+			showfn(options) {
+				return !!options.showShadow;
+			},
+			animationfn(options) {
+				return options.animKey;
+			},
+			z: 20,
+		},
 		penetrator: {
 			srcfn(options) {
 				if (options.penetrators.length <= 0) return;
@@ -74,7 +87,25 @@ const combatMainNpc = {
 			animationfn(options) {
 				return options.animKey;
 			},
-			z: 20,
+			z: 19,
+		},
+		penetratorEjaculate: {
+			srcfn(options) {
+				if (options.penetrators.length <= 0) return;
+				const penetrator = options.penetrators[0];
+				const path = `${options.src}penetrators/${penetrator.type}/${penetrator.position}-${penetrator.state}-${penetrator.ejaculate.type}.png`;
+				return path;
+			},
+			showfn(options) {
+				if (options.penetrators.length <= 0) return;
+				const penetrator = options.penetrators[0];
+				const result = penetrator.show && penetrator.isEjaculating;
+				return !!result;
+			},
+			animationfn(options) {
+				return options.animKey;
+			},
+			z: 21,
 		},
 	},
 };

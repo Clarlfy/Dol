@@ -5,6 +5,8 @@
  * @property {"missionary" | "doggy"} position
  * @property {string} type
  * @property {Colour} colour
+ * @property {string} state
+ * @property {boolean} showShadow
  * @property {Penetrator[]} penetrators
  */
 
@@ -16,8 +18,15 @@
  * @property {-1|0|1|2|3|4|5} target PC is -1. NPCs are 0 to 5.
  * @property {string} position Area that the penetrator is in.
  * @property {string} state What it is doing in the position.
+ * @property {string} isEjaculating Whether the penetrator is ejaculating.
+ * @property {Ejaculate} ejaculate The type of ejaculate.
  * @property {string} hasCondom Whether the penetrator is wrapped in a condom.
  * @property {boolean} show Whether to render the penetrator.
+ */
+
+/**
+ * @typedef {object} Ejaculate
+ * @property {string} type
  */
 
 /**
@@ -64,6 +73,7 @@ function mapNpcToOptions(index, options) {
 	// Maybe use active_enemy? const index = V.active_enemy.
 	const npc = V.NPCList[index];
 	options.type = npc.type;
+	options.showShadow = false;
 
 	mapNpcToShadowOptions(npc, options);
 
@@ -81,6 +91,11 @@ function mapNpcToShadowOptions(npc, options) {
 	options.penetrators = options.penetrators = [];
 	const penetrator = mapNpcToPenetratorOptions(npc);
 	if (penetrator != null) {
+		// Figure out which shadow base to use from penetrator:
+		options.state = penetrator.position;
+		// Figure out whether to show the shadow man or not:
+		options.showShadow = V.options.silhouetteEnabled && ["vagina", "anus", "mouth"].includes(penetrator.position);
+
 		console.log("Pushing penetrator to list:", penetrator);
 		options.penetrators.push(penetrator);
 	}
@@ -100,6 +115,10 @@ function mapNpcToPenetratorOptions(npc) {
 		type: npc.type,
 		colour: npc.skincolour,
 		target: target.pc,
+		isEjaculating: V.enemyarousal >= V.enemyarousalmax && wearingCondom(V.vaginatarget) !== "worn" && !npcHasStrapon(V.vaginatarget),
+		ejaculate: {
+			type: "sperm",
+		},
 	};
 	switch (npc.penis) {
 		case "anusentrance":
@@ -191,6 +210,10 @@ function mapNpcToPenetratorOptions(npc) {
 		case "cheeks":
 			penetrator.position = "butt";
 			penetrator.state = "buttjob";
+			return penetrator;
+		case "chest":
+			penetrator.position = "chest";
+			penetrator.state = "titjob";
 			return penetrator;
 		// case "leftDildoAnus":
 		// case "rightDildoAnus":
