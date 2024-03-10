@@ -13,6 +13,7 @@
  * @property {string} animKeyStill The key used for fetching the animation configuration for true still sprites.
  * @property {number} breastSize The size of the player breasts.
  * @property {number} breastsExposed Whether the breasts are shown.
+ * @property {Penetrator} penetrator Typically the PC's penis, or strapon etc.
  * @property {string} hairType The type of hair.
  * @property {string} hairLength The named stage of the hair length.
  * @property {"up"|"down"} legBackPosition The position the back leg is in.

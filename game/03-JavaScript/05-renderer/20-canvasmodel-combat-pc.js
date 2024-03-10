@@ -168,7 +168,7 @@ const combatMainPc = {
 		 */
 		backarm: {
 			srcfn(options) {
-				return options.src + "body/arms/back.png";
+				return `${options.src}body/arms/back.png`;
 			},
 			showfn(options) {
 				const result = options.showPlayer && options.position === "doggy";
@@ -181,7 +181,7 @@ const combatMainPc = {
 		},
 		backthigh: {
 			srcfn(options) {
-				return options.src + "body/thighs/back" + options.legBackPosition + ".png";
+				return `${options.src}body/thighs/back${options.legBackPosition}.png`;
 			},
 			showfn(options) {
 				return !!options.showPlayer;
@@ -193,7 +193,7 @@ const combatMainPc = {
 		},
 		backleg: {
 			srcfn(options) {
-				return options.src + "body/legs/back" + options.legBackPosition + ".png";
+				return `${options.src}body/legs/back${options.legBackPosition}.png`;
 			},
 			showfn(options) {
 				return !!options.showPlayer;
@@ -205,7 +205,7 @@ const combatMainPc = {
 		},
 		base: {
 			srcfn(options) {
-				return options.src + "body/base.png";
+				return `${options.src}body/base.png`;
 			},
 			showfn(options) {
 				return !!options.showPlayer;
@@ -220,7 +220,7 @@ const combatMainPc = {
 				if (options.position === "doggy") {
 					return options.src + "";
 				}
-				return options.src + "body/thighs/front" + options.legFrontPosition + ".png";
+				return `${options.src}body/thighs/front${options.legFrontPosition}.png`;
 			},
 			showfn(options) {
 				const result = options.showPlayer && options.position !== "doggy";
@@ -233,7 +233,7 @@ const combatMainPc = {
 		},
 		frontleg: {
 			srcfn(options) {
-				return options.src + "body/legs/front" + options.legFrontPosition + ".png";
+				return `${options.src}body/legs/front${options.legFrontPosition}.png`;
 			},
 			showfn(options) {
 				return !!options.showPlayer;
@@ -245,7 +245,7 @@ const combatMainPc = {
 		},
 		frontarm: {
 			srcfn(options) {
-				return options.src + "body/arms/front.png";
+				return `${options.src}body/arms/front.png`;
 			},
 			showfn(options) {
 				return !!options.showPlayer;
@@ -257,7 +257,7 @@ const combatMainPc = {
 		},
 		frontbreast: {
 			srcfn(options) {
-				return options.src + "body/breasts/" + options.breastSize + ".png";
+				return `${options.src}body/breasts/${options.breastSize}.png`;
 			},
 			showfn(options) {
 				if (!options.breastSize) return false;
@@ -269,6 +269,19 @@ const combatMainPc = {
 			},
 			z: zi.frontBreast,
 		},
+		penetrator: {
+			srcfn(options) {
+				return `${options.src}body/penetrator/penis.png`;
+			},
+			showfn(options) {
+				const result = options.showPlayer && options.penetrator.show;
+				return !!result;
+			},
+			animationfn(options) {
+				return options.animKey;
+			},
+			z: zi.penis,
+		},
 		/*
 		 *	██   ██ ███████  █████  ██████
 		 *	██   ██ ██      ██   ██ ██   ██
@@ -278,7 +291,7 @@ const combatMainPc = {
 		 */
 		head: {
 			srcfn(options) {
-				return options.src + "body/head/head.png";
+				return `${options.src}body/head/head.png`;
 			},
 			showfn(options) {
 				return !!options.showPlayer;
@@ -290,7 +303,7 @@ const combatMainPc = {
 		},
 		lefteye: {
 			srcfn(options) {
-				return options.src + "body/head/eyes.png";
+				return `${options.src}body/head/eyes.png`;
 			},
 			showfn(options) {
 				return !!options.showPlayer;
@@ -303,7 +316,7 @@ const combatMainPc = {
 		},
 		eyelid: {
 			srcfn(options) {
-				return options.src + "body/head/eyelids.png";
+				return `${options.src}body/head/eyelids.png`;
 			},
 			showfn(options) {
 				const result = options.showPlayer;
@@ -316,7 +329,7 @@ const combatMainPc = {
 		},
 		eyelashes: {
 			srcfn(options) {
-				return options.src + "body/head/lashes.png";
+				return `${options.src}body/head/lashes.png`;
 			},
 			showfn(options) {
 				return !!options.showPlayer;
@@ -329,7 +342,7 @@ const combatMainPc = {
 		},
 		blush: {
 			srcfn(options) {
-				return options.src + "body/head/blush/" + options.blush + ".png";
+				return `${options.src}body/head/blush/${options.blush}.png`;
 			},
 			showfn(options) {
 				const result = options.showFace && options.blush > 0;
@@ -341,7 +354,7 @@ const combatMainPc = {
 		/* This creates a weird effect on the face, tbi */
 		tears: {
 			srcfn(options) {
-				return options.src + "body/head/tear/" + options.tears + ".png";
+				return `${options.src}body/head/tear/${options.tears}.png`;
 			},
 			showfn(options) {
 				const result = options.showFace && options.tears > 0;
@@ -353,7 +366,7 @@ const combatMainPc = {
 			srcfn(options) {
 				let state = "closedmouth";
 				if (options.inOral) state = "mouth";
-				return options.src + "body/oral/" + state + ".png";
+				return `${options.src}body/oral/${state}.png`;
 			},
 			showfn(options) {
 				return !!options.showPlayer;
@@ -365,7 +378,7 @@ const combatMainPc = {
 		},
 		hair: {
 			srcfn(options) {
-				return options.src + "hair/" + options.hairType + "/" + options.hairLength + ".png";
+				return `${options.src}hair/${options.hairType}/${options.hairLength}.png`;
 			},
 			showfn(options) {
 				return !!options.showPlayer;
@@ -399,7 +412,7 @@ const combatMainPc = {
 			srcfn(options) {
 				const clothes = options.clothes.legs;
 				if (clothes == null || clothes.name == null) return "";
-				const path = options.src + "clothing/legs/" + clothes.name + "/" + clothes.state + "l.png";
+				const path = `${options.src}clothing/legs/${clothes.name}/${clothes.state}l.png`;
 				console.log("legs", "Path:", path);
 				return path;
 			},
@@ -408,7 +421,7 @@ const combatMainPc = {
 			srcfn(options) {
 				const clothes = options.clothes.legs;
 				if (clothes == null || clothes.name == null) return "";
-				const path = options.src + "clothing/legs/" + clothes.name + "/" + clothes.state + "r.png";
+				const path = `${options.src}clothing/legs/${clothes.name}/${clothes.state}r.png`;
 				console.log("legs", "Path:", path);
 				return path;
 			},
@@ -432,7 +445,7 @@ const combatMainPc = {
 			srcfn(options) {
 				const clothes = options.clothes.upper;
 				if (clothes == null || clothes.name == null) return "";
-				const path = options.src + "clothing/upper/" + clothes.name + "/breasts/" + options.breastSize + ".png";
+				const path = `${options.src}clothing/upper/${clothes.name}/breasts/${options.breastSize}.png`;
 				console.log("upper", "Path:", path);
 				return path;
 			},
@@ -441,7 +454,7 @@ const combatMainPc = {
 			srcfn(options) {
 				const clothes = options.clothes.upper;
 				if (clothes == null || clothes.name == null) return "";
-				const path = options.src + "clothing/upper/" + clothes.name + "/sleeves/" + clothes.sleeves + ".png";
+				const path = `${options.src}clothing/upper/${clothes.name}/sleeves/${clothes.sleeves}.png`;
 				console.log("upper", "Path:", path);
 				return path;
 			},
@@ -451,7 +464,7 @@ const combatMainPc = {
 			srcfn(options) {
 				const clothes = options.clothes.upper;
 				if (clothes == null || clothes.name == null) return "";
-				const path = options.src + "clothing/upper/" + clothes.name + "/sleeves/" + clothes.sleeves + ".png";
+				const path = `${options.src}clothing/upper/${clothes.name}/sleeves/${clothes.sleeves}.png`;
 				console.log("upper", "Path:", path);
 				return path;
 			},
@@ -476,7 +489,7 @@ function genClothingLayer(slot, overrideOptions = {}) {
 		srcfn(options) {
 			const clothes = options.clothes[slot];
 			if (clothes == null || clothes.name == null) return "";
-			const path = options.src + "clothing/" + slot + "/" + clothes.name + "/" + clothes.state + ".png";
+			const path = `${options.src}clothing/${slot}/${clothes.name}/${clothes.state}.png`;
 			console.log(slot, "Path:", path);
 			return path;
 		},
