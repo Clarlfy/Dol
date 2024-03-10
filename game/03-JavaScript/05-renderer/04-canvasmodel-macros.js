@@ -19,9 +19,10 @@ Macro.add("newcanvasselect", {
 
 Macro.add("newcanvascompile", {
 	handler() {
+		const options = this.args[0] || T.modelOptions || {};
 		const layers = T.layers;
 		if (layers instanceof Array) {
-			layers.push(...T.model.compile(T.modelOptions));
+			layers.push(...T.model.compile(options));
 		}
 	},
 });

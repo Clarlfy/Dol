@@ -186,22 +186,31 @@ Debugging:
 		<!-- Organises canvas windows into a grid -->
 		<div class="combat-grid">
 			<!-- Top row - Contains miniture viewports -->
-			<div class="combat-close">
+			<div class="combat-close d-flex flex-row justify-content-center">
+				<<set $_closeOptions to getCloseOptions()>>
 				<div class="combat-close-chest">
-					<!-- <<modelselect "combatCloseChest" "combatCloseChest">> -->
-					<!-- <<animate>> -->
+					<<newcanvasstart 64 64>>
+					<<newcanvasselect "combatCloseChest" "combatCloseChest">>
+					<<newcanvascompile $_closeOptions>>
+					<<newcanvasanimate "border border-primary">>
 				</div>
 				<div class="combat-close-vagina">
-					<!-- <<modelselect "combatCloseVagina" "combatCloseVagina">> -->
-					<!-- <<animate>> -->
+					<<newcanvasstart 64 64>>
+					<<newcanvasselect "combatCloseVagina" "combatCloseVagina">>
+					<<newcanvascompile $_closeOptions>>
+					<<newcanvasanimate "border border-primary">>
 				</div>
 				<div class="combat-close-penis">
-					<!-- <<modelselect "combatClosePenis" "combatClosePenis">> -->
-					<!-- <<animate>> -->
+					<<newcanvasstart 64 64>>
+					<<newcanvasselect "combatClosePenis" "combatClosePenis">>
+					<<newcanvascompile $_closeOptions>>
+					<<newcanvasanimate "border border-primary">>
 				</div>
 				<div class="combat-close-arse">
-					<!-- <<modelselect "combatCloseArse" "combatCloseArse">> -->
-					<!-- <<animate>> -->
+					<<newcanvasstart 64 64>>
+					<<newcanvasselect "combatCloseArse" "combatCloseArse">>
+					<<newcanvascompile $_closeOptions>>
+					<<newcanvasanimate "border border-primary">>
 				</div>
 			</div>
 			<!-- Main canvas container. -->
