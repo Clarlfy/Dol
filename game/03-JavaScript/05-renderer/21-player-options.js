@@ -165,6 +165,7 @@ function mapPcToPenetratorOptions(pc, options) {
 		},
 	};
 	switch (V.penisuse) {
+		case 1:
 		case 0:
 			penetrator.position = "default";
 			penetrator.state = "default";
