@@ -1,6 +1,7 @@
 /* For any item that has a colour_combat tag, set it to 0 if that item ever gets its own combat sprites. */
 function initGenitals() {
-	setup.clothes.genitals = [
+	/** @type {ClothesItem[]} */
+	const clothing = [
 		{
 			index: 0,
 			name: "naked",
@@ -511,6 +512,7 @@ function initGenitals() {
 			penisSize: true,
 		},
 	];
+	setup.clothes.genitals = clothing;
 
 	/*
 		Clothes that modders add go into this array, this should be empty in the base game at all times.

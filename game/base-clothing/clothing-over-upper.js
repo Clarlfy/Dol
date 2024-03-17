@@ -2,7 +2,8 @@
 /* word - widget will output "a" if "a", and nothing if "n". eg - You are wearing <<a>> hat. You are wearing <<a>> shorts.
 plural - widget will output "are" if 1, and "is" if 0. eg - Your hat <<upperplural>> wet. Your shorts <<upperplural>> wet. */
 function initOverUpper() {
-	setup.clothes.over_upper = [
+	/** @type {ClothesItem[]} */
+	const clothing = [
 		{
 			index: 0,
 			name: "naked",
@@ -130,6 +131,7 @@ function initOverUpper() {
 			accIcon: 0,
 		},
 	];
+	setup.clothes.over_upper = clothing;
 
 	/*
 		Clothes that modders add go into this array, this should be empty in the base game at all times.

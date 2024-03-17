@@ -13,14 +13,19 @@ Macro.add("newcanvasselect", {
 		const slot = this.args[1];
 		const model = Renderer.locateModel(name, slot);
 		T.model = model;
-		T.modelOptions = model.defaultOptions();
+		T.options = T.options || {};
+		T.options[slot] = model.defaultOptions();
 	},
 });
 
 Macro.add("newcanvascompile", {
 	handler() {
-		const options = this.args[0] || T.modelOptions || {};
+		T.options = T.options || {};
+		const slot = this.args[0];
+		const options = T.options[slot];
 		const layers = T.layers;
+		// Need to ask Aim about the model caching, when a layer is "shown", the layer is always "cached", regardless of if it's hidden once more.
+		delete Renderer.CanvasModelCaches[slot];
 		if (layers instanceof Array) {
 			layers.push(...T.model.compile(options));
 		}

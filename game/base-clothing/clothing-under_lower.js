@@ -1,6 +1,7 @@
 function initUnderLower() {
 	/* For any item that has a colour_combat tag, set it to 0 if that item ever gets its own combat sprites. */
-	setup.clothes.under_lower = [
+	/** @type {ClothesItem[]} */
+	const clothing = [
 		{
 			index: 0,
 			name: "naked",
@@ -1703,6 +1704,7 @@ function initUnderLower() {
 			outfitSecondary: ["under_upper", "shibari ropes"],
 		},
 	];
+	setup.clothes.under_lower = clothing;
 
 	/*
 		Clothes that modders add go into this array, this should be empty in the base game at all times.

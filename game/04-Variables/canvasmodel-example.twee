@@ -217,32 +217,42 @@ Debugging:
 			<div class="combat-main d-flex justify-content-center">
 				<<newcanvasstart 256 256>>
 
+				<<run console.warn("===============================================")>>
+				<<run console.warn("================== PC canvas ==================")>>
+				<<run console.warn("===============================================")>>
 				<!-- Compile PC layers. -->
 				<<newcanvasselect "combatMainPc" "combatMainPc">>
-				<!-- Load T.modelOptions from PC data. -->
-				<<mapplayertooptions>>
+				<!-- Load T.options[slot] from PC data. -->
+				<<mapplayertooptions "combatMainPc">>
+				<<run console.warn("===============================================")>>
+				<<run console.warn("================= PC compile ==================")>>
+				<<run console.warn("===============================================")>>
 				<!-- Compile PC model and push to layer pipeline. -->
-				<<newcanvascompile>>
+				<<newcanvascompile "combatMainPc">>
 
-				<<for $_npc range $NPCList>>
-					<<run console.log("compile npc:", $_npc)>>
-					<<if $_npc.type is "human">>
-						<<newcanvasselect "combatMainNpc" "combatMainNpc">>
-						<<mapnpctooptions>>
-						<<newcanvascompile>>
+				<<run console.warn("===============================================")>>
+				<<run console.warn("================= NPC canvas ==================")>>
+				<<run console.warn("===============================================")>>
+				<<for _index, _npc range $NPCList>>
+					<<run console.log("compile npc:", _npc)>>
+					<<if _npc.type is "human">>
+						<<set $_slot to "combatMainNpc" + _index>>
+						<<newcanvasselect "combatMainNpc" $_slot>>
+						<<mapnpctooptions $_slot _index>>
+						<<run console.warn("===============================================")>>
+						<<run console.warn(`======== Human NPC ${_index} compile ==========`)>>
+						<<run console.warn("===============================================")>>
+						<<newcanvascompile $_slot>>
+					<<elseif $BeastList.includes(_npc.type)>>
+						<<set $_slot to "combatMainNpc" + _index>>
+						<<newcanvasselect "combatMainNpc" $_slot>>
+						<<mapnpctooptions $_slot _index>>
+						<<run console.warn("===============================================")>>
+						<<run console.warn(`======== ${_npc.type} NPC ${_index} compile ==========`)>>
+						<<run console.warn("===============================================")>>
+						<<newcanvascompile $_slot>>
 					<</if>>
 				<</for>>
-				<!--
-				Loop over NPCList
-					If NPC is human:
-						<<newcanvasselect "combatMainHuman" "combatMainHuman">>
-						Load T.modelOptions from npc data
-						<<newcanvascompile>>
-					If NPC is beast:
-						<<newcanvasselect "combatMainBeast" "combatMainBeast">>
-						Load T.modelOptions from npc data
-						<<newcanvascompile>>
-				-->
 				<<newcanvasanimate "border border-primary">>
 			</div>
 		</div>

@@ -22,8 +22,26 @@ declare interface ClothesItem {
 	one_piece: number;
 	strap: number;
 	open: number;
-	word: "a";
-	state: string?;
+	/**
+	 * "a": a skirt.
+	 * 
+	 * "n": skirt.
+	 * 
+	 * "an": an skirt.
+	 */
+	word: "a" | "n" | "an";
+	/**
+	 * Naked states are almost always 0.
+	 * 
+	 * Upper clothing is typically a mix of "chest" and "midriff". Some decisions are questionable here.
+	 * 
+	 * Most lower clothing states are "waist", can be set to "thighs" when player pulls them down.
+	 * 
+	 * Legwear is a mix between "thighs", "knees" and "ankles".
+	 * 
+	 * Strap-ons are typically set to "worn".
+	 */
+	state: 0 | "chest" | "midriff" | "waist" | "thighs" | "knees" | "ankles" | "worn";
 	state_base: string?;
 	state_top: string?;
 	state_top_base: string?;

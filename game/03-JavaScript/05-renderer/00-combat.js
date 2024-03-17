@@ -1,6 +1,14 @@
 class CombatSystem {
 	isActive() {
-		return this.isVaginaActive() || this.isAnusActive() || this.isMouthActive() || this.isPenisActive() || this.isArmActive() || this.isChestActive();
+		return (
+			this.isVaginaActive() ||
+			this.isAnusActive() ||
+			this.isMouthActive() ||
+			this.isPenisActive() ||
+			this.isArmActive() ||
+			this.isChestActive() ||
+			this.isFeetActive()
+		);
 	}
 
 	isVaginaActive() {
@@ -45,6 +53,11 @@ class CombatSystem {
 
 	isChestActive() {
 		const activeUse = ["penis"].includes(V.chestuse);
+		return activeUse;
+	}
+
+	isFeetActive() {
+		const activeUse = ["penis"].includes(V.feetuse);
 		return activeUse;
 	}
 }

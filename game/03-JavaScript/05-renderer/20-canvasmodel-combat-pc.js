@@ -1,105 +1,74 @@
+/* eslint-disable jsdoc/no-undefined-types */
 /**
- * @typedef ZIndices
+ * @typedef CombatZIndices
  * @type {object}
- * @property {0} bg Background.
- * @property {0} over_head_back Template.
- * @property {1} head_back Template.
- * @property {5} basehead Template.
- * @property {10} backhair Template.
- * @property {15} back_lower Template.
- * @property {20} base Template.
- * @property {21} facebase Template.
- * @property {22} tanBody Template.
- * @property {25} hirsute Template.
- * @property {30} eyes Template.
- * @property {31} sclera Template.
- * @property {32} iris Template.
- * @property {33} irisacc Template.
- * @property {34} eyelids Template.
- * @property {35} lashes Template.
- * @property {40} mouth Template.
- * @property {30} armsidle Template.
- * @property {31.5} handsidle Template.
- * @property {32} under_upper_arms Template.
- * @property {33} bellyBase Template.
- * @property {35} breasts Template.
- * @property {36} breastsparasite Template.
- * @property {30} tanbreasts Template.
- * @property {50} blush Template.
- * @property {51} freckles Template.
- * @property {51.5} mascara_running Template.
- * @property {52} skin Template.
- * @property {53} toast Template.
- * @property {55} tears Template.
- * @property {60} hair Template.
- * @property {64} penis_chastity Template.
- * @property {66.6} legs Template. // above underParasite but below under_lower
- * @property {64} pbhair Template.
- * @property {64.3} penisunderclothes Template.
- * @property {64.6} pbhairballsunderclothes Template.
- * @property {65} genitals Template.
- * @property {104} penis Template. // when exposed
- * @property {104.3} pbhairballs Template. // when exposed
- * @property {104.6} parasite Template. // when exposed
- * @property {66} underParasite Template.
- * @property {67} under_lower Template.
- * @property {68} under_lower_top Template.
- * @property {70} under_upper Template.
- * @property {72} under_upper_top Template.
- * @property {73} under_upper_top_high Template.
- * @property {74} under_upper_top_acc Template.
- * @property {75} under_lower_high Template.
- * @property {77} under_lower_top_high Template.
- * @property {78} under_lower_top_high_acc Template.
- * @property {75} under Template.
- * @property {85} feet Template.
- * @property {90} lower Template.
- * @property {92} lower_top Template.
- * @property {94} upper_arms Template.
- * @property {94.5} lower_belly Template.
- * @property {95} upper Template.
- * @property {89} upper_tucked Template.
- * @property {88.5} upper_arms_tucked Template.
- * @property {97} upper_top Template.
- * @property {98} bellyClothes Template.
- * @property {99} bellyClothesShadow Template.
- * @property {103} collar Template.
- * @property {103} neck Template.
- * @property {105} arms_cover Template.
- * @property {109} under_upper_arms_cover Template.
- * @property {110} hands Template.
- * @property {112} upper_arms_cover Template.
- * @property {115} lower_high Template.
- * @property {117} lower_top_high Template.
- * @property {132} hairforwards Template.
- * @property {133} fronthair Template.
- * @property {138} brow Template.
- * @property {140} horns Template.
- * @property {145} face Template.
- * @property {150} head Template.
- * @property {152} over_head Template.
- * @property {165} tailPenisCover Template.
- * @property {166} tailPenisCoverOverlay Template.
- * @property {170} over_lower Template.
- * @property {171} over_upper Template.
- * @property {170} over_upper_arms Template.
- * @property {174} over_upper_arms_cover Template.
  * Combat layers
- * Player
- * @property {12} backThigh Template.
- * @property {14} backLeg Template.
- * @property {16} backBreast Template.
- * @property {18} backArm Template.
- * @property {22} frontThigh Template.
- * @property {24} frontLeg Template.
- * @property {26} frontBreast Template.
- * @property {28} frontArm Template.
+ * @property {0} far
+ * @property {50} base
+ * @property {100} near
+ * Hair:
+ * @property {35} backHair
+ * @property {55} hair
+ * Back legs:
+ * @property {40} backCalf
+ * @property {41} backFoot
+ * @property {42} backThigh
+ * @property {43} backCalfUnderwear
+ * @property {44} backThighUnderwear
+ * @property {45} backFootwear
+ * @property {46} backCalfWear
+ * @property {47} backThighWear
+ * @property {48} backCalfOverwear
+ * @property {49} backThighOverwear
+ * Front Legs:
+ * @property {60} frontCalf
+ * @property {61} frontFoot
+ * @property {62} frontThigh
+ * @property {63} frontCalfUnderwear
+ * @property {64} frontThighUnderwear
+ * @property {65} frontFootwear
+ * @property {66} frontCalfWear
+ * @property {67} frontThighWear
+ * @property {68} frontCalfOverwear
+ * @property {69} frontThighOverwear
  */
 
 /**
- * @type {ZIndices}
+ * @type {CombatZIndices}
  */
-const zi = ZIndices;
+const zi = {
+	far: 0,
+
+	backHair: 35,
+
+	backCalf: 40,
+	backFoot: 41,
+	backThigh: 42,
+	backCalfUnderwear: 43,
+	backThighUnderwear: 44,
+	backFootwear: 45,
+	backCalfWear: 46,
+	backThighWear: 47,
+	backCalfOverwear: 48,
+	backThighOverwear: 49,
+
+	base: 50,
+
+	hair: 55,
+
+	frontCalf: 60,
+	frontFoot: 61,
+	frontThigh: 62,
+	frontCalfUnderwear: 63,
+	frontThighUnderwear: 64,
+	frontFootwear: 65,
+	frontCalfWear: 66,
+	frontThighWear: 67,
+	frontCalfOverwear: 68,
+	frontThighOverwear: 69,
+
+	near: 100,
+};
 
 /**
  * @type {CanvasModelOptions}
@@ -177,11 +146,11 @@ const combatMainPc = {
 			animationfn(options) {
 				return options.animKey;
 			},
-			z: zi.backArm,
+			z: zi.base - 3,
 		},
 		backthigh: {
 			srcfn(options) {
-				return `${options.src}body/thighs/back${options.legBackPosition}.png`;
+				return `${options.src}body/thighs/back-${options.legBackPosition}.png`;
 			},
 			showfn(options) {
 				return !!options.showPlayer;
@@ -193,7 +162,7 @@ const combatMainPc = {
 		},
 		backleg: {
 			srcfn(options) {
-				return `${options.src}body/legs/back${options.legBackPosition}.png`;
+				return `${options.src}body/legs/back-${options.legBackPosition}.png`;
 			},
 			showfn(options) {
 				return !!options.showPlayer;
@@ -201,7 +170,7 @@ const combatMainPc = {
 			animationfn(options) {
 				return options.animKey;
 			},
-			z: zi.backLeg,
+			z: zi.backCalf,
 		},
 		base: {
 			srcfn(options) {
@@ -220,7 +189,7 @@ const combatMainPc = {
 				if (options.position === "doggy") {
 					return options.src + "";
 				}
-				return `${options.src}body/thighs/front${options.legFrontPosition}.png`;
+				return `${options.src}body/thighs/front-${options.legFrontPosition}.png`;
 			},
 			showfn(options) {
 				const result = options.showPlayer && options.position !== "doggy";
@@ -233,7 +202,7 @@ const combatMainPc = {
 		},
 		frontleg: {
 			srcfn(options) {
-				return `${options.src}body/legs/front${options.legFrontPosition}.png`;
+				return `${options.src}body/legs/front-${options.legFrontPosition}.png`;
 			},
 			showfn(options) {
 				return !!options.showPlayer;
@@ -241,11 +210,11 @@ const combatMainPc = {
 			animationfn(options) {
 				return options.animKey;
 			},
-			z: zi.frontLeg,
+			z: zi.frontCalf,
 		},
 		frontarm: {
 			srcfn(options) {
-				return `${options.src}body/arms/front.png`;
+				return `${options.src}body/arms/front-${options.armFrontPosition}.png`;
 			},
 			showfn(options) {
 				return !!options.showPlayer;
@@ -253,7 +222,7 @@ const combatMainPc = {
 			animationfn(options) {
 				return options.animKey;
 			},
-			z: 100 || zi.frontArm,
+			z: zi.base + 11,
 		},
 		frontbreast: {
 			srcfn(options) {
@@ -267,20 +236,38 @@ const combatMainPc = {
 			animationfn(options) {
 				return options.animKey;
 			},
-			z: zi.frontBreast,
+			z: zi.base + 5,
 		},
 		penetrator: {
 			srcfn(options) {
-				return `${options.src}body/penetrator/penis.png`;
+				const penetrator = options.penetrator;
+				return `${options.src}body/penetrator/${penetrator.position}-${penetrator.state}.png`;
 			},
 			showfn(options) {
-				const result = options.showPlayer && options.penetrator.show;
+				const penetrator = options.penetrator;
+				const result = options.showPlayer && penetrator.show;
 				return !!result;
 			},
 			animationfn(options) {
 				return options.animKey;
 			},
-			z: zi.penis,
+			z: zi.base + 5,
+		},
+		penetratorEjaculate: {
+			srcfn(options) {
+				const penetrator = options.penetrator;
+				return `${options.src}body/penetrator/${penetrator.position}-${penetrator.state}-${penetrator.ejaculate.type}.png`;
+			},
+			showfn(options) {
+				const penetrator = options.penetrator;
+				console.log("ejac penetrator", JSON.parse(JSON.stringify(penetrator)));
+				const result = options.showPlayer && penetrator.show && penetrator.isEjaculating;
+				return !!result;
+			},
+			animationfn(options) {
+				return "sex-4f-vfast";
+			},
+			z: zi.base + 6,
 		},
 		/*
 		 *	██   ██ ███████  █████  ██████
@@ -312,7 +299,7 @@ const combatMainPc = {
 				return options.animKey;
 			},
 			filters: ["left_eye"],
-			z: zi.eyes,
+			z: zi.base + 1,
 		},
 		eyelid: {
 			srcfn(options) {
@@ -325,7 +312,7 @@ const combatMainPc = {
 			animationfn(options) {
 				return options.animKeyStill;
 			},
-			z: zi.eyelids,
+			z: zi.base + 2,
 		},
 		eyelashes: {
 			srcfn(options) {
@@ -338,7 +325,7 @@ const combatMainPc = {
 				return options.animKeyStill;
 			},
 			filters: ["phair"],
-			z: zi.eyelids,
+			z: zi.base + 3,
 		},
 		blush: {
 			srcfn(options) {
@@ -349,7 +336,7 @@ const combatMainPc = {
 				return !!result;
 			},
 			filters: ["body"],
-			z: zi.blush,
+			z: zi.base + 1,
 		},
 		/* This creates a weird effect on the face, tbi */
 		tears: {
@@ -360,7 +347,7 @@ const combatMainPc = {
 				const result = options.showFace && options.tears > 0;
 				return !!result;
 			},
-			z: zi.tears,
+			z: zi.base + 2,
 		},
 		mouth: {
 			srcfn(options) {
@@ -374,7 +361,7 @@ const combatMainPc = {
 			animationfn(options) {
 				return options.animKey;
 			},
-			z: zi.mouth,
+			z: zi.base + 1,
 		},
 		hair: {
 			srcfn(options) {
@@ -396,10 +383,35 @@ const combatMainPc = {
 		 *	██      ██      ██    ██    ██    ██   ██ ██ ██  ██ ██ ██    ██
 		 *	 ██████ ███████  ██████     ██    ██   ██ ██ ██   ████  ██████
 		 */
-		facewear: genClothingLayer("face"),
-		footwear: genClothingLayer("feet"),
-		genitals: genClothingLayer("genitals"),
-		hands: genClothingLayer("hands"),
+		facewear: genClothingLayer("face", {
+			z: zi.base + 4,
+		}),
+		footwearBack: genClothingLayer("feet", {
+			srcfn(options) {
+				const clothes = options.clothes.feet;
+				if (clothes == null || clothes.name == null) return "";
+				const path = `${options.src}clothing/feet/${clothes.name}/back-${clothes.state}.png`;
+				console.log("Path:", path);
+				return path;
+			},
+			z: zi.backFootwear,
+		}),
+		footwearFront: genClothingLayer("feet", {
+			srcfn(options) {
+				const clothes = options.clothes.feet;
+				if (clothes == null || clothes.name == null) return "";
+				const path = `${options.src}clothing/feet/${clothes.name}/front-${clothes.state}.png`;
+				console.log("Path:", path);
+				return path;
+			},
+			z: zi.frontFootwear,
+		}),
+		genitals: genClothingLayer("genitals", {
+			z: zi.base + 6,
+		}),
+		hands: genClothingLayer("hands", {
+			z: zi.base + 5,
+		}),
 		/*
 		 *	██   ██ ███████  █████  ██████  ██     ██ ███████  █████  ██████
 		 *	██   ██ ██      ██   ██ ██   ██ ██     ██ ██      ██   ██ ██   ██
@@ -407,32 +419,50 @@ const combatMainPc = {
 		 *	██   ██ ██      ██   ██ ██   ██ ██ ███ ██ ██      ██   ██ ██   ██
 		 *	██   ██ ███████ ██   ██ ██   ██  ███ ███  ███████ ██   ██ ██   ██
 		 */
-		headwear: genClothingLayer("head"),
-		legwearLeft: genClothingLayer("legs", {
+		headwear: genClothingLayer("head", {
+			z: zi.base + 10,
+		}),
+		legwearBack: genClothingLayer("legs", {
 			srcfn(options) {
 				const clothes = options.clothes.legs;
 				if (clothes == null || clothes.name == null) return "";
-				const path = `${options.src}clothing/legs/${clothes.name}/${clothes.state}l.png`;
+				const path = `${options.src}clothing/legs/${clothes.name}/back-${clothes.state}.png`;
 				console.log("legs", "Path:", path);
 				return path;
 			},
+			z: zi.backThigh + 1,
 		}),
-		legwearRight: genClothingLayer("legs", {
+		legwearFront: genClothingLayer("legs", {
 			srcfn(options) {
 				const clothes = options.clothes.legs;
 				if (clothes == null || clothes.name == null) return "";
-				const path = `${options.src}clothing/legs/${clothes.name}/${clothes.state}r.png`;
+				const path = `${options.src}clothing/legs/${clothes.name}/front-${clothes.state}.png`;
 				console.log("legs", "Path:", path);
 				return path;
 			},
+			z: zi.frontThigh + 1,
 		}),
-		lower: genClothingLayer("lower"),
-		neckWear: genClothingLayer("neck"),
-		overHead: genClothingLayer("over_head"),
-		overLower: genClothingLayer("over_lower"),
-		overUpper: genClothingLayer("over_upper"),
-		underLower: genClothingLayer("under_lower"),
-		underUpper: genClothingLayer("under_upper"),
+		lower: genClothingLayer("lower", {
+			z: zi.frontThigh + 3,
+		}),
+		neckWear: genClothingLayer("neck", {
+			z: zi.base + 10,
+		}),
+		overHead: genClothingLayer("over_head", {
+			z: zi.base + 10,
+		}),
+		overLower: genClothingLayer("over_lower", {
+			z: zi.frontThigh + 3,
+		}),
+		overUpper: genClothingLayer("over_upper", {
+			z: zi.base + 10,
+		}),
+		underLower: genClothingLayer("under_lower", {
+			z: zi.frontThigh + 2,
+		}),
+		underUpper: genClothingLayer("under_upper", {
+			z: zi.base + 10,
+		}),
 		/*
 		 *	██    ██ ██████  ██████  ███████ ██████
 		 *	██    ██ ██   ██ ██   ██ ██      ██   ██
@@ -440,7 +470,9 @@ const combatMainPc = {
 		 *	██    ██ ██      ██      ██      ██   ██
 		 *	 ██████  ██      ██      ███████ ██   ██
 		 */
-		upper: genClothingLayer("upper"),
+		upper: genClothingLayer("upper", {
+			z: zi.base + 10,
+		}),
 		upperBreasts: genClothingLayer("upper", {
 			srcfn(options) {
 				const clothes = options.clothes.upper;
@@ -449,6 +481,7 @@ const combatMainPc = {
 				console.log("upper", "Path:", path);
 				return path;
 			},
+			z: zi.base + 10,
 		}),
 		upperBackSleeves: genClothingLayer("upper", {
 			srcfn(options) {
@@ -458,7 +491,7 @@ const combatMainPc = {
 				console.log("upper", "Path:", path);
 				return path;
 			},
-			z: 100,
+			z: zi.base + 10,
 		}),
 		upperFrontSleeves: genClothingLayer("upper", {
 			srcfn(options) {
@@ -468,7 +501,7 @@ const combatMainPc = {
 				console.log("upper", "Path:", path);
 				return path;
 			},
-			z: 100,
+			z: zi.base + 12,
 		}),
 	},
 };

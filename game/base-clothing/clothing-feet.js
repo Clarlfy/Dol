@@ -1,6 +1,8 @@
+/* eslint-disable jsdoc/no-undefined-types */
 /* For any item that has a colour_combat tag, set it to 0 if that item ever gets its own combat sprites. */
 function initFeet() {
-	setup.clothes.feet = [
+	/** @type {ClothesItem[]} */
+	const clothing = [
 		{
 			index: 0,
 			name: "naked",
@@ -364,6 +366,7 @@ function initFeet() {
 			name: "court heels",
 			name_cap: "Court heels",
 			variable: "courtheels",
+			combatImg: "courtheels",
 			integrity: 200,
 			integrity_max: 200,
 			fabric_strength: 20,
@@ -1053,6 +1056,7 @@ function initFeet() {
 			accIcon: "platform_mary_janes_acc.png",
 		},
 	];
+	setup.clothes.feet = clothing;
 
 	/*
 		Clothes that modders add go into this array, this should be empty in the base game at all times.

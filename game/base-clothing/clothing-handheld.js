@@ -1,6 +1,7 @@
 /* For any item that has a colour_combat tag, set it to 0 if that item ever gets its own combat sprites. */
 function initHandheld() {
-	setup.clothes.handheld = [
+	/** @type {ClothesItem[]} */
+	const clothing = [
 		{
 			index: 0,
 			name: "naked",
@@ -30,7 +31,6 @@ function initHandheld() {
 			accIcon: 0,
 			mainImage: 0,
 		},
-
 		{
 			index: 1,
 			name: "umbrella",
@@ -950,6 +950,7 @@ function initHandheld() {
 			accessory_colour_sidebar: 0,
 		},
 	];
+	setup.clothes.handheld = clothing;
 
 	/*
 		Clothes that modders add go into this array, this should be empty in the base game at all times.

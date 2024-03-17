@@ -2,7 +2,8 @@
 /* word - widget will output "a" if "a", and nothing if "n". eg - You are wearing <<a>> hat. You are wearing <<a>> shorts.
 plural - widget will output "are" if 1, and "is" if 0. eg - Your hat <<upperplural>> wet. Your shorts <<upperplural>> wet. */
 function initUpper() {
-	setup.clothes.upper = [
+	/** @type {ClothesItem[]} */
+	const clothing = [
 		{
 			index: 0,
 			name: "naked",
@@ -7469,6 +7470,7 @@ function initUpper() {
 			pregType: "min",
 		},
 	];
+	setup.clothes.upper = clothing;
 
 	/*
 		Clothes that modders add go into this array, this should be empty in the base game at all times.

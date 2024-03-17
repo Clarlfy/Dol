@@ -26,7 +26,7 @@
 
 /**
  * @typedef {object} Ejaculate
- * @property {string} type
+ * @property {"sperm" | "pee" | "girlcum" | "sriracha"} type
  */
 
 /**
@@ -73,6 +73,7 @@ function mapNpcToOptions(index, options) {
 	// Maybe use active_enemy? const index = V.active_enemy.
 	const npc = V.NPCList[index];
 	options.type = npc.type;
+	options.state = "default";
 	options.showShadow = false;
 
 	mapNpcToShadowOptions(npc, options);
@@ -179,10 +180,10 @@ function mapNpcToPenetratorOptions(npc) {
 			penetrator.position = "mouth";
 			penetrator.state = "penetrated";
 			return penetrator;
-		case "othermouth": // Not sure of the usage?
-			penetrator.position = "mouth";
-			penetrator.state = "penetrated";
-			return penetrator;
+		case "othermouth":
+			// Not sure of the usage?
+			// Maybe it shouldn't be part of npc.penis
+			return null;
 		case "feet":
 			penetrator.position = "feet";
 			penetrator.state = "footjob";
@@ -230,6 +231,9 @@ window.mapNpcToPenetratorOptions = mapNpcToPenetratorOptions;
 
 Macro.add("mapnpctooptions", {
 	handler() {
-		mapNpcToOptions(V.index, T.modelOptions);
+		const slot = this.args[0];
+		const index = this.args[1];
+		const options = T.options[slot] || {};
+		T.options[slot] = mapNpcToOptions(index, options);
 	},
 });

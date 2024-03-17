@@ -1,3 +1,4 @@
+/* eslint-disable jsdoc/no-undefined-types */
 /**
  * @typedef {object} CanvasModelLayerNpc
  * @property {boolean} [show] Show this layer, default false (if no show:true or showfn present, needs explicit `<<showlayer>>`). Do not use undefined/null/0/"" to hide layer!
@@ -61,7 +62,7 @@ const combatMainNpc = {
 	layers: {
 		baseShadow: {
 			srcfn(options) {
-				const path = `${options.src}shadow/${options.type}/vagina.png`;
+				const path = `${options.src}shadow/${options.type}/${options.state}.png`;
 				return path;
 			},
 			showfn(options) {
@@ -70,7 +71,7 @@ const combatMainNpc = {
 			animationfn(options) {
 				return options.animKey;
 			},
-			z: 20,
+			z: 60,
 		},
 		penetrator: {
 			srcfn(options) {
@@ -87,7 +88,7 @@ const combatMainNpc = {
 			animationfn(options) {
 				return options.animKey;
 			},
-			z: 19,
+			z: 59,
 		},
 		penetratorEjaculate: {
 			srcfn(options) {
@@ -105,7 +106,7 @@ const combatMainNpc = {
 			animationfn(options) {
 				return options.animKey;
 			},
-			z: 21,
+			z: 61,
 		},
 	},
 };
