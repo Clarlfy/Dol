@@ -668,6 +668,7 @@ function initLegs() {
 			name: "sports socks",
 			name_cap: "Sports socks",
 			variable: "sports socks short",
+			combatImg: "anklesocks",
 			integrity: 100,
 			integrity_max: 100,
 			fabric_strength: 20,

@@ -298,7 +298,7 @@ const combatMainPc = {
 			animationfn(options) {
 				return options.animKey;
 			},
-			filters: ["left_eye"],
+			filters: ["leftEye"],
 			z: zi.base + 1,
 		},
 		eyelid: {
@@ -409,16 +409,25 @@ const combatMainPc = {
 		genitals: genClothingLayer("genitals", {
 			z: zi.base + 6,
 		}),
-		hands: genClothingLayer("hands", {
-			z: zi.base + 5,
+		handsBack: genClothingLayer("hands", {
+			srcfn(options) {
+				const clothes = options.clothes.hands;
+				if (clothes == null || clothes.name == null) return "";
+				if (clothes.state !== "handjob") return "";
+				const path = `${options.src}clothing/hands/${clothes.name}/back-${clothes.state}.png`;
+				return path;
+			},
+			z: zi.base - 4,
 		}),
-		/*
-		 *	██   ██ ███████  █████  ██████  ██     ██ ███████  █████  ██████
-		 *	██   ██ ██      ██   ██ ██   ██ ██     ██ ██      ██   ██ ██   ██
-		 *	███████ █████   ███████ ██████  ██  █  ██ █████   ███████ ██████
-		 *	██   ██ ██      ██   ██ ██   ██ ██ ███ ██ ██      ██   ██ ██   ██
-		 *	██   ██ ███████ ██   ██ ██   ██  ███ ███  ███████ ██   ██ ██   ██
-		 */
+		handsFront: genClothingLayer("hands", {
+			srcfn(options) {
+				const clothes = options.clothes.hands;
+				if (clothes == null || clothes.name == null) return "";
+				const path = `${options.src}clothing/hands/${clothes.name}/front-${clothes.state}.png`;
+				return path;
+			},
+			z: zi.base + 12,
+		}),
 		headwear: genClothingLayer("head", {
 			z: zi.base + 10,
 		}),
@@ -426,21 +435,41 @@ const combatMainPc = {
 			srcfn(options) {
 				const clothes = options.clothes.legs;
 				if (clothes == null || clothes.name == null) return "";
-				const path = `${options.src}clothing/legs/${clothes.name}/back-${clothes.state}.png`;
+				const path = `${options.src}clothing/legs/${clothes.name}/back-${options.legFrontPosition}-${clothes.state}.png`;
 				console.log("legs", "Path:", path);
 				return path;
 			},
 			z: zi.backThigh + 1,
 		}),
+		legwearAccBack: genClothingLayer("legs", {
+			srcfn(options) {
+				const clothes = options.clothes.legs;
+				if (clothes == null || clothes.name == null) return "";
+				const path = `${options.src}clothing/legs/${clothes.name}/back-${options.legFrontPosition}-${clothes.state}-acc.png`;
+				console.log("legs", "Path:", path);
+				return path;
+			},
+			z: zi.backThigh + 2,
+		}),
 		legwearFront: genClothingLayer("legs", {
 			srcfn(options) {
 				const clothes = options.clothes.legs;
 				if (clothes == null || clothes.name == null) return "";
-				const path = `${options.src}clothing/legs/${clothes.name}/front-${clothes.state}.png`;
+				const path = `${options.src}clothing/legs/${clothes.name}/front-${options.legFrontPosition}-${clothes.state}.png`;
 				console.log("legs", "Path:", path);
 				return path;
 			},
 			z: zi.frontThigh + 1,
+		}),
+		legwearAccFront: genClothingLayer("legs", {
+			srcfn(options) {
+				const clothes = options.clothes.legs;
+				if (clothes == null || clothes.name == null) return "";
+				const path = `${options.src}clothing/legs/${clothes.name}/front-${options.legFrontPosition}-${clothes.state}-acc.png`;
+				console.log("legs", "Path:", path);
+				return path;
+			},
+			z: zi.frontThigh + 2,
 		}),
 		lower: genClothingLayer("lower", {
 			z: zi.frontThigh + 3,
@@ -463,13 +492,6 @@ const combatMainPc = {
 		underUpper: genClothingLayer("under_upper", {
 			z: zi.base + 10,
 		}),
-		/*
-		 *	██    ██ ██████  ██████  ███████ ██████
-		 *	██    ██ ██   ██ ██   ██ ██      ██   ██
-		 *	██    ██ ██████  ██████  █████   ██████
-		 *	██    ██ ██      ██      ██      ██   ██
-		 *	 ██████  ██      ██      ███████ ██   ██
-		 */
 		upper: genClothingLayer("upper", {
 			z: zi.base + 10,
 		}),
@@ -505,7 +527,6 @@ const combatMainPc = {
 		}),
 	},
 };
-
 Renderer.CanvasModels.combatMainPc = combatMainPc;
 
 /**

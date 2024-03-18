@@ -171,6 +171,7 @@ function initHands() {
 			name: "long leather gloves",
 			name_cap: "Long leather gloves",
 			variable: "longleathergloves",
+			combatImg: "longleathergloves",
 			integrity: 200,
 			integrity_max: 200,
 			fabric_strength: 20,
