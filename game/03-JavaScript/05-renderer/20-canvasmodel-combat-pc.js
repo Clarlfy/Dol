@@ -21,16 +21,16 @@
  * @property {48} backCalfOverwear
  * @property {49} backThighOverwear
  * Front Legs:
- * @property {60} frontCalf
- * @property {61} frontFoot
- * @property {62} frontThigh
- * @property {63} frontCalfUnderwear
- * @property {64} frontThighUnderwear
- * @property {65} frontFootwear
- * @property {66} frontCalfWear
- * @property {67} frontThighWear
- * @property {68} frontCalfOverwear
- * @property {69} frontThighOverwear
+ * @property {65} frontCalf
+ * @property {66} frontFoot
+ * @property {67} frontThigh
+ * @property {68} frontCalfUnderwear
+ * @property {69} frontThighUnderwear
+ * @property {70} frontFootwear
+ * @property {71} frontCalfWear
+ * @property {72} frontThighWear
+ * @property {73} frontCalfOverwear
+ * @property {74} frontThighOverwear
  */
 
 /**
@@ -39,33 +39,33 @@
 const zi = {
 	far: 0,
 
-	backHair: 35,
+	backHair: 20,
 
-	backCalf: 40,
-	backFoot: 41,
-	backThigh: 42,
-	backCalfUnderwear: 43,
-	backThighUnderwear: 44,
-	backFootwear: 45,
-	backCalfWear: 46,
-	backThighWear: 47,
-	backCalfOverwear: 48,
-	backThighOverwear: 49,
+	backCalf: 26,
+	backFoot: 27,
+	backThigh: 28,
+	backCalfUnderwear: 29,
+	backThighUnderwear: 30,
+	backFootwear: 31,
+	backCalfWear: 32,
+	backThighWear: 33,
+	backCalfOverwear: 34,
+	backThighOverwear: 35,
 
 	base: 50,
 
 	hair: 55,
 
-	frontCalf: 60,
-	frontFoot: 61,
-	frontThigh: 62,
-	frontCalfUnderwear: 63,
-	frontThighUnderwear: 64,
-	frontFootwear: 65,
-	frontCalfWear: 66,
-	frontThighWear: 67,
-	frontCalfOverwear: 68,
-	frontThighOverwear: 69,
+	frontCalf: 65,
+	frontFoot: 66,
+	frontThigh: 67,
+	frontCalfUnderwear: 68,
+	frontThighUnderwear: 69,
+	frontFootwear: 70,
+	frontCalfWear: 71,
+	frontThighWear: 72,
+	frontCalfOverwear: 73,
+	frontThighOverwear: 74,
 
 	near: 100,
 };
@@ -495,35 +495,68 @@ const combatMainPc = {
 		upper: genClothingLayer("upper", {
 			z: zi.base + 10,
 		}),
+		upperAcc: genClothingLayer("upper", {
+			srcfn(options) {
+				const clothes = options.clothes.upper;
+				if (clothes == null || clothes.name == null) return "";
+				const path = `${options.src}clothing/upper/${clothes.name}/acc.png`;
+				console.log("Path:", path);
+				return path;
+			},
+			filtersfn(options) {
+				return ["worn_upper_acc"];
+			},
+			z: zi.base + 11,
+		}),
 		upperBreasts: genClothingLayer("upper", {
 			srcfn(options) {
 				const clothes = options.clothes.upper;
 				if (clothes == null || clothes.name == null) return "";
-				const path = `${options.src}clothing/upper/${clothes.name}/breasts/${options.breastSize}.png`;
+				const path = `${options.src}clothing/upper/${clothes.name}/breasts/${clothes.breasts}.png`;
 				console.log("upper", "Path:", path);
 				return path;
 			},
-			z: zi.base + 10,
+			showfn(options) {
+				const clothes = options.clothes.upper;
+				const show = options.showClothing && clothes != null && clothes.name != null && clothes.hasBreasts;
+				console.log("Show upper breasts:", show);
+				return !!show;
+			},
+			z: zi.base + 12,
 		}),
 		upperBackSleeves: genClothingLayer("upper", {
 			srcfn(options) {
 				const clothes = options.clothes.upper;
 				if (clothes == null || clothes.name == null) return "";
-				const path = `${options.src}clothing/upper/${clothes.name}/sleeves/${clothes.sleeves}.png`;
+				const path = `${options.src}clothing/upper/${clothes.name}/sleeves/back-${clothes.sleeves}.png`;
 				console.log("upper", "Path:", path);
 				return path;
 			},
-			z: zi.base + 10,
+			showfn(options) {
+				const clothes = options.clothes.upper;
+				const show = options.showClothing && clothes != null && clothes.name != null && clothes.hasSleeves;
+				// Sleeves on the side behind are never shown, except for handjobs.
+				if (!["handjob"].includes(clothes.sleeves)) return false;
+				console.log("Show upper breasts:", show);
+				return !!show;
+			},
+			z: zi.base + 9,
 		}),
 		upperFrontSleeves: genClothingLayer("upper", {
 			srcfn(options) {
 				const clothes = options.clothes.upper;
 				if (clothes == null || clothes.name == null) return "";
-				const path = `${options.src}clothing/upper/${clothes.name}/sleeves/${clothes.sleeves}.png`;
+				const path = `${options.src}clothing/upper/${clothes.name}/sleeves/front-${clothes.sleeves}.png`;
 				console.log("upper", "Path:", path);
 				return path;
 			},
-			z: zi.base + 12,
+			showfn(options) {
+				const clothes = options.clothes.upper;
+				const show = options.showClothing && clothes != null && clothes.name != null && clothes.hasSleeves;
+				console.log("Show upper breasts:", show);
+				return !!show;
+			},
+			z: zi.base + 13,
 		}),
 	},
 };

@@ -88,7 +88,6 @@ function initUnderUpper() {
 			iconFile: "bikini_top.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 2,
 			name: "school swimsuit",

@@ -165,7 +165,6 @@ function initHands() {
 			leftImage: 1,
 			rightImage: 1,
 		},
-
 		{
 			index: 5,
 			name: "long leather gloves",

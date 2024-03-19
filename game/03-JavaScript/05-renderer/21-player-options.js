@@ -35,6 +35,10 @@
  * @property {string} name The name of the clothing directory.
  * @property {string} state The state of the clothing, the file name.
  * @property {number} alpha The percent of the alpha channel. 1 is 100%, 0 is 0%.
+ * @property {boolean} hasBreasts Whether the clothing uses breast sprites.
+ * @property {string} breasts Breast state.
+ * @property {boolean} hasSleeves Whether the clothing uses sleeve sprites.
+ * @property {string} sleeves Sleeve state.
  */
 
 /**
@@ -87,6 +91,9 @@ function mapPlayerToOptions(options) {
 	options.animKey = combat.isActive() ? "sex-4f-vfast" : "sex-2f-idle";
 	options.animKeyStill = combat.isActive() ? "sex-4f-vfast" : "sex-1f-idle";
 
+	// Ensure breast size is calculated before clothing options.
+	options.breastSize = Math.clamp(V.player.perceived_breastsize / 3, 0, 4);
+
 	// Clothing options
 	mapPcToClothingOptions(V.player, options);
 
@@ -96,8 +103,6 @@ function mapPlayerToOptions(options) {
 	/** @type {Penetrator} */
 	const penetrator = mapPcToPenetratorOptions(V.player, options);
 	options.penetrator = penetrator;
-
-	options.breastSize = Math.clamp(V.player.perceived_breastsize / 3, 0, 4);
 
 	options.skinType = V.skinColor.natural;
 	options.skinTone = V.skinColor.range / 100;
@@ -324,7 +329,14 @@ function mapPcToClothingOptions(pc, options) {
 			alpha: 1,
 		};
 		if (["upper", "under_upper", "over_upper"].includes(slot)) {
-			clothes.sleeves = "front";
+			if (clothing.sleeve_img === 1) {
+				clothes.hasSleeves = true;
+				clothes.sleeves = "default";
+			}
+			if (clothing.breast_img === 1) {
+				clothes.hasBreasts = true;
+				clothes.breasts = options.breastSize;
+			}
 		}
 		options.clothes = options.clothes || {};
 		options.clothes[slot] = clothes;
@@ -344,7 +356,7 @@ function mapPcToClothingOptions(pc, options) {
 			options.filters[accFilterKey] = lookupColour(
 				options,
 				setup.colours.clothes_map,
-				options["worn_" + slot + "_acc_colour"],
+				clothes.item.accessory_colour,
 				slot + " accessory",
 				"worn_" + slot + "_acc_custom",
 				clothing.prefilter
