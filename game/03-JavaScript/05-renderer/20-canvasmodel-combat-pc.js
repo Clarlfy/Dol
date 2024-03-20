@@ -236,7 +236,7 @@ const combatMainPc = {
 			animationfn(options) {
 				return options.animKey;
 			},
-			z: zi.base + 5,
+			z: zi.base + 10,
 		},
 		penetrator: {
 			srcfn(options) {
@@ -426,7 +426,7 @@ const combatMainPc = {
 				const path = `${options.src}clothing/hands/${clothes.name}/front-${clothes.state}.png`;
 				return path;
 			},
-			z: zi.base + 12,
+			z: zi.base + 14,
 		}),
 		headwear: genClothingLayer("head", {
 			z: zi.base + 10,
@@ -493,7 +493,7 @@ const combatMainPc = {
 			z: zi.base + 10,
 		}),
 		upper: genClothingLayer("upper", {
-			z: zi.base + 10,
+			z: zi.base + 11,
 		}),
 		upperAcc: genClothingLayer("upper", {
 			srcfn(options) {
@@ -506,7 +506,7 @@ const combatMainPc = {
 			filtersfn(options) {
 				return ["worn_upper_acc"];
 			},
-			z: zi.base + 11,
+			z: zi.base + 12,
 		}),
 		upperBreasts: genClothingLayer("upper", {
 			srcfn(options) {
@@ -522,7 +522,7 @@ const combatMainPc = {
 				console.log("Show upper breasts:", show);
 				return !!show;
 			},
-			z: zi.base + 12,
+			z: zi.base + 13,
 		}),
 		upperBackSleeves: genClothingLayer("upper", {
 			srcfn(options) {
@@ -540,7 +540,7 @@ const combatMainPc = {
 				console.log("Show upper breasts:", show);
 				return !!show;
 			},
-			z: zi.base + 9,
+			z: zi.base + 10,
 		}),
 		upperFrontSleeves: genClothingLayer("upper", {
 			srcfn(options) {
@@ -556,7 +556,7 @@ const combatMainPc = {
 				console.log("Show upper breasts:", show);
 				return !!show;
 			},
-			z: zi.base + 13,
+			z: zi.base + 14,
 		}),
 	},
 };
