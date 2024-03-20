@@ -308,9 +308,15 @@ function mapPcToClothingOptions(pc, options) {
 		const isSkirtDown = clothing.skirt_down === 0;
 		const areLegsUp = ["footjob", "up"].includes(options.legFrontPosition) || ["footjob", "up"].includes(options.legFrontPosition);
 		// Replace slot === "lower" with all lower slots? In case we need this logic for all lower layers that could be skirts.
-		if (slot === "lower" && clothing.state === "waist" && (isSkirtDown || areLegsUp)) {
-			options.genitalsExposed = true;
-			state = "hips";
+		if (slot === "lower") {
+			if (clothing.state === "waist" && (isSkirtDown || areLegsUp)) {
+				options.genitalsExposed = true;
+				state = "hips";
+			}
+			if (clothing.state === "thighs" && (isSkirtDown || areLegsUp)) {
+				options.genitalsExposed = true;
+				state = "thighs-down";
+			}
 		}
 
 		// Feet clothing states
