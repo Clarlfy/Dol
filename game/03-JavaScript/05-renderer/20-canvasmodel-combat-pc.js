@@ -472,6 +472,18 @@ const combatMainPc = {
 			z: zi.frontThigh + 2,
 		}),
 		lower: genClothingLayer("lower", {
+			dxfn(options) {
+				if (options.legFrontPosition === "footjob") {
+					return -10;
+				}
+				return 0;
+			},
+			dyfn(options) {
+				if (options.legFrontPosition === "footjob") {
+					return 4;
+				}
+				return 0;
+			},
 			z: zi.frontThigh + 3,
 		}),
 		neckWear: genClothingLayer("neck", {
