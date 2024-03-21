@@ -529,9 +529,6 @@ Renderer.CanvasModels["main"] = {
 	 *	██      ██   ██ ███████ ██      ██   ██  ██████   ██████ ███████ ███████ ███████
 	 */
 	preprocess(options) {
-		console.warn("============================");
-		console.log("Pre-everything filters", JSON.parse(JSON.stringify(options.filters)));
-
 		options.blink_animation = options.blink ? options.trauma ? "blink-trauma" : "blink" : "";
 
 		// Generate skin tone & tanlines filters
@@ -683,9 +680,6 @@ Renderer.CanvasModels["main"] = {
 			options.filters.penis_parasite = lookupColour(setup.colours.clothes_map, "red", "penis_parasite");
 		}
 
-		console.warn("============================");
-		console.log("Pre-clothing filters", JSON.parse(JSON.stringify(options.filters)));
-
 		// Clothing filters and options
 		for (let slot of setup.clothes_all_slots) {
 			let index = options["worn_" + slot];
@@ -721,11 +715,6 @@ Renderer.CanvasModels["main"] = {
 				}
 			}
 		}
-
-		console.warn("============================");
-		console.log(JSON.parse(JSON.stringify(options)));
-		console.warn("============================");
-		console.log("Post-clothing filters", JSON.parse(JSON.stringify(options.filters)));
 
 		// Show arm and hand just below outermost clothes layer to fully show its main/breasts layer and hide others
 		// -0.1 is to move arms behind sleeves; to display gloves above sleeves they get +0.2 in hand layer decls
@@ -910,9 +899,6 @@ Renderer.CanvasModels["main"] = {
 		} else {
 			options.alt_sleeve_state = true;
 		}
-
-		console.warn("============================");
-		console.log(JSON.parse(JSON.stringify(options)));
 	},
 	layers: {
 		// banner comments generated in http://patorjk.com/software/taag/#p=display&c=c&f=ANSI%20Regular&t=base

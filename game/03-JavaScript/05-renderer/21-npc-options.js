@@ -5,6 +5,8 @@
  * @property {"missionary" | "doggy"} position
  * @property {string} type
  * @property {Colour} colour
+ * @property {string} state
+ * @property {boolean} showShadow
  * @property {Penetrator[]} penetrators
  */
 
@@ -16,8 +18,15 @@
  * @property {-1|0|1|2|3|4|5} target PC is -1. NPCs are 0 to 5.
  * @property {string} position Area that the penetrator is in.
  * @property {string} state What it is doing in the position.
+ * @property {string} isEjaculating Whether the penetrator is ejaculating.
+ * @property {Ejaculate} ejaculate The type of ejaculate.
  * @property {string} hasCondom Whether the penetrator is wrapped in a condom.
  * @property {boolean} show Whether to render the penetrator.
+ */
+
+/**
+ * @typedef {object} Ejaculate
+ * @property {"sperm" | "pee" | "girlcum" | "sriracha"} type
  */
 
 /**
@@ -64,6 +73,8 @@ function mapNpcToOptions(index, options) {
 	// Maybe use active_enemy? const index = V.active_enemy.
 	const npc = V.NPCList[index];
 	options.type = npc.type;
+	options.state = "default";
+	options.showShadow = false;
 
 	mapNpcToShadowOptions(npc, options);
 
@@ -81,6 +92,11 @@ function mapNpcToShadowOptions(npc, options) {
 	options.penetrators = options.penetrators = [];
 	const penetrator = mapNpcToPenetratorOptions(npc);
 	if (penetrator != null) {
+		// Figure out which shadow base to use from penetrator:
+		options.state = penetrator.position;
+		// Figure out whether to show the shadow man or not:
+		options.showShadow = V.options.silhouetteEnabled && ["vagina", "anus", "mouth"].includes(penetrator.position);
+
 		console.log("Pushing penetrator to list:", penetrator);
 		options.penetrators.push(penetrator);
 	}
@@ -100,6 +116,10 @@ function mapNpcToPenetratorOptions(npc) {
 		type: npc.type,
 		colour: npc.skincolour,
 		target: target.pc,
+		isEjaculating: V.enemyarousal >= V.enemyarousalmax && wearingCondom(V.vaginatarget) !== "worn" && !npcHasStrapon(V.vaginatarget),
+		ejaculate: {
+			type: "sperm",
+		},
 	};
 	switch (npc.penis) {
 		case "anusentrance":
@@ -119,17 +139,11 @@ function mapNpcToPenetratorOptions(npc) {
 			penetrator.state = "penetrateddouble";
 			return penetrator;
 		case "penisentrance":
-			penetrator.position = "penis";
-			penetrator.state = "entrance";
-			return penetrator;
+			return null;
 		case "penisimminent":
-			penetrator.position = "penis";
-			penetrator.state = "imminent";
-			return penetrator;
+			return null;
 		case "penis":
-			penetrator.position = "penis";
-			penetrator.state = "frotting";
-			return penetrator;
+			return null;
 		case "vaginaentrance":
 			penetrator.position = "vagina";
 			penetrator.state = "entrance";
@@ -166,10 +180,10 @@ function mapNpcToPenetratorOptions(npc) {
 			penetrator.position = "mouth";
 			penetrator.state = "penetrated";
 			return penetrator;
-		case "othermouth": // Not sure of the usage?
-			penetrator.position = "mouth";
-			penetrator.state = "penetrated";
-			return penetrator;
+		case "othermouth":
+			// Not sure of the usage?
+			// Maybe it shouldn't be part of npc.penis
+			return null;
 		case "feet":
 			penetrator.position = "feet";
 			penetrator.state = "footjob";
@@ -198,6 +212,10 @@ function mapNpcToPenetratorOptions(npc) {
 			penetrator.position = "butt";
 			penetrator.state = "buttjob";
 			return penetrator;
+		case "chest":
+			penetrator.position = "chest";
+			penetrator.state = "titjob";
+			return penetrator;
 		// case "leftDildoAnus":
 		// case "rightDildoAnus":
 		// case "leftStroker":
@@ -213,6 +231,9 @@ window.mapNpcToPenetratorOptions = mapNpcToPenetratorOptions;
 
 Macro.add("mapnpctooptions", {
 	handler() {
-		mapNpcToOptions(V.index, T.modelOptions);
+		const slot = this.args[0];
+		const index = this.args[1];
+		const options = T.options[slot] || {};
+		T.options[slot] = mapNpcToOptions(index, options);
 	},
 });

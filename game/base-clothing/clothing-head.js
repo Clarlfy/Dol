@@ -1,7 +1,8 @@
 /* For any item that has a colour_combat tag, set it to 0 if that item ever gets its own combat sprites. */
 /* head_type should only be added to headwear that doesn't play well with certain hairstyles. Hairstyles whose alt_head_type matches the head_type of the worn head item will use an alternate hairstyle instead. */
 function initHead() {
-	setup.clothes.head = [
+	/** @type {ClothesItem[]} */
+	const clothing = [
 		{
 			index: 0,
 			name: "naked",
@@ -2122,6 +2123,8 @@ function initHead() {
 			accIcon: "lolita_headband_acc.png",
 		},
 	];
+	setup.clothes.head = clothing;
+
 	/*
 		Clothes that modders add go into this array, this should be empty in the base game at all times.
 		These items should have a `modder` variable with a the modders name in a short string

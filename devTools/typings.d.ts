@@ -22,8 +22,26 @@ declare interface ClothesItem {
 	one_piece: number;
 	strap: number;
 	open: number;
-	word: "a";
-	state: string?;
+	/**
+	 * "a": a skirt.
+	 * 
+	 * "n": skirt.
+	 * 
+	 * "an": an skirt.
+	 */
+	word: "a" | "n" | "an";
+	/**
+	 * Naked states are almost always 0.
+	 * 
+	 * Upper clothing is typically a mix of "chest" and "midriff". Some decisions are questionable here.
+	 * 
+	 * Most lower clothing states are "waist", can be set to "thighs" when player pulls them down.
+	 * 
+	 * Legwear is a mix between "thighs", "knees" and "ankles".
+	 * 
+	 * Strap-ons are typically set to "worn".
+	 */
+	state: 0 | "chest" | "midriff" | "waist" | "thighs" | "knees" | "ankles" | "worn";
 	state_base: string?;
 	state_top: string?;
 	state_top_base: string?;
@@ -36,15 +54,49 @@ declare interface ClothesItem {
 	colour: string | 0;
 	colour_options: string[];
 	colour_sidebar: 0 | 1;
-	exposed: number;
-	exposed_base: number;
-	vagina_exposed: number;
-	vagina_exposed_base: number;
-	anus_exposed: number;
-	anus_exposed_base: number;
+	/**
+	 * 0. Does not expose
+	 * 1. Partially exposes
+	 * 2. Fully exposes (naked, transparent)
+	 */
+	exposed: 0 | 1 | 2;
+	/**
+	 * 0. Does not expose
+	 * 1. Partially exposes
+	 * 2. Fully exposes (naked, transparent)
+	 */
+	exposed_base: 0 | 1 | 2;
+	/**
+	 * 0. Vagina not exposed (Should include penis?)
+	 * 1. Vagina exposed
+	 */
+	vagina_exposed: 0 | 1;
+	/**
+	 * 0. Vagina not exposed (Should include penis?)
+	 * 1. Vagina exposed
+	 */
+	vagina_exposed_base: 0 | 1;
+	/**
+	 * 0. Anus not exposed
+	 * 1. Anus exposed
+	 */
+	anus_exposed: 0 | 1;
+	/**
+	 * 0: Anus not exposed
+	 * 
+	 * 1: Anus exposed
+	 */
+	anus_exposed_base: 0 | 1;
 	type: string[];
 	set: string;
-	gender: string;
+	/**
+	 * m: Male
+	 * 
+	 * f: Female
+	 * 
+	 * n: Neither
+	 */
+	gender: "m" | "f" | "n";
 	femininity: number;
 	warmth: number;
 	cost: number;
@@ -70,12 +122,14 @@ declare interface ClothesItem {
 	back_img_colour?: "" | "no" | "primary" | "secondary";
 	/**
 	 * (For upper, over_upper, under_upper slots)
+	 * 
 	 * 1 if has sleeve images, named (left|right)[_cover].png".
 	 * Colouring depends on sleeve_colour property.
 	 */
 	sleeve_img: number;
 	/**
 	 * (For upper, over_upper, under_upper slots)
+	 * 
 	 * 1 if has sleeve accessory images, named (left|right)[_cover]_acc.png".
 	 * These images are not colored.
 	 * Requires sleeve_img: 1.
@@ -83,6 +137,7 @@ declare interface ClothesItem {
 	sleeve_acc_img: number;
 	/**
 	 * (For upper, over_upper, under_upper slots)
+	 * 
 	 * Recolouring of sleeves images:
 	 * * "" (default) - depending on colour_sidebar
 	 * * "no" - do not recolour image

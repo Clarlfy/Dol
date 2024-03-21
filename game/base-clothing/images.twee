@@ -14,6 +14,9 @@
 		<</if>>
 	</div>
 	<div id="img" @class="limitedColourContainerClasses() + ($options.sidebarAnimations isnot false ? '':' noAnimations') + ' offset-sidebar-img'">
+	<<run console.warn("===============================================")>>
+	<<run console.warn("================ Sidebar canvas ===============")>>
+	<<run console.warn("===============================================")>>
 	<<if $options.sidebarRenderer is 'canvas'>>
 		<<canvasimg>>
 	<<else>>

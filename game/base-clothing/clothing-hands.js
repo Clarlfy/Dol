@@ -1,6 +1,7 @@
 /* For any item that has a colour_combat tag, set it to 0 if that item ever gets its own combat sprites. */
 function initHands() {
-	setup.clothes.hands = [
+	/** @type {ClothesItem[]} */
+	const clothing = [
 		{
 			index: 0,
 			name: "naked",
@@ -164,12 +165,12 @@ function initHands() {
 			leftImage: 1,
 			rightImage: 1,
 		},
-
 		{
 			index: 5,
 			name: "long leather gloves",
 			name_cap: "Long leather gloves",
 			variable: "longleathergloves",
+			combatImg: "longleathergloves",
 			integrity: 200,
 			integrity_max: 200,
 			fabric_strength: 20,
@@ -412,6 +413,7 @@ function initHands() {
 			rightImage: 1,
 		},
 	];
+	setup.clothes.hands = clothing;
 
 	/*
 		Clothes that modders add go into this array, this should be empty in the base game at all times.

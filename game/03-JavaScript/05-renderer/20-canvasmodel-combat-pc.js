@@ -1,238 +1,74 @@
 /* eslint-disable jsdoc/no-undefined-types */
 /**
- * @typedef {object} CanvasModelOptions
- * @property {string} name Model name, for debugging.
- * @property {number} width Frame width.
- * @property {number} height Frame height.
- * @property {number} frames Number of frames for CSS animation.
- * @property {Object<string, CanvasModelLayer>} layers Layers (by name).
- * @property {Function} [generatedOptions] Function ()=>string[] names of generated options.
- * @property {Function} [defaultOptions] Function ()=>object returning default options.
- * @property {function(Options): void} [preprocess] Preprocessing function (options)=>void to generate temp options.
- */
-
-/**
- * @typedef {object} CanvasModelLayer
- * @property {boolean} [show] Show this layer, default false (if no show:true or showfn present, needs explicit `<<showlayer>>`). Do not use undefined/null/0/"" to hide layer!
- * @property {string} [src] Image path. Either `src` or `srcfn` is required.
- * @property {number} [z] Z-index (rendering order), higher=above, lower=below. Either `z` of `zfn` is required.
- * @property {number} [alpha] Layer opacity, from 0 (invisible) to 1 (opaque, default).
- * @property {boolean} [desaturate] Convert image to grayscale (before recoloring), default false.
- * @property {number} [brightness] Adjust brightness, from -1 to +1 (before recoloring), default 0.
- * @property {number} [contrast] Adjust contrast (before recoloring), default 1.
- * @property {string} [blendMode] Recoloring mode (see docs for globalCompositeOperation; "hard-light", "multiply" and "screen" ), default none.
- * @property {string|object} [blend] Color for recoloring, CSS color string or gradient spec (see model.d.ts).
- * @property {string} [masksrc] Mask image path. If present, only parts where mask is opaque will be displayed.
- * @property {string} [animation] Name of animation to apply, default none.
- * @property {number} [frames] Frame numbers used to display static images, array of subsprite indices. For example, if model frame count is 6 but layer has only 3 subsprites, default frames would be [0, 0, 1, 1, 2, 2].
- * @property {string[]} [filters] Names of filters that should be applied to the layer; filters themselves are taken from model options.
- * @property {number} [dx] Layer X position on the image, default 0.
- * @property {number} [dy] Layer Y position on the image, default 0.
- * @property {number} [width] Layer subsprite width, default = model width.
- * @property {number} [height] Layer subsprite width, default = model height.
- *
- * The following functions can be used instead of constant properties. Their arguments are (options) where options are model options provided in render call (from _modeloptions variable for <<rendermodel>>/<<animatemodel>> widget).
- * @property {function(Options): boolean} [showfn] (options)=>boolean Function generating `show` property. Should return boolean, do not use undefined/null/0/"" to hide layer, use of !! (double not) operator recommended.
- * @property {function(Options): string} [srcfn] (options)=>string.
- * @property {function(Options): number} [zfn] (options)=>number.
- * @property {function(Options): number} [alphafn] (options)=>number.
- * @property {function(Options): boolean} [desaturatefn] (options)=>boolean.
- * @property {function(Options): number} [brightnessfn] (options)=>number.
- * @property {function(Options): number} [contrastftn] (options)=>number.
- * @property {function(Options): (string|object)} [blendModefn] (options)=>(string|object).
- * @property {function(Options): string} [blendfn] (options)=>string.
- * @property {function(Options): string} [masksrcfn] (options)=>string.
- * @property {function(Options): string} [animationfn] (options)=>string.
- * @property {function(Options): number[]} [framesfn] (options)=>number[].
- * @property {function(Options): string[]} [filtersfn] (options)=>string[].
- * @property {function(Options): number} [dxfn] (options)=>number.
- * @property {function(Options): number} [dyfn] (options)=>number.
- * @property {function(Options): number} [widthfn] (options)=>number.
- * @property {function(Options): number} [heightfn] (options)=>number.
- */
-
-/**
- * @typedef Options
+ * @typedef CombatZIndices
  * @type {object}
- * @property {"img/sex/"} root The root directory.
- * @property {"doggy"|"missionary"} position The position.
- * @property {boolean} showPlayer Flag to show the player model.
- * @property {boolean} showClothing Flag to show the clothing layers.
- * @property {boolean} showNPCs Flag to show the NPC model(s).
- * @property {number} animSpeed The global speed to play animations.
- * Computed
- * @property {string} src The computed directory path for the position.
- * @property {string} animKey The key used for fetching the animation configuration.
- * @property {string} animKeyStill The key used for fetching the animation configuration for true still sprites.
- * @property {number} breast_size The size of the player breasts.
- * @property {string} hairType The type of hair.
- * @property {string} hairLength The named stage of the hair length.
- * @property {"up"|"down"} legBackPosition The position the back leg is in.
- * @property {"up"|"down"} legFrontPosition The position the front leg is in.
- * @property {1|2|3|4|5} blush The volume of blush on the player, higher is more.
- * @property {1|2|3|4|5} tears The volume of tears the player displays, higher is more.
- * @property {Object<string, ClothingState>} clothes Template.
- * @property {object} filters The filters for layers.
- */
-
-/**
- * @typedef ClothingModel
- * @type {object}
- * @property {number} index The unique number given to every clothes object.
- * @property {string} name The lowercase display name given to clothes.
- * @property {string} name_cap The uppercase display name variant given to clothes.
- * @property {string} combat_img The name of the model used for combat rendering.
- * @property {string} variable A name in lowercase, without spaces, used for matching where index cannot be used.
- * @property {number} integrity A number ranging from 0 to {integrity_max}. 0 means the piece is broken fully, {integrity_max} is full integrity.
- * @property {number} integrity_max Used to control the total resilience of the clothing piece, where a higher number means it can take more damage.
- * @property {number} fabric_strength The resiliency modifier where a higher number means damage is less impactful on integrity.
- * @property {number} reveal A number from 0 to 1000, where 0 is not revealing, and 1000 is fully revealing, usually naked.
- * @property {number} bustresize Adjusts the perceived breast size when worn. Should only be used for upper clothing.
- * @property {"a"|"n"} word Whether clothing prefixes use "a" or "an".
- * @property {0|1} one_piece Supposedly deprecated. Likely used to pair clothing to an outfit set.
- * @property {0|1} strap Whether the clothing has straps over the shoulder. Normally used for contextual dialogue for clothing removal.
- * @property {number} open Template.
- * @property {number} state Template.
- * @property {number} state_base Template.
- * @property {number} state_top Template.
- * @property {number} state_top_base Template.
- * @property {0|1} plural Template.
- * @property {number} colour Template.
- * @property {string[]} colour_options Template.
- * @property {number} exposed Template.
- * @property {number} exposed_base Template.
- * @property {string[]} type Template.
- * @property {string} set Template.
- * @property {string} gender Template.
- * @property {number} warmth Template.
- * @property {number} cost The base price of the clothing in pence. E.G. 200 equates to 2 pounds.
- * @property {string} description Description shown in the store.
- * @property {string[]} shop Template.
- * @property {number} accessory Template.
- * @property {number} accessory_colour Template.
- * @property {string[]} accessory_colour_options Template.
- * @property {number} sleeve_img Template.
- * @property {number} breast_img Template.
- * @property {number} cursed Template.
- * @property {number} location Template.
- * @property {number} iconFile Template.
- * @property {number} accIcon Template.
- * @property {number} mainImage Template.
- * @property {number} notuck Template.
- * @property {number} pregType Template.
- */
-
-/**
- * @typedef ClothingState
- * @type {object}
- * @property {ClothesItem} item The clothing item's setup with worn properties copied over.
- * @property {string} name The name of the clothing directory.
- * @property {string} state The state of the clothing, the file name.
- * @property {number} alpha The percent of the alpha channel. 1 is 100%, 0 is 0%.
- */
-
-/**
- * @typedef ZIndices
- * @type {object}
- * @property {0} bg Background.
- * @property {0} over_head_back Template.
- * @property {1} head_back Template.
- * @property {5} basehead Template.
- * @property {10} backhair Template.
- * @property {15} back_lower Template.
- * @property {20} base Template.
- * @property {21} facebase Template.
- * @property {22} tanBody Template.
- * @property {25} hirsute Template.
- * @property {30} eyes Template.
- * @property {31} sclera Template.
- * @property {32} iris Template.
- * @property {33} irisacc Template.
- * @property {34} eyelids Template.
- * @property {35} lashes Template.
- * @property {40} mouth Template.
- * @property {30} armsidle Template.
- * @property {31.5} handsidle Template.
- * @property {32} under_upper_arms Template.
- * @property {33} bellyBase Template.
- * @property {35} breasts Template.
- * @property {36} breastsparasite Template.
- * @property {30} tanbreasts Template.
- * @property {50} blush Template.
- * @property {51} freckles Template.
- * @property {51.5} mascara_running Template.
- * @property {52} skin Template.
- * @property {53} toast Template.
- * @property {55} tears Template.
- * @property {60} hair Template.
- * @property {64} penis_chastity Template.
- * @property {66.6} legs Template. // above underParasite but below under_lower
- * @property {64} pbhair Template.
- * @property {64.3} penisunderclothes Template.
- * @property {64.6} pbhairballsunderclothes Template.
- * @property {65} genitals Template.
- * @property {104} penis Template. // when exposed
- * @property {104.3} pbhairballs Template. // when exposed
- * @property {104.6} parasite Template. // when exposed
- * @property {66} underParasite Template.
- * @property {67} under_lower Template.
- * @property {68} under_lower_top Template.
- * @property {70} under_upper Template.
- * @property {72} under_upper_top Template.
- * @property {73} under_upper_top_high Template.
- * @property {74} under_upper_top_acc Template.
- * @property {75} under_lower_high Template.
- * @property {77} under_lower_top_high Template.
- * @property {78} under_lower_top_high_acc Template.
- * @property {75} under Template.
- * @property {85} feet Template.
- * @property {90} lower Template.
- * @property {92} lower_top Template.
- * @property {94} upper_arms Template.
- * @property {94.5} lower_belly Template.
- * @property {95} upper Template.
- * @property {89} upper_tucked Template.
- * @property {88.5} upper_arms_tucked Template.
- * @property {97} upper_top Template.
- * @property {98} bellyClothes Template.
- * @property {99} bellyClothesShadow Template.
- * @property {103} collar Template.
- * @property {103} neck Template.
- * @property {105} arms_cover Template.
- * @property {109} under_upper_arms_cover Template.
- * @property {110} hands Template.
- * @property {112} upper_arms_cover Template.
- * @property {115} lower_high Template.
- * @property {117} lower_top_high Template.
- * @property {132} hairforwards Template.
- * @property {133} fronthair Template.
- * @property {138} brow Template.
- * @property {140} horns Template.
- * @property {145} face Template.
- * @property {150} head Template.
- * @property {152} over_head Template.
- * @property {165} tailPenisCover Template.
- * @property {166} tailPenisCoverOverlay Template.
- * @property {170} over_lower Template.
- * @property {171} over_upper Template.
- * @property {170} over_upper_arms Template.
- * @property {174} over_upper_arms_cover Template.
  * Combat layers
- * Player
- * @property {12} backThigh Template.
- * @property {14} backLeg Template.
- * @property {16} backBreast Template.
- * @property {18} backArm Template.
- * @property {22} frontThigh Template.
- * @property {24} frontLeg Template.
- * @property {26} frontBreast Template.
- * @property {28} frontArm Template.
+ * @property {0} far
+ * @property {50} base
+ * @property {100} near
+ * Hair:
+ * @property {35} backHair
+ * @property {55} hair
+ * Back legs:
+ * @property {40} backCalf
+ * @property {41} backFoot
+ * @property {42} backThigh
+ * @property {43} backCalfUnderwear
+ * @property {44} backThighUnderwear
+ * @property {45} backFootwear
+ * @property {46} backCalfWear
+ * @property {47} backThighWear
+ * @property {48} backCalfOverwear
+ * @property {49} backThighOverwear
+ * Front Legs:
+ * @property {65} frontCalf
+ * @property {66} frontFoot
+ * @property {67} frontThigh
+ * @property {68} frontCalfUnderwear
+ * @property {69} frontThighUnderwear
+ * @property {70} frontFootwear
+ * @property {71} frontCalfWear
+ * @property {72} frontThighWear
+ * @property {73} frontCalfOverwear
+ * @property {74} frontThighOverwear
  */
 
 /**
- * @type {ZIndices}
+ * @type {CombatZIndices}
  */
-const zi = ZIndices;
+const zi = {
+	far: 0,
+
+	backHair: 20,
+
+	backCalf: 26,
+	backFoot: 27,
+	backThigh: 28,
+	backCalfUnderwear: 29,
+	backThighUnderwear: 30,
+	backFootwear: 31,
+	backCalfWear: 32,
+	backThighWear: 33,
+	backCalfOverwear: 34,
+	backThighOverwear: 35,
+
+	base: 50,
+
+	hair: 55,
+
+	frontCalf: 65,
+	frontFoot: 66,
+	frontThigh: 67,
+	frontCalfUnderwear: 68,
+	frontThighUnderwear: 69,
+	frontFootwear: 70,
+	frontCalfWear: 71,
+	frontThighWear: 72,
+	frontCalfOverwear: 73,
+	frontThighOverwear: 74,
+
+	near: 100,
+};
 
 /**
  * @type {CanvasModelOptions}
@@ -301,7 +137,7 @@ const combatMainPc = {
 		 */
 		backarm: {
 			srcfn(options) {
-				return options.src + "body/arms/back.png";
+				return `${options.src}body/arms/back.png`;
 			},
 			showfn(options) {
 				const result = options.showPlayer && options.position === "doggy";
@@ -310,11 +146,11 @@ const combatMainPc = {
 			animationfn(options) {
 				return options.animKey;
 			},
-			z: zi.backArm,
+			z: zi.base - 3,
 		},
 		backthigh: {
 			srcfn(options) {
-				return options.src + "body/thighs/back" + options.legBackPosition + ".png";
+				return `${options.src}body/thighs/back-${options.legBackPosition}.png`;
 			},
 			showfn(options) {
 				return !!options.showPlayer;
@@ -326,7 +162,7 @@ const combatMainPc = {
 		},
 		backleg: {
 			srcfn(options) {
-				return options.src + "body/legs/back" + options.legBackPosition + ".png";
+				return `${options.src}body/legs/back-${options.legBackPosition}.png`;
 			},
 			showfn(options) {
 				return !!options.showPlayer;
@@ -334,11 +170,11 @@ const combatMainPc = {
 			animationfn(options) {
 				return options.animKey;
 			},
-			z: zi.backLeg,
+			z: zi.backCalf,
 		},
 		base: {
 			srcfn(options) {
-				return options.src + "body/base.png";
+				return `${options.src}body/base.png`;
 			},
 			showfn(options) {
 				return !!options.showPlayer;
@@ -353,7 +189,7 @@ const combatMainPc = {
 				if (options.position === "doggy") {
 					return options.src + "";
 				}
-				return options.src + "body/thighs/front" + options.legFrontPosition + ".png";
+				return `${options.src}body/thighs/front-${options.legFrontPosition}.png`;
 			},
 			showfn(options) {
 				const result = options.showPlayer && options.position !== "doggy";
@@ -366,7 +202,7 @@ const combatMainPc = {
 		},
 		frontleg: {
 			srcfn(options) {
-				return options.src + "body/legs/front" + options.legFrontPosition + ".png";
+				return `${options.src}body/legs/front-${options.legFrontPosition}.png`;
 			},
 			showfn(options) {
 				return !!options.showPlayer;
@@ -374,11 +210,11 @@ const combatMainPc = {
 			animationfn(options) {
 				return options.animKey;
 			},
-			z: zi.frontLeg,
+			z: zi.frontCalf,
 		},
 		frontarm: {
 			srcfn(options) {
-				return options.src + "body/arms/front.png";
+				return `${options.src}body/arms/front-${options.armFrontPosition}.png`;
 			},
 			showfn(options) {
 				return !!options.showPlayer;
@@ -386,11 +222,11 @@ const combatMainPc = {
 			animationfn(options) {
 				return options.animKey;
 			},
-			z: 100 || zi.frontArm,
+			z: zi.base + 11,
 		},
 		frontbreast: {
 			srcfn(options) {
-				return options.src + "body/breasts/" + options.breastSize + ".png";
+				return `${options.src}body/breasts/${options.breastSize}.png`;
 			},
 			showfn(options) {
 				if (!options.breastSize) return false;
@@ -400,7 +236,38 @@ const combatMainPc = {
 			animationfn(options) {
 				return options.animKey;
 			},
-			z: zi.frontBreast,
+			z: zi.base + 10,
+		},
+		penetrator: {
+			srcfn(options) {
+				const penetrator = options.penetrator;
+				return `${options.src}body/penetrator/${penetrator.position}-${penetrator.state}.png`;
+			},
+			showfn(options) {
+				const penetrator = options.penetrator;
+				const result = options.showPlayer && penetrator.show;
+				return !!result;
+			},
+			animationfn(options) {
+				return options.animKey;
+			},
+			z: zi.base + 5,
+		},
+		penetratorEjaculate: {
+			srcfn(options) {
+				const penetrator = options.penetrator;
+				return `${options.src}body/penetrator/${penetrator.position}-${penetrator.state}-${penetrator.ejaculate.type}.png`;
+			},
+			showfn(options) {
+				const penetrator = options.penetrator;
+				console.log("ejac penetrator", JSON.parse(JSON.stringify(penetrator)));
+				const result = options.showPlayer && penetrator.show && penetrator.isEjaculating;
+				return !!result;
+			},
+			animationfn(options) {
+				return "sex-4f-vfast";
+			},
+			z: zi.base + 6,
 		},
 		/*
 		 *	██   ██ ███████  █████  ██████
@@ -411,7 +278,7 @@ const combatMainPc = {
 		 */
 		head: {
 			srcfn(options) {
-				return options.src + "body/head/head.png";
+				return `${options.src}body/head/head.png`;
 			},
 			showfn(options) {
 				return !!options.showPlayer;
@@ -423,7 +290,7 @@ const combatMainPc = {
 		},
 		lefteye: {
 			srcfn(options) {
-				return options.src + "body/head/eyes.png";
+				return `${options.src}body/head/eyes.png`;
 			},
 			showfn(options) {
 				return !!options.showPlayer;
@@ -431,12 +298,12 @@ const combatMainPc = {
 			animationfn(options) {
 				return options.animKey;
 			},
-			filters: ["left_eye"],
-			z: zi.eyes,
+			filters: ["leftEye"],
+			z: zi.base + 1,
 		},
 		eyelid: {
 			srcfn(options) {
-				return options.src + "body/head/eyelids.png";
+				return `${options.src}body/head/eyelids.png`;
 			},
 			showfn(options) {
 				const result = options.showPlayer;
@@ -445,11 +312,11 @@ const combatMainPc = {
 			animationfn(options) {
 				return options.animKeyStill;
 			},
-			z: zi.eyelids,
+			z: zi.base + 2,
 		},
 		eyelashes: {
 			srcfn(options) {
-				return options.src + "body/head/lashes.png";
+				return `${options.src}body/head/lashes.png`;
 			},
 			showfn(options) {
 				return !!options.showPlayer;
@@ -458,35 +325,35 @@ const combatMainPc = {
 				return options.animKeyStill;
 			},
 			filters: ["phair"],
-			z: zi.eyelids,
+			z: zi.base + 3,
 		},
 		blush: {
 			srcfn(options) {
-				return options.src + "body/head/blush/" + options.blush + ".png";
+				return `${options.src}body/head/blush/${options.blush}.png`;
 			},
 			showfn(options) {
 				const result = options.showFace && options.blush > 0;
 				return !!result;
 			},
 			filters: ["body"],
-			z: zi.blush,
+			z: zi.base + 1,
 		},
 		/* This creates a weird effect on the face, tbi */
 		tears: {
 			srcfn(options) {
-				return options.src + "body/head/tear/" + options.tears + ".png";
+				return `${options.src}body/head/tear/${options.tears}.png`;
 			},
 			showfn(options) {
 				const result = options.showFace && options.tears > 0;
 				return !!result;
 			},
-			z: zi.tears,
+			z: zi.base + 2,
 		},
 		mouth: {
 			srcfn(options) {
 				let state = "closedmouth";
 				if (options.inOral) state = "mouth";
-				return options.src + "body/oral/" + state + ".png";
+				return `${options.src}body/oral/${state}.png`;
 			},
 			showfn(options) {
 				return !!options.showPlayer;
@@ -494,11 +361,11 @@ const combatMainPc = {
 			animationfn(options) {
 				return options.animKey;
 			},
-			z: zi.mouth,
+			z: zi.base + 1,
 		},
 		hair: {
 			srcfn(options) {
-				return options.src + "hair/" + options.hairType + "/" + options.hairLength + ".png";
+				return `${options.src}hair/${options.hairType}/${options.hairLength}.png`;
 			},
 			showfn(options) {
 				return !!options.showPlayer;
@@ -516,83 +383,195 @@ const combatMainPc = {
 		 *	██      ██      ██    ██    ██    ██   ██ ██ ██  ██ ██ ██    ██
 		 *	 ██████ ███████  ██████     ██    ██   ██ ██ ██   ████  ██████
 		 */
-		facewear: genClothingLayer("face"),
-		footwear: genClothingLayer("feet"),
-		genitals: genClothingLayer("genitals"),
-		hands: genClothingLayer("hands"),
-		/*
-		 *	██   ██ ███████  █████  ██████  ██     ██ ███████  █████  ██████
-		 *	██   ██ ██      ██   ██ ██   ██ ██     ██ ██      ██   ██ ██   ██
-		 *	███████ █████   ███████ ██████  ██  █  ██ █████   ███████ ██████
-		 *	██   ██ ██      ██   ██ ██   ██ ██ ███ ██ ██      ██   ██ ██   ██
-		 *	██   ██ ███████ ██   ██ ██   ██  ███ ███  ███████ ██   ██ ██   ██
-		 */
-		headwear: genClothingLayer("head"),
-		legwearLeft: genClothingLayer("legs", {
+		facewear: genClothingLayer("face", {
+			z: zi.base + 4,
+		}),
+		footwearBack: genClothingLayer("feet", {
+			srcfn(options) {
+				const clothes = options.clothes.feet;
+				if (clothes == null || clothes.name == null) return "";
+				const path = `${options.src}clothing/feet/${clothes.name}/back-${clothes.state}.png`;
+				console.log("Path:", path);
+				return path;
+			},
+			z: zi.backFootwear,
+		}),
+		footwearFront: genClothingLayer("feet", {
+			srcfn(options) {
+				const clothes = options.clothes.feet;
+				if (clothes == null || clothes.name == null) return "";
+				const path = `${options.src}clothing/feet/${clothes.name}/front-${clothes.state}.png`;
+				console.log("Path:", path);
+				return path;
+			},
+			z: zi.frontFootwear,
+		}),
+		genitals: genClothingLayer("genitals", {
+			z: zi.base + 6,
+		}),
+		handsBack: genClothingLayer("hands", {
+			srcfn(options) {
+				const clothes = options.clothes.hands;
+				if (clothes == null || clothes.name == null) return "";
+				if (clothes.state !== "handjob") return "";
+				const path = `${options.src}clothing/hands/${clothes.name}/back-${clothes.state}.png`;
+				return path;
+			},
+			z: zi.base - 4,
+		}),
+		handsFront: genClothingLayer("hands", {
+			srcfn(options) {
+				const clothes = options.clothes.hands;
+				if (clothes == null || clothes.name == null) return "";
+				const path = `${options.src}clothing/hands/${clothes.name}/front-${clothes.state}.png`;
+				return path;
+			},
+			z: zi.base + 14,
+		}),
+		headwear: genClothingLayer("head", {
+			z: zi.base + 10,
+		}),
+		legwearBack: genClothingLayer("legs", {
 			srcfn(options) {
 				const clothes = options.clothes.legs;
 				if (clothes == null || clothes.name == null) return "";
-				const path = options.src + "clothing/legs/" + clothes.name + "/" + clothes.state + "l.png";
+				const path = `${options.src}clothing/legs/${clothes.name}/back-${options.legFrontPosition}-${clothes.state}.png`;
 				console.log("legs", "Path:", path);
 				return path;
 			},
+			z: zi.backThigh + 1,
 		}),
-		legwearRight: genClothingLayer("legs", {
+		legwearAccBack: genClothingLayer("legs", {
 			srcfn(options) {
 				const clothes = options.clothes.legs;
 				if (clothes == null || clothes.name == null) return "";
-				const path = options.src + "clothing/legs/" + clothes.name + "/" + clothes.state + "r.png";
+				const path = `${options.src}clothing/legs/${clothes.name}/back-${options.legFrontPosition}-${clothes.state}-acc.png`;
 				console.log("legs", "Path:", path);
 				return path;
 			},
+			z: zi.backThigh + 2,
 		}),
-		lower: genClothingLayer("lower"),
-		neckWear: genClothingLayer("neck"),
-		overHead: genClothingLayer("over_head"),
-		overLower: genClothingLayer("over_lower"),
-		overUpper: genClothingLayer("over_upper"),
-		underLower: genClothingLayer("under_lower"),
-		underUpper: genClothingLayer("under_upper"),
-		/*
-		 *	██    ██ ██████  ██████  ███████ ██████
-		 *	██    ██ ██   ██ ██   ██ ██      ██   ██
-		 *	██    ██ ██████  ██████  █████   ██████
-		 *	██    ██ ██      ██      ██      ██   ██
-		 *	 ██████  ██      ██      ███████ ██   ██
-		 */
-		upper: genClothingLayer("upper"),
+		legwearFront: genClothingLayer("legs", {
+			srcfn(options) {
+				const clothes = options.clothes.legs;
+				if (clothes == null || clothes.name == null) return "";
+				const path = `${options.src}clothing/legs/${clothes.name}/front-${options.legFrontPosition}-${clothes.state}.png`;
+				console.log("legs", "Path:", path);
+				return path;
+			},
+			z: zi.frontThigh + 1,
+		}),
+		legwearAccFront: genClothingLayer("legs", {
+			srcfn(options) {
+				const clothes = options.clothes.legs;
+				if (clothes == null || clothes.name == null) return "";
+				const path = `${options.src}clothing/legs/${clothes.name}/front-${options.legFrontPosition}-${clothes.state}-acc.png`;
+				console.log("legs", "Path:", path);
+				return path;
+			},
+			z: zi.frontThigh + 2,
+		}),
+		lower: genClothingLayer("lower", {
+			dxfn(options) {
+				if (options.legFrontPosition === "footjob") {
+					return -10;
+				}
+				return 0;
+			},
+			dyfn(options) {
+				if (options.legFrontPosition === "footjob") {
+					return 4;
+				}
+				return 0;
+			},
+			z: zi.frontThigh + 3,
+		}),
+		neckWear: genClothingLayer("neck", {
+			z: zi.base + 10,
+		}),
+		overHead: genClothingLayer("over_head", {
+			z: zi.base + 10,
+		}),
+		overLower: genClothingLayer("over_lower", {
+			z: zi.frontThigh + 3,
+		}),
+		overUpper: genClothingLayer("over_upper", {
+			z: zi.base + 10,
+		}),
+		underLower: genClothingLayer("under_lower", {
+			z: zi.frontThigh + 2,
+		}),
+		underUpper: genClothingLayer("under_upper", {
+			z: zi.base + 10,
+		}),
+		upper: genClothingLayer("upper", {
+			z: zi.base + 11,
+		}),
+		upperAcc: genClothingLayer("upper", {
+			srcfn(options) {
+				const clothes = options.clothes.upper;
+				if (clothes == null || clothes.name == null) return "";
+				const path = `${options.src}clothing/upper/${clothes.name}/acc.png`;
+				console.log("Path:", path);
+				return path;
+			},
+			filtersfn(options) {
+				return ["worn_upper_acc"];
+			},
+			z: zi.base + 12,
+		}),
 		upperBreasts: genClothingLayer("upper", {
 			srcfn(options) {
 				const clothes = options.clothes.upper;
 				if (clothes == null || clothes.name == null) return "";
-				const path = options.src + "clothing/upper/" + clothes.name + "/breasts/" + options.breastSize + ".png";
+				const path = `${options.src}clothing/upper/${clothes.name}/breasts/${clothes.breasts}.png`;
 				console.log("upper", "Path:", path);
 				return path;
 			},
+			showfn(options) {
+				const clothes = options.clothes.upper;
+				const show = options.showClothing && clothes != null && clothes.name != null && clothes.hasBreasts;
+				console.log("Show upper breasts:", show);
+				return !!show;
+			},
+			z: zi.base + 13,
 		}),
 		upperBackSleeves: genClothingLayer("upper", {
 			srcfn(options) {
 				const clothes = options.clothes.upper;
 				if (clothes == null || clothes.name == null) return "";
-				const path = options.src + "clothing/upper/" + clothes.name + "/sleeves/" + clothes.sleeves + ".png";
+				const path = `${options.src}clothing/upper/${clothes.name}/sleeves/back-${clothes.sleeves}.png`;
 				console.log("upper", "Path:", path);
 				return path;
 			},
-			z: 100,
+			showfn(options) {
+				const clothes = options.clothes.upper;
+				const show = options.showClothing && clothes != null && clothes.name != null && clothes.hasSleeves;
+				// Sleeves on the side behind are never shown, except for handjobs.
+				if (!["handjob"].includes(clothes.sleeves)) return false;
+				console.log("Show upper breasts:", show);
+				return !!show;
+			},
+			z: zi.base + 10,
 		}),
 		upperFrontSleeves: genClothingLayer("upper", {
 			srcfn(options) {
 				const clothes = options.clothes.upper;
 				if (clothes == null || clothes.name == null) return "";
-				const path = options.src + "clothing/upper/" + clothes.name + "/sleeves/" + clothes.sleeves + ".png";
+				const path = `${options.src}clothing/upper/${clothes.name}/sleeves/front-${clothes.sleeves}.png`;
 				console.log("upper", "Path:", path);
 				return path;
 			},
-			z: 100,
+			showfn(options) {
+				const clothes = options.clothes.upper;
+				const show = options.showClothing && clothes != null && clothes.name != null && clothes.hasSleeves;
+				console.log("Show upper breasts:", show);
+				return !!show;
+			},
+			z: zi.base + 14,
 		}),
 	},
 };
-
 Renderer.CanvasModels.combatMainPc = combatMainPc;
 
 /**
@@ -609,7 +588,7 @@ function genClothingLayer(slot, overrideOptions = {}) {
 		srcfn(options) {
 			const clothes = options.clothes[slot];
 			if (clothes == null || clothes.name == null) return "";
-			const path = options.src + "clothing/" + slot + "/" + clothes.name + "/" + clothes.state + ".png";
+			const path = `${options.src}clothing/${slot}/${clothes.name}/${clothes.state}.png`;
 			console.log(slot, "Path:", path);
 			return path;
 		},

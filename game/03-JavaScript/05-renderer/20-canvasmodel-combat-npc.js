@@ -1,3 +1,4 @@
+/* eslint-disable jsdoc/no-undefined-types */
 /**
  * @typedef {object} CanvasModelLayerNpc
  * @property {boolean} [show] Show this layer, default false (if no show:true or showfn present, needs explicit `<<showlayer>>`). Do not use undefined/null/0/"" to hide layer!
@@ -59,6 +60,19 @@ const combatMainNpc = {
 	},
 	/** @type {Object<string, CanvasModelLayerNpc>} */
 	layers: {
+		baseShadow: {
+			srcfn(options) {
+				const path = `${options.src}shadow/${options.type}/${options.state}.png`;
+				return path;
+			},
+			showfn(options) {
+				return !!options.showShadow;
+			},
+			animationfn(options) {
+				return options.animKey;
+			},
+			z: 60,
+		},
 		penetrator: {
 			srcfn(options) {
 				if (options.penetrators.length <= 0) return;
@@ -74,7 +88,25 @@ const combatMainNpc = {
 			animationfn(options) {
 				return options.animKey;
 			},
-			z: 20,
+			z: 59,
+		},
+		penetratorEjaculate: {
+			srcfn(options) {
+				if (options.penetrators.length <= 0) return;
+				const penetrator = options.penetrators[0];
+				const path = `${options.src}penetrators/${penetrator.type}/${penetrator.position}-${penetrator.state}-${penetrator.ejaculate.type}.png`;
+				return path;
+			},
+			showfn(options) {
+				if (options.penetrators.length <= 0) return;
+				const penetrator = options.penetrators[0];
+				const result = penetrator.show && penetrator.isEjaculating;
+				return !!result;
+			},
+			animationfn(options) {
+				return options.animKey;
+			},
+			z: 61,
 		},
 	},
 };

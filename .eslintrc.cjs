@@ -234,6 +234,8 @@ module.exports = {
 		skinColor: "readonly",
 		nullable: "readonly",
 		combat: "readonly",
+		wearingCondom: "readonly",
+		npcHasStrapon: "readonly",
 	},
 
 	ignorePatterns: [

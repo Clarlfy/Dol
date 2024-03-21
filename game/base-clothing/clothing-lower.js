@@ -1,6 +1,7 @@
 /* For any item that has a colour_combat tag, set it to 0 if that item ever gets its own combat sprites. */
 function initLower() {
-	setup.clothes.lower = [
+	/** @type {ClothesItem[]} */
+	const clothing = [
 		{
 			index: 0,
 			name: "naked",
@@ -7014,6 +7015,7 @@ function initLower() {
 			outfitSecondary: ["upper", "prison jumpsuit"],
 		},
 	];
+	setup.clothes.lower = clothing;
 
 	/*
 		Clothes that modders add go into this array, this should be empty in the base game at all times.

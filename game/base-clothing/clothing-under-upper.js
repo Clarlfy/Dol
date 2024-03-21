@@ -1,6 +1,7 @@
 /* For any item that has a colour_combat tag, set it to 0 if that item ever gets its own combat sprites. */
 function initUnderUpper() {
-	setup.clothes.under_upper = [
+	/** @type {ClothesItem[]} */
+	const clothing = [
 		{
 			index: 0,
 			name: "naked",
@@ -87,7 +88,6 @@ function initUnderUpper() {
 			iconFile: "bikini_top.png",
 			accIcon: 0,
 		},
-
 		{
 			index: 2,
 			name: "school swimsuit",
@@ -1597,6 +1597,7 @@ function initUnderUpper() {
 			accIcon: 0,
 		},
 	];
+	setup.clothes.under_upper = clothing;
 
 	/*
 		Clothes that modders add go into this array, this should be empty in the base game at all times.
